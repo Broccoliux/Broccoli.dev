@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   <!-- Fixed typo -->
     <title>Broccoli Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
@@ -26,7 +26,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            height: 65px;
+            height: 80px;
             background-color: #042580;
         }
 
@@ -46,25 +46,33 @@
             font-size: 1.5rem;
         }
 
-        .firstsection {
+        .firstSection{                    
             display: flex;
             justify-content: space-around;
-            margin: 23px;
+            margin: 23px 0;
+            align-items: center;         
         }
 
-        .firstSection div {
+        .firstSection > div{
             width: 34%;
         }
 
-        .leftSection {
+        .leftSection{
             background-color: #6e04fa;
-
         }
 
-        .rightSection {
+        .rightSection{
             background-color: #6e04fa;
-
         }
+
+        /* === Added only for the right side image card === */
+        .rightSection img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* ================================================ */
+
     </style>
 </head>
 
@@ -72,7 +80,7 @@
     <header>
         <nav>
             <div class="left">Broccoli portfolio</div>
-            <div class="right"></div>
+            <!-- Removed empty <div class="right"></div> and extra </div> below -->
             <ul>
                 <li>Home</li>
                 <li>About</li>
@@ -80,23 +88,20 @@
                 <li>Projects</li>
                 <li>Contact Me</li>
             </ul>
-            </div>
         </nav>
     </header>
 
     <main>
         <section class="firstSection">
-            <div class=" leftSection">
+            <div class="leftSection">
                 Hi, my name is Broccoli.
                 <div>
-                    u can call me broc, if u dont like broccoli </div>
-
+                    u can call me broc, if u dont like broccoli 
+                </div>
             </div>
-            <div class="leftSection">
+            <div class="rightSection">
                 <img src="broccli.jpg" alt="Broccoli Image">
             </div>
-
-
         </section>
     </main>
 </body>
