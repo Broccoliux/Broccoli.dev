@@ -1,0 +1,118 @@
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        body {
+            background-color: #000000fd;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 70px;
+            background-color: #020714;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            list-style: none;
+            margin: 0 23px;
+
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+
+        }
+
+        nav ul li a:hover {
+            color: #26ce17;
+            font-size: 1.04rem;
+
+        }
+
+        main hr {
+            border: 0;
+            color: #333;
+            background-color: #333;
+            height: 2px;
+            margin: 40px 70px;
+        }
+
+        .left {
+            font-size: 1.5rem;
+        }
+
+        .firstSection {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 110px 0;
+        }
+
+        .firstSection>div {
+            width: 34%;
+        }
+
+        .leftSection {
+            font-size: 3rem;
+        }
+
+        .rightSection img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .green {
+            color: #26da0e;
+        }
+
+        .Broccoli portfolio {
+            color: #0E6E38;
+        }
+
+        .text-gray {
+            color: #26da0e;
+        }
+
+        #element {
+            color: #26da0e;
+        }
+
+        .secondSection {
+            max-width: 83vw;
+            margin: 0 auto;
+            height: 100vh;
+        }
+
+
+
+
+        footer {
+            background-color: #020714;
+            height: 200px;
+            text-align: left;
+            padding: 20px;
+            color: #26da0e;
+        }
+
+        .footer {
+            display: flex;
+            margin: 0 auto;
+        }
+    </style>

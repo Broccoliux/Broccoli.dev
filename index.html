@@ -1,142 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Broccoli Portfolio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-    </style>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-
-        }
-
-        body {
-            background-color: #000000fd;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            height: 70px;
-            background-color: #020714;
-        }
-
-        nav ul {
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul li {
-            list-style: none;
-            margin: 0 23px;
-
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #ffffff;
-
-        }
-
-        nav ul li a:hover {
-            color: #26ce17;
-            font-size: 1.04rem;
-
-        }
-
-        main hr {
-            border: 0;
-            color: #333;
-            background-color: #333;
-            height: 2px;
-            margin: 40px 70px;
-        }
-
-        .left {
-            font-size: 1.5rem;
-        }
-
-        .firstSection {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 110px 0;
-        }
-
-        .firstSection>div {
-            width: 34%;
-        }
-
-        .leftSection {
-            font-size: 3rem;
-        }
-
-        .rightSection img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .green {
-            color: #26da0e;
-        }
-
-        .Broccoli portfolio {
-            color: #0E6E38;
-        }
-
-        .text-gray {
-            color: #26da0e;
-        }
-
-        #element {
-            color: #26da0e;
-        }
-
-        .secondSection {
-            max-width: 83vw;
-            margin: 0 auto;
-            height: 100vh;
-        }
-
-
-
-
-        footer {
-            background-color: #020714;
-            height: 200px;
-            text-align: left;
-            padding: 20px;
-            color: #26da0e;
-        }
-
-        .footer {
-            display: flex;
-            margin: 0 auto;
-        }
-    </style>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <!-- Content will stay here -->
     <header>
         <nav>
             <div class="left"> <span class="green">Broccoli🥦portfolio</span> </div>
-
             <ul>
-                <li><a href="/home">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/contact">Contact Me</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -145,31 +28,26 @@
         <section class="firstSection">
             <div class="leftSection">
                 Yo, my name is <span class="green">Broccoli</span>
-
                 <div>I am really good at:</div>
                 <span id="element"></span>
-
             </div>
             <div class="rightSection">
-                <img src="img assets/broccoli.png" alt="Broccoli Image">
+                <img src="assets/images/broccoli.png" alt="Broccoli Image">
             </div>
         </section>
+        
         <hr>
+        
         <section class="secondSection">
             <span class="text-gray">What i have done so far</span>
             <h1>Work experience</h1>
-
-
         </section>
     </main>
-    <script src="https://unpkg.com/typed.js@3.0.0/dist/typed.umd.js"></script>
-    <!-- Setup and start animation! -->
-    <script>
-        var typed = new Typed('#element', {
-            strings: ['AI/ML Engineer', 'IOT Engineer.', 'Embedded systems developer.'],
-            typeSpeed: 50,
-        });
-    </script>
-</body>
 
+    <!-- Typed.js Library -->
+    <script src="https://unpkg.com/typed.js@3.0.0/dist/typed.umd.js"></script>
+    
+    <!-- Your Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
 </html>
