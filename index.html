@@ -109,13 +109,20 @@
         .secondSection {
             max-width: 83vw;
             margin: 0 auto;
+            height: 100vh;
         }
 
-         .secondSection h1{
-           font-size: 2rem;
-           text-align: left;
+        .secondSection h1 {
+            font-size: 2rem;
+            text-align: left;
         }
-    
+
+        .ssecondSection .box {
+            background: white;
+            width: 80vw;
+            height: 2px;
+            margin: 50px 0;
+        }
     </style>
 </head>
 
@@ -149,8 +156,11 @@
         </section>
         <hr>
         <section class="secondSection">
-            <h1>Work experience</h1>
             <span class="text-gray">What i have done so far</span>
+            <h1>Work experience</h1>
+
+            <div class="box"></div>
+        </section>
     </main>
     <script src="https://unpkg.com/typed.js@3.0.0/dist/typed.umd.js"></script>
     <!-- Setup and start animation! -->
