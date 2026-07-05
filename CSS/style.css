@@ -282,7 +282,7 @@ hr {
 
     border-radius: 10px;
 
-    font-size: 20px;
+    font-size: 13px;
 
     font-weight: 500;
 
@@ -294,7 +294,7 @@ hr {
 
 .dock-item:hover .tooltip {
 
-    opacity: 50;
+    opacity: 0;
 
     top: -56px;
 
