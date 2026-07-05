@@ -131,28 +131,80 @@ function animate() {
 
     updateTargets();
 
+    let totalWidth = 0;
+    let tallest = ICON_SIZE;
+    let maxScale = 1;
+
+    // Update physics
     state.forEach(obj => {
 
-        const scaleForce =
-            (obj.targetScale - obj.scale) * SPRING;
-
+        const scaleForce = (obj.targetScale - obj.scale) * SPRING;
         obj.velocityScale += scaleForce;
-
         obj.velocityScale *= DAMPING;
-
         obj.scale += obj.velocityScale;
 
-        const yForce =
-            (obj.targetOffsetY - obj.offsetY) * SPRING;
-
+        const yForce = (obj.targetOffsetY - obj.offsetY) * SPRING;
         obj.velocityY += yForce;
-
         obj.velocityY *= DAMPING;
-
         obj.offsetY += obj.velocityY;
 
+        if (obj.scale > maxScale) {
+            maxScale = obj.scale;
+        }
+
+        const currentSize = ICON_SIZE * obj.scale;
+
+        totalWidth += currentSize;
+
+        if (currentSize > tallest) {
+            tallest = currentSize;
+        }
+
+    });
+
+    // ------------------------------
+    // Dynamic Dock Size
+    // ------------------------------
+
+    const GAP = 6;
+    const BASE_PADDING = 10;
+
+    totalWidth += GAP * (state.length - 1);
+    totalWidth += BASE_PADDING * 2;
+
+    dock.style.width = totalWidth + "px";
+    dock.style.height = (tallest + 18) + "px";
+
+    // ------------------------------
+    // Keep dock perfectly centered
+    // ------------------------------
+
+    dock.parentElement.style.left = "50%";
+    dock.parentElement.style.transform = "translateX(-50%)";
+
+    // ------------------------------
+    // Position icons
+    // ------------------------------
+
+    let currentX = BASE_PADDING;
+
+    state.forEach(obj => {
+
+        const currentSize = ICON_SIZE * obj.scale;
+
+        obj.element.style.position = "absolute";
+
+        obj.element.style.left = currentX + "px";
+
+        obj.element.style.bottom = "8px";
+
+        obj.element.style.width = currentSize + "px";
+        obj.element.style.height = currentSize + "px";
+
         obj.element.style.transform =
-            `translateY(${obj.offsetY}px) scale(${obj.scale})`;
+            `translateY(${obj.offsetY}px)`;
+
+        currentX += currentSize + GAP;
 
     });
 
@@ -282,13 +334,13 @@ function updateTargets() {
 // Hover Glow
 // ======================================================
 
-items.forEach(item=>{
+items.forEach(item => {
 
-    item.addEventListener("mouseenter",()=>{
+    item.addEventListener("mouseenter", () => {
 
-        item.style.boxShadow=
+        item.style.boxShadow =
 
-        `
+            `
         0 10px 35px rgba(0,0,0,.45),
         inset 0 1px 0 rgba(255,255,255,.75),
         0 0 28px rgba(255,255,255,.10)
@@ -296,11 +348,11 @@ items.forEach(item=>{
 
     });
 
-    item.addEventListener("mouseleave",()=>{
+    item.addEventListener("mouseleave", () => {
 
-        item.style.boxShadow=
+        item.style.boxShadow =
 
-        `
+            `
         0 6px 15px rgba(0,0,0,.25),
         inset 0 1px 0 rgba(255,255,255,.55)
         `;
@@ -313,36 +365,36 @@ items.forEach(item=>{
 // Scroll Spy
 // ======================================================
 
-const sections=[
+const sections = [
     ...document.querySelectorAll("section")
 ];
 
-window.addEventListener("scroll",()=>{
+window.addEventListener("scroll", () => {
 
-    let current="home";
+    let current = "home";
 
-    sections.forEach(section=>{
+    sections.forEach(section => {
 
-        const top=
-            section.offsetTop-250;
+        const top =
+            section.offsetTop - 250;
 
-        if(scrollY>=top){
+        if (scrollY >= top) {
 
-            current=section.id;
+            current = section.id;
 
         }
 
     });
 
-    items.forEach(button=>{
+    items.forEach(button => {
 
-        if(button.dataset.section===current){
+        if (button.dataset.section === current) {
 
             button.classList.add("active");
 
         }
 
-        else{
+        else {
 
             button.classList.remove("active");
 
@@ -356,28 +408,28 @@ window.addEventListener("scroll",()=>{
 // Active Dot
 // ======================================================
 
-function updateDots(){
+function updateDots() {
 
-    items.forEach(item=>{
+    items.forEach(item => {
 
-        const dot=
+        const dot =
             item.querySelector(".active-dot");
 
-        if(!dot) return;
+        if (!dot) return;
 
-        if(item.classList.contains("active")){
+        if (item.classList.contains("active")) {
 
-            dot.style.opacity="1";
+            dot.style.opacity = "1";
 
-            dot.style.transform="scale(1)";
+            dot.style.transform = "scale(1)";
 
         }
 
-        else{
+        else {
 
-            dot.style.opacity="0";
+            dot.style.opacity = "0";
 
-            dot.style.transform="scale(.2)";
+            dot.style.transform = "scale(.2)";
 
         }
 
@@ -387,11 +439,11 @@ function updateDots(){
 
 updateDots();
 
-items.forEach(item=>{
+items.forEach(item => {
 
-    item.addEventListener("click",()=>{
+    item.addEventListener("click", () => {
 
-        setTimeout(updateDots,20);
+        setTimeout(updateDots, 20);
 
     });
 
@@ -401,20 +453,20 @@ items.forEach(item=>{
 // Small Floating Idle Animation
 // ======================================================
 
-let idleTime=0;
+let idleTime = 0;
 
-function idleFloat(){
+function idleFloat() {
 
-    idleTime+=0.02;
+    idleTime += 0.02;
 
-    state.forEach((obj,index)=>{
+    state.forEach((obj, index) => {
 
-        const float=
+        const float =
 
-        Math.sin(idleTime+index*.4)*1.2;
+            Math.sin(idleTime + index * .4) * 1.2;
 
-        obj.element.style.translate=
-        `0 ${float}px`;
+        obj.element.style.translate =
+            `0 ${float}px`;
 
     });
 
@@ -433,7 +485,7 @@ idleFloat();
 
 const SVG_ICONS = {
 
-home: `
+    home: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -441,7 +493,7 @@ stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 </svg>
 `,
 
-about:`
+    about: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <circle cx="12" cy="8" r="4"/>
@@ -449,21 +501,21 @@ stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 </svg>
 `,
 
-experience:`
+    experience: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
 </svg>
 `,
 
-projects:`
+    projects: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
 </svg>
 `,
 
-skills:`
+    skills: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <circle cx="12" cy="12" r="3"/>
@@ -499,7 +551,7 @@ stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 </svg>
 `,
 
-contact:`
+    contact: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1
@@ -515,15 +567,15 @@ stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 // Inject Icons
 // =======================================
 
-items.forEach(item=>{
+items.forEach(item => {
 
-    const icon=item.querySelector(".dock-icon");
+    const icon = item.querySelector(".dock-icon");
 
-    const key=item.dataset.section;
+    const key = item.dataset.section;
 
-    if(SVG_ICONS[key]){
+    if (SVG_ICONS[key]) {
 
-        icon.innerHTML=SVG_ICONS[key];
+        icon.innerHTML = SVG_ICONS[key];
 
     }
 
@@ -533,21 +585,21 @@ items.forEach(item=>{
 // Shine Overlay
 // =======================================
 
-items.forEach(item=>{
+items.forEach(item => {
 
-    const shine=document.createElement("div");
+    const shine = document.createElement("div");
 
-    shine.className="dock-shine";
+    shine.className = "dock-shine";
 
-    shine.style.position="absolute";
-    shine.style.inset="0";
-    shine.style.pointerEvents="none";
-    shine.style.borderRadius="20px";
+    shine.style.position = "absolute";
+    shine.style.inset = "0";
+    shine.style.pointerEvents = "none";
+    shine.style.borderRadius = "20px";
 
-    shine.style.background=
-    "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
+    shine.style.background =
+        "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
 
-    shine.style.opacity=".55";
+    shine.style.opacity = ".55";
 
     item.appendChild(shine);
 
@@ -557,35 +609,35 @@ items.forEach(item=>{
 // Active Animation
 // =======================================
 
-items.forEach(item=>{
+items.forEach(item => {
 
-    item.addEventListener("click",()=>{
+    item.addEventListener("click", () => {
 
         item.animate(
 
-        [
+            [
 
-        {
-            transform:item.style.transform
-        },
+                {
+                    transform: item.style.transform
+                },
 
-        {
-            transform:item.style.transform+" scale(.92)"
-        },
+                {
+                    transform: item.style.transform + " scale(.92)"
+                },
 
-        {
-            transform:item.style.transform
-        }
+                {
+                    transform: item.style.transform
+                }
 
-        ],
+            ],
 
-        {
+            {
 
-            duration:220,
+                duration: 220,
 
-            easing:"ease-out"
+                easing: "ease-out"
 
-        });
+            });
 
     });
 
@@ -595,13 +647,13 @@ items.forEach(item=>{
 // Mouse Leave Reset
 // =======================================
 
-dock.addEventListener("mouseleave",()=>{
+dock.addEventListener("mouseleave", () => {
 
-    state.forEach(obj=>{
+    state.forEach(obj => {
 
-        obj.targetScale=1;
+        obj.targetScale = 1;
 
-        obj.targetOffsetY=0;
+        obj.targetOffsetY = 0;
 
     });
 

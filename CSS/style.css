@@ -161,23 +161,23 @@ hr {
 
     align-items: flex-end;
 
-    gap: 8px;
+    gap: 6px;
 
-    padding: 12px;
+    padding: 8px 10px;
 
-    border-radius: 28px;
+    border-radius: 20px;
 
-    background: rgba(255, 255, 255, .08);
+    background: rgba(20, 20, 20, .45);
 
-    backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(30px);
 
-    border: 1px solid rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .08);
 
     box-shadow:
 
-        0 12px 40px rgba(0, 0, 0, .45),
+        0 8px 25px rgba(0, 0, 0, .35),
 
-        inset 0 1px 0 rgba(255, 255, 255, .08);
+        inset 0 1px rgba(255, 255, 255, .08);
 
 }
 
@@ -193,7 +193,7 @@ hr {
 
     cursor: pointer;
 
-    border-radius: 20px;
+    border-radius: 15px;
 
     display: flex;
 
@@ -205,7 +205,7 @@ hr {
             #3a3a3a,
             #1f1f1f);
 
-    border: 1px solid rgba(255, 255, 255, .08);
+    border: 1px solid rgb(255, 255, 255);
     transition:
 
         transform .12s linear,
@@ -272,11 +272,13 @@ hr {
 
     pointer-events: none;
 
-    background: white;
+    background: #222;
 
-    color: #111;
+    border: 1px solid rgba(255, 255, 255, .08);
 
-    padding: 8px 14px;
+    color: white;
+
+    padding: 6px 12px;
 
     border-radius: 10px;
 
@@ -292,7 +294,7 @@ hr {
 
 .dock-item:hover .tooltip {
 
-    opacity: 1;
+    opacity: 50;
 
     top: -56px;
 
