@@ -21,8 +21,8 @@ new Typed("#element", {
 const dock = document.getElementById("dock");
 const items = [...document.querySelectorAll(".dock-item")];
 
-const ICON_SIZE = 56;
-const MAX_SCALE = 1.5;
+const ICON_SIZE = 45;
+const MAX_SCALE = 1.38;
 const MAGNETIC_DISTANCE = 150;
 
 let mouseX = Infinity;
@@ -124,8 +124,8 @@ function updateTargets() {
 // Spring Animation
 // ================================================
 
-const SPRING = 0.18;
-const DAMPING = 0.78;
+const SPRING = 0.14;
+const DAMPING = 0.92;
 
 function animate() {
 
@@ -173,7 +173,7 @@ function animate() {
     totalWidth += BASE_PADDING * 2;
 
     dock.style.width = totalWidth + "px";
-    dock.style.height = (tallest + 18) + "px";
+    dock.style.height = (tallest + Math.abs(state[0].offsetY) + 24) + "px";
 
     // ------------------------------
     // Keep dock perfectly centered
