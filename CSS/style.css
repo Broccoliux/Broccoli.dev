@@ -294,7 +294,7 @@ hr {
 
 .dock-item:hover .tooltip {
 
-    opacity: 0;
+    opacity: 100;
 
     top: -56px;
 
