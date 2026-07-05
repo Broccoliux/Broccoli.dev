@@ -202,11 +202,10 @@ hr {
     align-items: center;
 
     background: linear-gradient(180deg,
+            #3a3a3a,
+            #1f1f1f);
 
-            #fafafa,
-
-            #ececec);
-
+    border: 1px solid rgba(255, 255, 255, .08);
     transition:
 
         transform .12s linear,
@@ -251,7 +250,7 @@ hr {
 
     height: 80%;
 
-    stroke: #333;
+    stroke: #aca2a2;
 
     fill: none;
 
