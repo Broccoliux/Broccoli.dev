@@ -1,40 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Broccoli Portfolio</title>
+
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <main>
-        <section class="firstSection">
-            <div class="leftSection">
-                Yo, my name is <span class="green">Broccoli</span>
-                <div>I am really good at:</div>
+
+        <!-- ================= HERO ================= -->
+
+        <section class="hero" id="home">
+
+            <div class="hero-left">
+
+                <h1>
+
+                    Yo, my name is
+
+                    <span class="green">
+                        Broccoli
+                    </span>
+
+                </h1>
+
+                <h2>
+
+                    I am really good at
+
+                </h2>
+
                 <span id="element"></span>
+
             </div>
-            <div class="rightSection">
-                <img src="img assets/broccoli.png" alt="Broccoli Image">
+
+            <div class="hero-right">
+
+                <img src="img assets/broccoli.png">
+
             </div>
+
         </section>
-        
+
         <hr>
-        
-        <section class="secondSection">
-            <span class="text-gray">What i have done so far</span>
-            <h1>Work experience</h1>
+
+        <!-- ================= ABOUT ================= -->
+
+        <section id="about" class="section">
+
+            <h2>About</h2>
+
+            <p>
+
+                Write your introduction here.
+
+            </p>
+
         </section>
+
+        <!-- ================= EXPERIENCE ================= -->
+
+        <section id="experience" class="section">
+
+            <h2>Experience</h2>
+
+            <p>
+
+                Your work experience.
+
+            </p>
+
+        </section>
+
+        <!-- ================= PROJECTS ================= -->
+
+        <section id="projects" class="section">
+
+            <h2>Projects</h2>
+
+        </section>
+
+        <!-- ================= SKILLS ================= -->
+
+        <section id="skills" class="section">
+
+            <h2>Skills</h2>
+
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+
+        <section id="contact" class="section">
+
+            <h2>Contact</h2>
+
+        </section>
+
     </main>
 
-    <!-- Magnetic Dock -->
-    <div class="dock-container">
-        <div class="magnetic-dock" id="magneticDock"></div>
+    <!-- ===================== DOCK ===================== -->
+
+    <div class="dock-wrapper">
+
+        <div id="dock" class="dock">
+
+            <!-- Home -->
+
+            <button class="dock-item active" data-section="home">
+
+                <span class="tooltip">
+
+                    Home
+
+                </span>
+
+                <div class="dock-icon">
+
+                    <!-- SVG comes next -->
+
+                </div>
+
+                <div class="active-dot"></div>
+
+            </button>
+
+            <!-- About -->
+
+            <button class="dock-item" data-section="about">
+
+                <span class="tooltip">
+
+                    About
+
+                </span>
+
+                <div class="dock-icon"></div>
+
+            </button>
+
+            <!-- Experience -->
+
+            <button class="dock-item" data-section="experience">
+
+                <span class="tooltip">
+
+                    Experience
+
+                </span>
+
+                <div class="dock-icon"></div>
+
+            </button>
+
+            <!-- Projects -->
+
+            <button class="dock-item" data-section="projects">
+
+                <span class="tooltip">
+
+                    Projects
+
+                </span>
+
+                <div class="dock-icon"></div>
+
+            </button>
+
+            <!-- Skills -->
+
+            <button class="dock-item" data-section="skills">
+
+                <span class="tooltip">
+
+                    Skills
+
+                </span>
+
+                <div class="dock-icon"></div>
+
+            </button>
+
+            <!-- Contact -->
+
+            <button class="dock-item" data-section="contact">
+
+                <span class="tooltip">
+
+                    Contact
+
+                </span>
+
+                <div class="dock-icon"></div>
+
+            </button>
+
+        </div>
+
     </div>
 
     <script src="https://unpkg.com/typed.js@3.0.0/dist/typed.umd.js"></script>
+
     <script src="js/main.js"></script>
+
 </body>
+
 </html>
