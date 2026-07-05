@@ -300,3 +300,38 @@ hr {
 
 }
 
+/* Typed.js */
+
+.typed-wrapper{
+    width: 520px;
+    height: 50px;
+    align-items: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#elements{
+    color: #fff;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.typed-cursor{
+    font-size: 34px;
+    color: #fff;
+    font-weight:300;
+    line-height: 1;
+}
+
+.typed-cursor--blink{
+    animation: typedblink .8 infinite;
+}
+
+@keyframes typedBlink{
+    0%,50%{
+        opticity: 1;
+    }
+    50.01%,100%{
+        opticity: 0;
+    }
+}
