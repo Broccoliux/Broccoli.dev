@@ -214,7 +214,7 @@ hr {
 
     box-shadow:
 
-        0 6px 15px rgb(255, 255, 255),
+        0 6px 15px rgb(0, 0, 0),
 
         inset 0 1px 0 rgba(255, 255, 255, .6);
 
@@ -224,9 +224,9 @@ hr {
 
     box-shadow:
 
-        0 12px 35px rgb(255, 255, 255),
+        0 12px 35px rgba(0, 0, 0, .45),
 
-        inset 0 1px 0 rgb(48, 44, 44);
+        inset 0 1px 0 rgba(255, 255, 255, .8);
 
 }
 
@@ -268,7 +268,7 @@ hr {
 
     top: -48px;
 
-    opacity: 0;
+    opacity: 100;
 
     pointer-events: none;
 
