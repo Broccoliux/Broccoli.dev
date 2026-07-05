@@ -79,13 +79,13 @@ body {
 
     display: inline-block;
 
-    margin-top: 15px;
-
     font-size: 34px;
 
     color: #26da0e;
 
     font-weight: 600;
+
+    white-space: nowrap;
 
 }
 
