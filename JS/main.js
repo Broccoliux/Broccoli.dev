@@ -4,9 +4,11 @@
 
 new Typed("#element", {
     strings: [
-        "AI/ML Engineering","Embedded Systems Developeing","IOT Engineering"
+        "AI/ML Engineering",
+        "Embedded Systems Developeing",
+        "IOT Engineering"
     ],
-    typeSpeed: 55,
+    typeSpeed: 35,
     backSpeed: 35,
     loop: true
 });
