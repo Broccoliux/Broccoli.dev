@@ -88,3 +88,10 @@ main hr {
     margin: 0 auto;
     height: 100vh;
 }
+
+/* ==================== MAGNETIC DOCK ==================== */
+.dock-container {
+    position: fixed;
+    bottom: 20px;
+    
+}
