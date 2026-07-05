@@ -299,3 +299,41 @@ hr {
     top: -56px;
 
 }
+
+/* ============================= */
+/* Typed.js */
+/* ============================= */
+
+.typed-wrapper{
+    width: 520px;          /* Increase if needed */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+#element{
+    color: #26da0e;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.typed-cursor{
+    font-size: 34px;       /* Match #element font-size */
+    color: #26da0e;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.typed-cursor--blink{
+    animation: typedBlink .8s infinite;
+}
+
+@keyframes typedBlink{
+    0%,50%{
+        opacity:1;
+    }
+    50.01%,100%{
+        opacity:0;
+    }
+}
