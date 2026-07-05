@@ -224,9 +224,9 @@ hr {
 
     box-shadow:
 
-        0 12px 35px rgba(0, 0, 0, .45),
+        0 12px 35px rgb(255, 255, 255),
 
-        inset 0 1px 0 rgba(255, 255, 255, .8);
+        inset 0 1px 0 rgb(48, 44, 44);
 
 }
 
