@@ -102,7 +102,7 @@ main hr {
     display: flex;
     align-items: flex-end;
     gap: 12px;
-    background: rgba(255, 255, 255, 0.1) 0 transparent 50%; 
+    background: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 12px 16px;
