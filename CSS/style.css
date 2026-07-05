@@ -143,5 +143,22 @@ main hr {
     top: -45;
     background-color: rgba(0, 0, 0,0.85);
     color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: all 0.2s ease;
+    transition: all 0.2 ease;
+    transform: translateY(10px);
+}
 
+.dock-item:hover .dock-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* actice state */
+.dock-item.active {
+    transform: scale(1.3);
 }
