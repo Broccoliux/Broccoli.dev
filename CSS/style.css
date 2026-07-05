@@ -268,7 +268,7 @@ hr {
 
     top: -48px;
 
-    opacity: 100;
+    opacity: 0;
 
     pointer-events: none;
 
@@ -282,7 +282,7 @@ hr {
 
     border-radius: 10px;
 
-    font-size: 13px;
+    font-size: 10px;
 
     font-weight: 500;
 
