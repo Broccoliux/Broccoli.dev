@@ -137,3 +137,11 @@ main hr {
 .dock-item:hover svg {
     stroke: #26da0e;
 }
+
+.dock-legel {
+    position: absolute;
+    top: -45;
+    background-color: rgba(0, 0, 0,0.85);
+    color: white;
+
+}
