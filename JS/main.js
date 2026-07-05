@@ -125,7 +125,7 @@ function updateTargets() {
 // ================================================
 
 const SPRING = 0.14;
-const DAMPING = 0.92;
+const DAMPING = 0.50;
 
 function animate() {
 
@@ -173,7 +173,21 @@ function animate() {
     totalWidth += BASE_PADDING * 2;
 
     dock.style.width = totalWidth + "px";
-    dock.style.height = (tallest + Math.abs(state[0].offsetY) + 24) + "px";
+    let requiredHeight = 0;
+
+    state.forEach(obj => {
+
+        const currentSize = ICON_SIZE * obj.scale;
+
+        const iconHeight = currentSize + Math.abs(obj.offsetY);
+
+        if (iconHeight > requiredHeight) {
+            requiredHeight = iconHeight;
+        }
+
+    });
+
+    dock.style.height = (requiredHeight + 24) + "px";
 
     // ------------------------------
     // Keep dock perfectly centered
