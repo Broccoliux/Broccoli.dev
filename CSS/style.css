@@ -310,8 +310,8 @@ hr {
     overflow: hidden;
 }
 
-#elements{
-    color: #fff;
+#element{
+    color: #26da0e;
     white-space: nowrap;
     display: inline-block;
 }
@@ -324,7 +324,7 @@ hr {
 }
 
 .typed-cursor--blink{
-    animation: typedblink .8 infinite;
+    animation: typedBlink .8s infinite;
 }
 
 @keyframes typedBlink{
