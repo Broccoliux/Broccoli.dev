@@ -15,10 +15,12 @@ html {
 }
 
 body {
+
     background: #000;
     color: #fff;
     font-family: "Roboto", sans-serif;
     overflow-x: hidden;
+
 }
 
 /* ============================= */
@@ -26,72 +28,113 @@ body {
 /* ============================= */
 
 .hero {
+
     min-height: 100vh;
+
     width: 100%;
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
     padding: 0 10%;
+
 }
 
 .hero-left {
+
     width: 50%;
+
 }
 
 .hero-left h1 {
+
     font-size: 58px;
     color: #fff;
     font-weight: 700;
+
     line-height: 1.2;
+
 }
 
 .hero-left h2 {
+
     margin-top: 18px;
+
     font-size: 28px;
+
     font-weight: 400;
+
 }
 
 .green {
+
     color: #26da0e;
+
 }
 
 #element {
+
     display: inline-block;
+
     font-size: 34px;
+
     color: #26da0e;
+
     font-weight: 600;
+
     white-space: nowrap;
+
 }
 
 .hero-right {
+
     width: 40%;
+
     display: flex;
+
     justify-content: center;
+
 }
 
 .hero-right img {
+
     width: 100%;
+
     max-width: 520px;
+
 }
 
 /* ============================= */
 
 .section {
+
     min-height: 100vh;
+
     padding: 120px 10%;
+
 }
 
 .section h2 {
+
     font-size: 48px;
+
     margin-bottom: 30px;
+
 }
 
 /* ============================= */
 
 hr {
+
     border: none;
+
     height: 1px;
+
     background: #262626;
+
 }
 
 /* ======================================= */
@@ -99,123 +142,196 @@ hr {
 /* ======================================= */
 
 .dock-wrapper {
+
     position: fixed;
+
     left: 50%;
+
     bottom: 22px;
+
     transform: translateX(-50%);
+
     z-index: 99999;
+
 }
 
 .dock {
+
     display: flex;
+
     align-items: flex-end;
+
     gap: 6px;
+
     padding: 8px 10px;
+
     border-radius: 20px;
+
     background: rgba(20, 20, 20, .45);
+
     backdrop-filter: blur(30px);
+
     border: 1px solid rgba(255, 255, 255, .08);
+
     box-shadow:
+
         0 8px 25px rgba(0, 0, 0, .35),
+
         inset 0 1px rgba(255, 255, 255, .08);
+
 }
 
 .dock-item {
+
     position: relative;
+
     width: 56px;
+
     height: 56px;
+
     border: none;
+
     cursor: pointer;
+
     border-radius: 15px;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    background: linear-gradient(180deg, #3a3a3a, #1f1f1f);
+
+    background: linear-gradient(180deg,
+            #3a3a3a,
+            #1f1f1f);
+
     border: 1px solid rgba(255, 255, 255, .08);
     transition:
+
         transform .12s linear,
+
         box-shadow .2s;
+
     box-shadow:
+
         0 6px 15px rgb(0, 0, 0),
+
         inset 0 1px 0 rgba(255, 255, 255, .6);
+
 }
 
 .dock-item:hover {
+
     box-shadow:
+
         0 12px 35px rgba(0, 0, 0, .45),
+
         inset 0 1px 0 rgba(255, 255, 255, .8);
+
 }
 
 .dock-icon {
+
     width: 60%;
+
     height: 60%;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
 }
 
 .dock-icon svg {
+
     width: 100%;
+
     height: 100%;
+
     stroke: #26da0e;
+
     fill: none;
+
     stroke-width: 2;
+
 }
 
 .tooltip {
+
     position: absolute;
+
     left: 50%;
+
     transform: translateX(-50%);
+
     top: -48px;
+
     opacity: 0;
+
     pointer-events: none;
+
     background: #222;
+
     border: 1px solid rgba(255, 255, 255, .08);
+
     color: white;
+
     padding: 6px 12px;
+
     border-radius: 10px;
+
     font-size: 13px;
+
     font-weight: 500;
+
     white-space: nowrap;
+
     transition: .18s;
+
 }
 
 .dock-item:hover .tooltip {
-    opacity: 1;
+
+    opacity: 100;
+
     top: -56px;
+
 }
 
 /* Typed.js */
 
-.typed-wrapper {
+.typed-wrapper{
     width: 520px;
     height: 50px;
+    align-items: center;
     align-items: center;
     overflow: hidden;
 }
 
-#element {
+#elements{
     color: #fff;
     white-space: nowrap;
     display: inline-block;
 }
 
-.typed-cursor {
+.typed-cursor{
     font-size: 34px;
     color: #fff;
-    font-weight: 300;
+    font-weight:300;
     line-height: 1;
 }
 
-.typed-cursor--blink {
-    animation: typedBlink .8s infinite;
+.typed-cursor--blink{
+    animation: typedblink .8 infinite;
 }
 
-@keyframes typedBlink {
-    0%, 50% {
+@keyframes typedBlink{
+    0%,50%{
         opacity: 1;
     }
-    50.01%, 100% {
+    50.01%,100%{
         opacity: 0;
     }
 }
