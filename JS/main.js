@@ -85,7 +85,7 @@ function updateTargets() {
         }
 
         obj.targetScale = lerp(
-            1,
+            
             MAX_SCALE,
             influence
         );
