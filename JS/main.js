@@ -302,9 +302,7 @@ items.forEach(item => {
 
 });
 
-// ======================================================
 // Scroll Spy
-// ======================================================
 
 const sections = [
     ...document.querySelectorAll("section")
@@ -320,9 +318,7 @@ window.addEventListener("scroll", () => {
             section.offsetTop - 250;
 
         if (scrollY >= top) {
-
             current = section.id;
-
         }
 
     });
@@ -330,48 +326,35 @@ window.addEventListener("scroll", () => {
     items.forEach(button => {
 
         if (button.dataset.section === current) {
-
             button.classList.add("active");
-
         }
 
         else {
-
             button.classList.remove("active");
-
         }
-
     });
 
 });
 
-// ======================================================
 // Active Dot
-// ======================================================
 
 function updateDots() {
 
     items.forEach(item => {
-
         const dot =
             item.querySelector(".active-dot");
 
         if (!dot) return;
 
         if (item.classList.contains("active")) {
-
             dot.style.opacity = "1";
-
             dot.style.transform = "scale(1)";
-
         }
 
         else {
 
             dot.style.opacity = "0";
-
             dot.style.transform = "scale(.2)";
-
         }
 
     });
@@ -381,18 +364,13 @@ function updateDots() {
 updateDots();
 
 items.forEach(item => {
-
     item.addEventListener("click", () => {
-
         setTimeout(updateDots, 20);
-
     });
 
 });
 
-// ======================================================
 // Small Floating Idle Animation
-// ======================================================
 
 let idleTime = 0;
 
