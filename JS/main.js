@@ -11,10 +11,7 @@ new Typed("#element", {
     loop: true
 });
 
-// ======================================================
-// COMPONENTRY STYLE MAGNETIC DOCK
-// Part 1
-// ======================================================
+// magnatic dock
 
 const dock = document.getElementById("dock");
 const items = [...document.querySelectorAll(".dock-item")];
