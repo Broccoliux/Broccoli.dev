@@ -18,7 +18,7 @@ const items = [...document.querySelectorAll(".dock-item")];
 
 const ICON_SIZE = 45;
 const MAX_SCALE = 1.38;
-const MAGNETIC_DISTANCE = 10;
+const MAGNETIC_DISTANCE = 200;
 
 let mouseX = Infinity;
 
