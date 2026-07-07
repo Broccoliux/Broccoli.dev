@@ -4,7 +4,7 @@ new Typed("#element", {
     strings: [
         "AI/ML Engineering",
         "Embedded Systems Developeing",
-        "IOT Engineering", "yapper"
+        "IOT Engineering","yapper"
     ],
     typeSpeed: 35,
     backSpeed: 35,
@@ -84,13 +84,12 @@ function updateTargets() {
 
         }
 
-        // Smooth clamping + definition
-        function lerp(a, b, t) {
-            return a + (b - a) * Math.max(0, Math.min(1, t));
-        }
+        obj.targetScale = lerp(
+            1,
+            MAX_SCALE,
+            influence
+        );
 
-        obj.targetScale = lerp(1, MAX_SCALE, influence);
-        
         obj.targetOffsetY =
             -10 * influence;
 
@@ -98,9 +97,7 @@ function updateTargets() {
 
 }
 
-// ================================================
 // Spring Animation
-// ================================================
 
 const SPRING = 0.14;
 const DAMPING = 0.50;
@@ -140,9 +137,7 @@ function animate() {
 
     });
 
-    // ------------------------------
     // Dynamic Dock Size
-    // ------------------------------
 
     const GAP = 6;
     const BASE_PADDING = 10;
