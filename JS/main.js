@@ -284,25 +284,19 @@ function updateTargets() {
 items.forEach(item => {
 
     item.addEventListener("mouseenter", () => {
-
         item.style.boxShadow =
 
-            `
-        0 10px 35px rgba(0,0,0,.45),
+        `0 10px 35px rgba(0,0,0,.45),
         inset 0 1px 0 rgba(255,255,255,.75),
-        0 0 28px rgba(255,255,255,.10)
-        `;
+        0 0 28px rgba(255,255,255,.10)`;
 
     });
 
     item.addEventListener("mouseleave", () => {
-
         item.style.boxShadow =
 
-            `
-        0 6px 15px rgba(0,0,0,.25),
-        inset 0 1px 0 rgba(255,255,255,.55)
-        `;
+        `0 6px 15px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.55)`;
 
     });
 
