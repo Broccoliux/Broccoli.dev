@@ -40,24 +40,19 @@ items.forEach((item, index) => {
 
 });
 
-
 // helper
 
 function clamp(value, min, max) {
 
     return Math.max(min, Math.min(max, value));
-
 }
 
 function lerp(a, b, t) {
 
     return a + (b - a) * t;
-
 }
 
-// ================================================
-// Mouse Position
-// ================================================
+// mouse Position
 
 dock.addEventListener("mousemove", (e) => {
 
@@ -71,22 +66,16 @@ dock.addEventListener("mouseleave", () => {
 
 });
 
-// ================================================
-// Calculate Targets
-// ================================================
+// calculate Targets
 
 function updateTargets() {
 
     state.forEach(obj => {
 
         const rect = obj.element.getBoundingClientRect();
-
         const center = rect.left + rect.width / 2;
-
         const distance = mouseX - center;
-
         const abs = Math.abs(distance);
-
         let influence = 0;
 
         if (abs < MAGNETIC_DISTANCE) {
