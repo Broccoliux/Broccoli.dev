@@ -20,7 +20,7 @@ const ICON_SIZE = 45;
 const MAX_SCALE = 1.38;
 const MAGNETIC_DISTANCE = 150;
 
-let mouseX = sections;
+let mouseX = Infinity;
 
 const state = [];
 
@@ -29,17 +29,11 @@ items.forEach((item, index) => {
     state.push({
 
         element: item,
-
         scale: 1,
-
         targetScale: 1,
-
         offsetY: 0,
-
         targetOffsetY: 0,
-
         velocityScale: 0,
-
         velocityY: 0
 
     });
