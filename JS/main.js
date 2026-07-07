@@ -4,7 +4,7 @@ new Typed("#element", {
     strings: [
         "AI/ML Engineering",
         "Embedded Systems Developeing",
-        "IOT Engineering"
+        "IOT Engineering","yapper"
     ],
     typeSpeed: 35,
     backSpeed: 35,
