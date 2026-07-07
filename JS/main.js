@@ -197,26 +197,19 @@ animate();
 items.forEach(item => {
 
     item.addEventListener("click", () => {
-
         items.forEach(button => {
-
             button.classList.remove("active");
-
         });
 
         item.classList.add("active");
-
         const section =
             document.getElementById(
                 item.dataset.section
             );
 
         if (section) {
-
             section.scrollIntoView({
-
                 behavior: "smooth"
-
             });
 
         }
@@ -225,14 +218,9 @@ items.forEach(item => {
 
 });
 
-// ======================================================
-// PART 2
-// MacOS Neighbor Wave + Scroll Spy + Hover Glow
-// ======================================================
 
-// --------------------------------------
-// Better influence curve
-// --------------------------------------
+// MacOS Neighbor Wave + Scroll Spy + Hover Glow
+
 
 function smoothstep(x) {
     return x * x * (3 - 2 * x);
