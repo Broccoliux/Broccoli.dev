@@ -229,21 +229,14 @@ function smoothstep(x) {
 function updateTargets() {
 
     state.forEach((obj, index) => {
-
         const rect = obj.element.getBoundingClientRect();
-
         const center = rect.left + rect.width / 2;
-
         const distance = mouseX - center;
-
         const abs = Math.abs(distance);
-
         let influence = 0;
 
         if (abs < MAGNETIC_DISTANCE) {
-
             influence = 1 - (abs / MAGNETIC_DISTANCE);
-
             influence = smoothstep(influence);
 
         }
@@ -258,30 +251,23 @@ function updateTargets() {
 
     });
 
-    // ----------------------------------
     // Neighbor wave (Mac Dock effect)
-    // ----------------------------------
 
     for (let i = 0; i < state.length; i++) {
-
         let wave = state[i].influence;
 
         if (state[i - 1]) {
-
             wave = Math.max(
                 wave,
                 state[i - 1].influence * 0.55
             );
-
         }
 
         if (state[i + 1]) {
-
             wave = Math.max(
                 wave,
                 state[i + 1].influence * 0.55
             );
-
         }
 
         state[i].targetScale =
@@ -291,12 +277,9 @@ function updateTargets() {
             -14 * wave;
 
     }
-
 }
 
-// ======================================================
 // Hover Glow
-// ======================================================
 
 items.forEach(item => {
 
