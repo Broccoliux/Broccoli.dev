@@ -407,26 +407,26 @@ const SVG_ICONS = {
         </svg>`,
 
     about: `
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<circle cx="12" cy="8" r="4"/>
-<path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
-</svg>
-`,
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
+        </svg>          
+        `,
 
     experience: `
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-</svg>
-`,
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>         
+        `,
 
     projects: `
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
-</svg>
-`,
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
+        </svg>
+        `,
 
     skills: `
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
