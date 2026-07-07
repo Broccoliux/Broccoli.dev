@@ -162,16 +162,12 @@ function animate() {
 
     dock.style.height = (requiredHeight + 24) + "px";
 
-    // ------------------------------
     // Keep dock perfectly centered
-    // ------------------------------
 
     dock.parentElement.style.left = "50%";
     dock.parentElement.style.transform = "translateX(-50%)";
 
-    // ------------------------------
     // Position icons
-    // ------------------------------
 
     let currentX = BASE_PADDING;
 
@@ -180,14 +176,10 @@ function animate() {
         const currentSize = ICON_SIZE * obj.scale;
 
         obj.element.style.position = "absolute";
-
         obj.element.style.left = currentX + "px";
-
         obj.element.style.bottom = "8px";
-
         obj.element.style.width = currentSize + "px";
         obj.element.style.height = currentSize + "px";
-
         obj.element.style.transform =
             `translateY(${obj.offsetY}px)`;
 
@@ -196,14 +188,11 @@ function animate() {
     });
 
     requestAnimationFrame(animate);
-
 }
 
 animate();
 
-// ================================================
 // Click Active State
-// ================================================
 
 items.forEach(item => {
 
