@@ -478,99 +478,57 @@ const SVG_ICONS = {
 
 // Inject Icons
 
-
 items.forEach(item => {
-
     const icon = item.querySelector(".dock-icon");
-
     const key = item.dataset.section;
 
     if (SVG_ICONS[key]) {
-
         icon.innerHTML = SVG_ICONS[key];
-
     }
-
 });
 
-// =======================================
 // Shine Overlay
-// =======================================
 
 items.forEach(item => {
 
     const shine = document.createElement("div");
-
     shine.className = "dock-shine";
-
     shine.style.position = "absolute";
     shine.style.inset = "0";
     shine.style.pointerEvents = "none";
     shine.style.borderRadius = "20px";
-
     shine.style.background =
         "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
-
     shine.style.opacity = ".55";
-
     item.appendChild(shine);
 
 });
 
-// =======================================
 // Active Animation
-// =======================================
 
 items.forEach(item => {
-
     item.addEventListener("click", () => {
-
         item.animate(
-
             [
-
-                {
-                    transform: item.style.transform
-                },
-
-                {
-                    transform: item.style.transform + " scale(.92)"
-                },
-
-                {
-                    transform: item.style.transform
-                }
-
-            ],
+                { transform: item.style.transform },
+                {  transform: item.style.transform + " scale(.92)"},
+                { transform: item.style.transform}
+            ],       
 
             {
-
                 duration: 220,
-
                 easing: "ease-out"
-
             });
-
     });
-
 });
 
-// =======================================
-// Mouse Leave Reset
-// =======================================
+// Mmouse leave reset
 
 dock.addEventListener("mouseleave", () => {
-
     state.forEach(obj => {
-
         obj.targetScale = 1;
-
         obj.targetOffsetY = 0;
 
     });
 
 });
-
-// =======================================
-// END OF PART 3
-// =======================================
