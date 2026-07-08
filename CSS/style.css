@@ -67,9 +67,7 @@ body {
 .hero-right {
 
     width: 40%;
-
     display: flex;
-
     justify-content: center;
 
 }
@@ -77,17 +75,13 @@ body {
 .hero-right img {
 
     width: 100%;
-
-    max-width: 520px;
+    max-width:520px;
 
 }
-
-/* ============================= */
 
 .section {
 
     min-height: 100vh;
-
     padding: 120px 10%;
 
 }
@@ -95,12 +89,9 @@ body {
 .section h2 {
 
     font-size: 48px;
-
     margin-bottom: 30px;
 
 }
-
-/* ============================= */
 
 hr {
 
@@ -112,20 +103,12 @@ hr {
 
 }
 
-/* ======================================= */
-/* MAGNETIC DOCK */
-/* ======================================= */
-
 .dock-wrapper {
 
     position: fixed;
-
     left: 50%;
-
     bottom: 22px;
-
     transform: translateX(-50%);
-
     z-index: 99999;
 
 }
@@ -133,47 +116,28 @@ hr {
 .dock {
 
     display: flex;
-
     align-items: flex-end;
-
     gap: 6px;
-
     padding: 8px 10px;
-
     border-radius: 20px;
-
     background: rgba(20, 20, 20, .45);
-
     backdrop-filter: blur(30px);
-
     border: 1px solid rgba(255, 255, 255, .08);
-
     box-shadow:
-
         0 8px 25px rgba(0, 0, 0, .35),
-
         inset 0 1px rgba(255, 255, 255, .08);
-
 }
 
 .dock-item {
 
     position: relative;
-
     width: 56px;
-
     height: 56px;
-
     border: none;
-
     cursor: pointer;
-
     border-radius: 15px;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     background: linear-gradient(180deg,
@@ -182,15 +146,11 @@ hr {
 
     border: 1px solid rgba(255, 255, 255, .08);
     transition:
-
         transform .12s linear,
-
         box-shadow .2s;
-
     box-shadow:
-
+    
         0 6px 15px rgb(0, 0, 0),
-
         inset 0 1px 0 rgba(255, 255, 255, .6);
 
 }
@@ -198,9 +158,7 @@ hr {
 .dock-item:hover {
 
     box-shadow:
-
         0 12px 35px rgba(0, 0, 0, .45),
-
         inset 0 1px 0 rgba(255, 255, 255, .8);
 
 }
@@ -208,27 +166,18 @@ hr {
 .dock-icon {
 
     width: 60%;
-
     height: 60%;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
 }
 
 .dock-icon svg {
 
     width: 100%;
-
     height: 100%;
-
     stroke: #26da0e;
-
     fill: none;
-
     stroke-width: 2;
 
 }
@@ -236,33 +185,19 @@ hr {
 .tooltip {
 
     position: absolute;
-
     left: 50%;
-
     transform: translateX(-50%);
-
     top: -48px;
-
     opacity: 0;
-
     pointer-events: none;
-
     background: #222;
-
     border: 1px solid rgba(255, 255, 255, .08);
-
     color: white;
-
     padding: 6px 12px;
-
     border-radius: 10px;
-
     font-size: 13px;
-
     font-weight: 500;
-
     white-space: nowrap;
-
     transition: .18s;
 
 }
