@@ -229,3 +229,15 @@ hr {
     }
 }
 
+#about {
+    font-size: 1.2rem;
+}
+
+#about p {
+    font-size: 2.5rem;
+    line-height: 1.7;
+}
+
+#about p hr {
+    color: #26da0e;
+}
