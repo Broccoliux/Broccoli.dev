@@ -24,14 +24,12 @@ body {
 /* HERO */
 
 .hero {
-
     min-height: 100vh;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 10%;
-
 }
 
 .hero-left {
@@ -59,13 +57,9 @@ body {
 #element {
 
     display: inline-block;
-
     font-size: 34px;
-
     color: #26da0e;
-
     font-weight: 600;
-
     white-space: nowrap;
 
 }
@@ -315,8 +309,4 @@ hr {
     50.01%,100%{
         opacity: 0;
     }
-}
-
-.align-center{
-    
 }
