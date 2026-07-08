@@ -1,6 +1,4 @@
-/* ============================= */
 /* GOOGLE FONT */
-/* ============================= */
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
@@ -23,40 +21,28 @@ body {
 
 }
 
-/* ============================= */
 /* HERO */
-/* ============================= */
 
 .hero {
 
     min-height: 100vh;
-
     width: 100%;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     padding: 0 10%;
 
 }
 
 .hero-left {
-
     width: 50%;
-
 }
 
 .hero-left h1 {
-
     font-size: 58px;
     color: #fff;
     font-weight: 700;
-
     line-height: 1.2;
-
 }
 
 .hero-left h2 {

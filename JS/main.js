@@ -311,7 +311,6 @@ const sections = [
 window.addEventListener("scroll", () => {
 
     let current = "home";
-
     sections.forEach(section => {
 
         const top =
@@ -356,7 +355,6 @@ function updateDots() {
             dot.style.opacity = "0";
             dot.style.transform = "scale(.2)";
         }
-
     });
 
 }
@@ -394,6 +392,8 @@ idleFloat();
 
 
 // Componentry SVG Icons + Shine + Active Animation
+
+
 
 //  SVG ICONS 
 
