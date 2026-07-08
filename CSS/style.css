@@ -18,7 +18,6 @@ body {
     color: #fff;
     font-family: "Roboto", sans-serif;
     overflow-x: hidden;
-
 }
 
 /* HERO */
@@ -47,7 +46,6 @@ body {
     margin-top: 18px;
     font-size: 28px;
     font-weight: 400;
-
 }
 
 .green {
@@ -55,7 +53,6 @@ body {
 }
 
 #element {
-
     display: inline-block;
     font-size: 34px;
     color: #26da0e;
@@ -65,52 +62,38 @@ body {
 }
 
 .hero-right {
-
     width: 40%;
     display: flex;
     justify-content: center;
-
 }
 
 .hero-right img {
-
     width: 100%;
     max-width:520px;
-
 }
 
 .section {
-
     min-height: 100vh;
     padding: 120px 10%;
-
 }
 
 .section h2 {
-
     font-size: 48px;
     margin-bottom: 30px;
-
 }
 
 hr {
-
     border: none;
-
     height: 1px;
-
     background: #262626;
-
 }
 
 .dock-wrapper {
-
     position: fixed;
     left: 50%;
     bottom: 22px;
     transform: translateX(-50%);
     z-index: 99999;
-
 }
 
 .dock {
@@ -149,7 +132,7 @@ hr {
         transform .12s linear,
         box-shadow .2s;
     box-shadow:
-    
+
         0 6px 15px rgb(0, 0, 0),
         inset 0 1px 0 rgba(255, 255, 255, .6);
 
