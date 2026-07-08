@@ -46,16 +46,14 @@ body {
 }
 
 .hero-left h2 {
-    margin-top: 50px;
+    margin-top: 18px;
     font-size: 28px;
     font-weight: 400;
 
 }
 
 .green {
-
     color: #26da0e;
-
 }
 
 #element {
@@ -317,4 +315,8 @@ hr {
     50.01%,100%{
         opacity: 0;
     }
+}
+
+.align-center{
+    
 }
