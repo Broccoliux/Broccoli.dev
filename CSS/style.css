@@ -291,11 +291,17 @@ hr {
     border: 1px solid rgba(255, 255, 255, .08);
 
     transition:
-        transform .35s,
-        border-color .35s,
-        box-shadow .35s;
+    transform .18s ease,
+    border-color .25s,
+    box-shadow .25s;
 
     cursor: pointer;
+
+}
+
+.project-card *{
+
+    transform-style: preserve-3d;
 
 }
 
@@ -321,11 +327,14 @@ hr {
 
     background: #111;
 
+    transform: translateZ(20px);
+
 }
 
 .project-content {
 
     padding: 24px;
+    transform: translateZ(40px);
 
 }
 
@@ -380,6 +389,8 @@ hr {
     gap: 15px;
 
     margin-top: 28px;
+
+    transform: translateZ(55px);
 
 }
 
