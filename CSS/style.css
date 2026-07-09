@@ -241,3 +241,9 @@ hr {
 #about p hr {
     color: #26da0e;
 }
+
+#experiance ul li{
+    font-size: 5.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
