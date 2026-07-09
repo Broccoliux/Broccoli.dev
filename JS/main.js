@@ -534,3 +534,56 @@ dock.addEventListener("mouseleave", () => {
     });
 
 });
+
+document.querySelectorAll(".project-card").forEach(card=>{
+
+    const sparkLayer=card.querySelector(".spark-layer");
+
+    let last=0;
+
+    card.addEventListener("mousemove",e=>{
+
+        const now=performance.now();
+
+        if(now-last<70)return;
+
+        last=now;
+
+        const rect=card.getBoundingClientRect();
+
+        const x=e.clientX-rect.left;
+
+        const y=e.clientY-rect.top;
+
+        for(let i=0;i<6;i++){
+
+            const spark=document.createElement("div");
+
+            spark.className="spark";
+
+            spark.style.left=x+"px";
+
+            spark.style.top=y+"px";
+
+            spark.style.setProperty(
+                "--tx",
+                (Math.random()*80-40)+"px"
+            );
+
+            spark.style.setProperty(
+                "--ty",
+                (Math.random()*80-40)+"px"
+            );
+
+            sparkLayer.appendChild(spark);
+
+            spark.addEventListener(
+                "animationend",
+                ()=>spark.remove()
+            );
+
+        }
+
+    });
+
+});
