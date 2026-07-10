@@ -4,7 +4,7 @@ new Typed("#element", {
     strings: [
         "AI/ML Engineering",
         "Embedded Systems Developeing",
-        "IOT Engineering","yapper"
+        "IOT Engineering", "yapper"
     ],
     typeSpeed: 35,
     backSpeed: 35,
@@ -285,7 +285,7 @@ items.forEach(item => {
     item.addEventListener("mouseenter", () => {
         item.style.boxShadow =
 
-        `0 10px 35px rgba(0,0,0,.45),
+            `0 10px 35px rgba(0,0,0,.45),
         inset 0 1px 0 rgba(255,255,255,.75),
         0 0 28px rgba(255,255,255,.10)`;
 
@@ -294,7 +294,7 @@ items.forEach(item => {
     item.addEventListener("mouseleave", () => {
         item.style.boxShadow =
 
-        `0 6px 15px rgba(0,0,0,.25),
+            `0 6px 15px rgba(0,0,0,.25),
         inset 0 1px 0 rgba(255,255,255,.55)`;
 
     });
@@ -377,7 +377,7 @@ const SVG_ICONS = {
         <circle cx="12" cy="8" r="4"/>
         <path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
         </svg>          
-        `,      
+        `,
 
     experience: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -476,10 +476,10 @@ items.forEach(item => {
         item.animate(
             [
                 { transform: item.style.transform },
-                {  transform: item.style.transform + " scale(.92)"},
-                { transform: item.style.transform}
-            ],       
-            
+                { transform: item.style.transform + " scale(.92)" },
+                { transform: item.style.transform }
+            ],
+
             {
                 duration: 220,
                 easing: "ease-out"
@@ -498,53 +498,7 @@ dock.addEventListener("mouseleave", () => {
 
 });
 
-document.querySelectorAll(".project-card").forEach(card=>{
 
-    const sparkLayer=card.querySelector(".spark-layer");
-    let last=0;
-    card.addEventListener("mousemove",e=>{
-        const now=performance.now();
-        if(now-last<70)return;
-        last=now;
-
-        const rect=card.getBoundingClientRect();
-
-        const x=e.clientX-rect.left;
-
-        const y=e.clientY-rect.top;
-
-        for(let i=0;i<6;i++){
-
-            const spark=document.createElement("div");
-
-            spark.className="spark";
-
-            spark.style.left=x+"px";
-
-            spark.style.top=y+"px";
-
-            spark.style.setProperty(
-                "--tx",
-                (Math.random()*80-40)+"px"
-            );
-
-            spark.style.setProperty(
-                "--ty",
-                (Math.random()*80-40)+"px"
-            );
-
-            sparkLayer.appendChild(spark);
-
-            spark.addEventListener(
-                "animationend",
-                ()=>spark.remove()
-            );
-
-        }
-
-    });
-
-});
 
 // =========================
 // Project Card 3D Tilt
@@ -552,9 +506,18 @@ document.querySelectorAll(".project-card").forEach(card=>{
 
 document.querySelectorAll(".project-card").forEach(card => {
 
+    let currentX = 0;
+    let currentY = 0;
+
+    let targetX = 0;
+    let targetY = 0;
+
+    let currentLift = 0;
+    let targetLift = 0;
+
     card.addEventListener("mousemove", e => {
         const rect = card.getBoundingClientRect();
-        
+
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
