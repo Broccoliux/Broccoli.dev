@@ -499,14 +499,7 @@ dock.addEventListener("mouseleave", () => {
 });
 
 
-
-// =========================
 // Project Card 3D Tilt
-// =========================
-
-// =========================
-// Project Card 3D Tilt
-// =========================
 
 document.querySelectorAll(".project-card").forEach(card => {
 
