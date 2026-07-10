@@ -360,11 +360,8 @@ hr {
 .project-buttons {
 
     display: flex;
-
     gap: 15px;
-
     margin-top: 28px;
-
     transform: translateZ(55px);
 
 }
@@ -372,21 +369,13 @@ hr {
 .project-buttons a {
 
     flex: 1;
-
     text-align: center;
-
     padding: 12px;
-
     border-radius: 12px;
-
     text-decoration: none;
-
-    color: white;
-
+    color: rgb(255, 255, 255);
     background: #1d1d1d;
-
     border: 1px solid rgba(255, 255, 255, .08);
-
     transition: .25s;
 
 }
@@ -394,37 +383,15 @@ hr {
 .project-buttons a:hover {
 
     background: #26da0e;
-
     color: black;
 
 }
 
-.card-glow {
 
-    position: absolute;
-
-    width: 160px;
-
-    height: 160px;
-
-    border-radius: 50%;
-
-    background: rgba(38, 218, 14, .18);
-
-    filter: blur(55px);
-
-    left: -110px;
-
-    top: -110px;
-
-    transition: .35s;
-
-}
 
 .project-card:hover .card-glow {
 
     left: 40%;
-
     top: 15%;
 
 }
@@ -432,15 +399,11 @@ hr {
 @media (max-width:900px) {
 
     .projects-grid {
-
         grid-template-columns: 1fr;
-
     }
 
     .project-card {
-
         max-width: none;
-
     }
 
 }
@@ -448,11 +411,8 @@ hr {
 .spark-layer {
 
     position: absolute;
-
     inset: 0;
-
     pointer-events: none;
-
     overflow: hidden;
 
 }
@@ -463,9 +423,9 @@ hr {
 
     rotate:45deg;
 
-    width: 2px;
+    width: 10px;
 
-    height: 2px;
+  
 
     border-radius: 1px;
 
