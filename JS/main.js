@@ -360,8 +360,6 @@ idleFloat();
 
 // Componentry SVG Icons + Shine + Active Animation
 
-
-
 //  SVG ICONS 
 
 const SVG_ICONS = {
