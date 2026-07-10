@@ -504,3 +504,29 @@ dock.addEventListener("mouseleave", () => {
 // Project Card 3D Tilt
 // =========================
 
+document.querySelectorAll(".project-card").forEach(card => {
+
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+    let currentLift = 0;
+
+    let targetRotateX = 0;
+    let targetRotateY = 0;
+    let targetLift = 0;
+
+    card.addEventListener("mousemove", (e) => {
+
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    targetRotateY = ((x - centerX) / centerX) * 7;
+    targetRotateX = ((centerY - y) / centerY) * 7;
+
+    targetLift = -10;
+
+});
