@@ -238,7 +238,6 @@ function updateTargets() {
         if (abs < MAGNETIC_DISTANCE) {
             influence = 1 - (abs / MAGNETIC_DISTANCE);
             influence = smoothstep(influence);
-
         }
 
         obj.targetScale =
