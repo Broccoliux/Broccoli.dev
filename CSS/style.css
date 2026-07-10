@@ -188,7 +188,6 @@ hr {
 .dock-item:hover .tooltip {
 
     opacity: 1;
-
     top: -56px;
 
 }
@@ -259,13 +258,9 @@ hr {
 .projects-grid {
 
     .projects-grid {
-
         display: grid;
-
         grid-template-columns: repeat(2, minmax(0, 1fr));
-
         gap: 32px;
-
         align-items: start;
 
     }
@@ -276,21 +271,17 @@ hr {
 .project-card {
 
     position: relative;
-
     overflow: hidden;
-
     border-radius: 24px;
-
     width: 100%;
     max-width: 520px;
-
     background: linear-gradient(180deg,
             rgba(38, 38, 38, .85),
             rgba(18, 18, 18, .95));
 
     border: 1px solid rgba(255, 255, 255, .08);
 
-    transition:
+    transition: 
     transform .18s ease,
     border-color .25s,
     box-shadow .25s;
@@ -307,12 +298,12 @@ hr {
 
 .project-card:hover {
 
-    transform: translateY(-8px);
+    transform: translateY(-20px);
 
     border-color: rgba(38, 218, 14, .35);
 
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, .45),
+        0 20px 50px rgb(2, 240, 2),
         0 0 18px rgba(38, 218, 14, .08);
 
 }
