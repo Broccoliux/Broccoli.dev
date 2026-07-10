@@ -504,6 +504,10 @@ dock.addEventListener("mouseleave", () => {
 // Project Card 3D Tilt
 // =========================
 
+// =========================
+// Project Card 3D Tilt
+// =========================
+
 document.querySelectorAll(".project-card").forEach(card => {
 
     let currentRotateX = 0;
@@ -516,17 +520,46 @@ document.querySelectorAll(".project-card").forEach(card => {
 
     card.addEventListener("mousemove", (e) => {
 
-    const rect = card.getBoundingClientRect();
+        const rect = card.getBoundingClientRect();
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
 
-    targetRotateY = ((x - centerX) / centerX) * 7;
-    targetRotateX = ((centerY - y) / centerY) * 7;
+        targetRotateY = ((x - centerX) / centerX) * 7;
+        targetRotateX = ((centerY - y) / centerY) * 7;
 
-    targetLift = -10;
+        targetLift = -10;
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        targetRotateX = 0;
+        targetRotateY = 0;
+        targetLift = 0;
+
+    });
+
+    function animateCard() {
+
+        currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+        currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+        currentLift += (targetLift - currentLift) * 0.12;
+
+        card.style.transform = `
+            perspective(1200px)
+            rotateX(${currentRotateX}deg)
+            rotateY(${currentRotateY}deg)
+            translateY(${currentLift}px)
+        `;
+
+        requestAnimationFrame(animateCard);
+
+    }
+
+    animateCard();
 
 });
