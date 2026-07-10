@@ -436,18 +436,13 @@ hr {
 @keyframes spark {
 
     0% {
-
         opacity: 1;
-
         transform:
             translate(0, 0) scale(5);
-
     }
 
     100% {
-
         opacity: 0;
-
         transform:
             translate(var(--tx),
                 var(--ty)) scale(.2);
