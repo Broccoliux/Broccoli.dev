@@ -420,22 +420,13 @@ hr {
 .spark {
 
     position: absolute;
-
     rotate:45deg;
-    rotate:-45deg;
-
-    width: 10px;
-
-    height: 10px;
-
-    border-radius: 1px;
-
+    width: 1px;
+    height: 2px;
+    border-radius: 0px;
     background: #26da0e;
-
     box-shadow:
-
         0 0 3px #26da0e,
-
         0 0 7px #26da0e;
 
     animation: spark .45s ease-out forwards;
