@@ -501,15 +501,10 @@ dock.addEventListener("mouseleave", () => {
 document.querySelectorAll(".project-card").forEach(card=>{
 
     const sparkLayer=card.querySelector(".spark-layer");
-
     let last=0;
-
     card.addEventListener("mousemove",e=>{
-
         const now=performance.now();
-
         if(now-last<70)return;
-
         last=now;
 
         const rect=card.getBoundingClientRect();
