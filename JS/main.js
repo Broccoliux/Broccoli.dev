@@ -335,40 +335,6 @@ window.addEventListener("scroll", () => {
 
 });
 
-// Active Dot
-
-function updateDots() {
-
-    items.forEach(item => {
-        const dot =
-            item.querySelector(".active-dot");
-
-        if (!dot) return;
-
-        if (item.classList.contains("active")) {
-            dot.style.opacity = "1";
-            dot.style.transform = "scale(1)";
-        }
-
-        else {
-
-            dot.style.opacity = "0";
-            dot.style.transform = "scale(.2)";
-        }
-
-    });
-
-}
-
-updateDots();
-
-items.forEach(item => {
-    item.addEventListener("click", () => {
-        setTimeout(updateDots, 20);
-    });
-
-});
-
 // Small Floating Idle Animation
 
 let idleTime = 0;
