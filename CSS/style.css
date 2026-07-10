@@ -387,13 +387,10 @@ hr {
 
 }
 
-
-
 .project-card:hover .card-glow {
 
     left: 40%;
     top: 15%;
-
 }
 
 @media (max-width:900px) {
