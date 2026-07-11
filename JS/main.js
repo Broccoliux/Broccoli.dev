@@ -519,6 +519,13 @@ document.querySelectorAll(".project-card").forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
+        const shineX = ((x / rect.width) * 100).toFixed(1);
+        const shineY = ((y / rect.height) * 100).toFixed(1);
+
+        card.style.setProperty("--shine-x", `${shineX}%`);
+        card.style.setProperty("--shine-y", `${shineY}%`);
+
+
         targetRotateY = ((x - centerX) / centerX) * 7;
         targetRotateX = ((centerY - y) / centerY) * 7;
 
