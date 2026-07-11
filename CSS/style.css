@@ -12,13 +12,15 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
 
-    background: #000;
-    color: #fff;
-    font-family: "Roboto", sans-serif;
-    overflow-x: hidden;
+body{
+    background: url("../img_assets/lost in the space.png") center/cover fixed;
+    color:#fff;
+    font-family:"Roboto",sans-serif;
+    overflow-x:hidden;
 }
+
+
 
 /* HERO */
 
