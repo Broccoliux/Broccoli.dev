@@ -267,6 +267,8 @@ hr {
 
 .project-card {
     position: relative;
+    --shine-x: 30%;
+    --shine-y: 20%;
     overflow: hidden;
     border-radius: 24px;
     width: 100%;
@@ -300,14 +302,20 @@ hr {
             border-radius: inherit;
             pointer-events: none;
 
-            background: 
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,.18) 0%,
-                    rgba(255,255,255,.05) 22%,
-                    transparent 42%,
-                    transparent 100%
-                );
+        background:
+
+        radial-gradient(
+            circle at var(--shine-x,30%) var(--shine-y,20%),
+            rgba(255,255,255,.24),
+            rgba(255,255,255,.08) 18%,
+            transparent 55%
+        ),
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.12),
+            transparent 45%
+        );      
 
             opacity: .55;
 
