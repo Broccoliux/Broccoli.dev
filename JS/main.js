@@ -151,7 +151,7 @@ function animate() {
     state.forEach(obj => {
 
         const currentSize = ICON_SIZE * obj.scale;
-
+        
         const iconHeight = currentSize + Math.abs(obj.offsetY);
 
         if (iconHeight > requiredHeight) {
