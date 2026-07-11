@@ -151,7 +151,7 @@ function animate() {
     state.forEach(obj => {
 
         const currentSize = ICON_SIZE * obj.scale;
-        
+
         const iconHeight = currentSize + Math.abs(obj.offsetY);
 
         if (iconHeight > requiredHeight) {
@@ -310,9 +310,7 @@ const sections = [
 window.addEventListener("scroll", () => {
 
     let current = "home";
-
     sections.forEach(section => {
-
         const top =
             section.offsetTop - 250;
 
@@ -550,9 +548,6 @@ document.querySelectorAll(".project-card").forEach(card => {
         `;
 
         requestAnimationFrame(animateCard);
-
     }
-
     animateCard();
-
 });
