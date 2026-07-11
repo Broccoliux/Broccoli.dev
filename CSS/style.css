@@ -266,29 +266,83 @@ hr {
 
 
 .project-card {
-
     position: relative;
     overflow: hidden;
     border-radius: 24px;
     width: 100%;
     max-width: 520px;
-    background: linear-gradient(
-            180deg,
-            rgba(38, 38, 38, .85),
-            rgba(18, 18, 18, .95));
 
-    border: 1px solid rgba(255, 255, 255, .08);
+    background: rgba(12, 12, 12, 0.28);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
 
-    transition: 
-    transform .18s ease,
-    border-color .25s,
-    box-shadow .25s;
+    border: 1px solid rgba(255, 255, 255, 0.10);
 
     cursor: pointer;
 
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        inset 0 1px rgba(255, 255, 255, 0.10),
+        inset 0 -1px rgba(0, 0, 0, 0.45);
+
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.35s,
+        box-shadow 0.35s,
+        background-color 0.35s,
+        backdrop-filter 0.35s;
+
+        .project-card::before{
+
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+
+            background: 
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.18) 0%,
+                    rgba(255,255,255,.05) 22%,
+                    transparent 42%,
+                    transparent 100%
+                );
+
+            opacity: .55;
+
+          .project-card::before{
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.18) 0%,
+            rgba(255,255,255,.05) 22%,
+            transparent 42%,
+            transparent 100%
+        );
+
+    opacity: .55;
+
+    transition:
+        opacity .35s,
+        transform .45s cubic-bezier(.22,1,.36,1);
+
+}
+        }
 }
 
-.project-card *{
+.project-card * {
 
     transform-style: preserve-3d;
 
@@ -296,12 +350,29 @@ hr {
 
 .project-card:hover {
 
-    transform: translateY(-10px);
-    border-color: rgba(38, 218, 14, .35);
-    box-shadow:
-        0 20px 50px rgba(30, 65, 30, 0.541),
-        0 0 18px rgba(38, 218, 14, .08);
+background: rgba(12,12,12,.22);
 
+backdrop-filter: blur(34px) saturate(200%);
+-webkit-backdrop-filter: blur(34px) saturate(200%);
+
+box-shadow:
+    0 26px 60px rgba(0,0,0,.55),
+    0 0 20px rgba(38,218,14,.08),
+    inset 0 1px rgba(255,255,255,.16),
+    inset 0 -1px rgba(0,0,0,.5);
+
+transform: translateY(-10px);
+    opacity: 1;    
+
+}
+
+.project-card:hover::before{
+    transform:
+        translateX(12px)
+        translateY(-8px)
+        rotate(-2deg);
+
+    opacity: .9;
 }
 
 .project-image {
@@ -382,7 +453,7 @@ hr {
 
     background: #26da0e;
     color: black;
-    
+
 
 }
 
@@ -403,4 +474,3 @@ hr {
     }
 
 }
-
