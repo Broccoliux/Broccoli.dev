@@ -546,7 +546,7 @@ document.querySelectorAll(".project-card").forEach(card => {
             rotateY(${currentRotateY}deg)
             translateY(${currentLift}px)
         `;
-
+        
         requestAnimationFrame(animateCard);
     }
     animateCard();
