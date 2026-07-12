@@ -558,3 +558,7 @@ document.querySelectorAll(".project-card").forEach(card => {
     }
     animateCard();
 });
+
+const track = document.getElementById("track1")
+const track = document.getElementById("tarck2")
+
