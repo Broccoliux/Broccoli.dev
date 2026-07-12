@@ -14,7 +14,7 @@ html {
 
 
 body{
-    background: url("../img_assets/lost in the space.png") center/cover fixed;
+    background: url("../img_assets/lost\ in\ the\ space.png") center/cover fixed;
     color:#fff;
     font-family:"Roboto",sans-serif;
     overflow-x:hidden;
@@ -87,7 +87,7 @@ body{
 hr {
     border: none;
     height: 1px;
-    background: #262626;
+    background: #091108;
 }
 
 .dock-wrapper {
@@ -265,6 +265,26 @@ hr {
 
 }
 
+.project-marquee{
+    margin: 80px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 29px;
+
+    overflow: hidden;
+}
+
+.marquee-track{
+
+    display:flex;
+    gap:28px;
+
+    width:max-content;
+
+    will-change:transform;
+
+}
 
 .project-card {
     position: relative;
