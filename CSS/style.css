@@ -13,11 +13,11 @@ html {
 }
 
 
-body{
+body {
     background: url("../img_assets/lost\ in\ the\ space.png") center/cover fixed;
-    color:#fff;
-    font-family:"Roboto",sans-serif;
-    overflow-x:hidden;
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+    overflow-x: hidden;
 }
 
 
@@ -256,13 +256,13 @@ hr {
 /* PROJECTS */
 
 
-.projects-grid{
+.projects-grid {
 
-    display:block;
+    display: block;
 
 }
 
-.project-marquee{
+.project-marquee {
     margin: 80px;
 
     display: flex;
@@ -272,16 +272,22 @@ hr {
     overflow: hidden;
 }
 
-.marquee-track{
-
-    display:flex;
-    gap:28px;
-
-    width:max-content;
-
-    will-change:transform;
-
+.marquee-row {
+    overflow: hidden;
+    white-space: nowrap;
 }
+
+.marquee-track {
+
+    display: flex;
+
+    gap: 32px;
+
+    width: max-content;
+
+    will-change: transform;
+}
+
 
 .project-card {
     position: relative;
@@ -312,67 +318,61 @@ hr {
         background-color 0.35s,
         backdrop-filter 0.35s;
 
-        .project-card::before{
+    .project-card::before {
 
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            pointer-events: none;
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
 
         background:
 
-        radial-gradient(
-            circle at var(--shine-x,30%) var(--shine-y,20%),
-            rgba(255,255,255,.24),
-            rgba(255,255,255,.08) 18%,
-            transparent 55%
-        ),
+            radial-gradient(circle at var(--shine-x, 30%) var(--shine-y, 20%),
+                rgba(255, 255, 255, .24),
+                rgba(255, 255, 255, .08) 18%,
+                transparent 55%),
 
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.12),
-            transparent 45%
-        );      
+            linear-gradient(135deg,
+                rgba(255, 255, 255, .12),
+                transparent 45%);
+
+        opacity: .55;
+
+        .project-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: inherit;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, .18) 0%,
+                    rgba(255, 255, 255, .05) 22%,
+                    transparent 42%,
+                    transparent 100%);
 
             opacity: .55;
 
-          .project-card::before{
+            transition:
+                opacity .35s,
+                transform .45s cubic-bezier(.22, 1, .36, 1);
 
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.18) 0%,
-            rgba(255,255,255,.05) 22%,
-            transparent 42%,
-            transparent 100%
-        );
-
-    opacity: .55;
-
-    transition:
-        opacity .35s,
-        transform .45s cubic-bezier(.22,1,.36,1);
-
-}
         }
+    }
 }
 
-.featured-card{
+.featured-card {
 
-    max-width:520px;
+    max-width: 520px;
 
-    margin-bottom:20px;
+    margin-bottom: 20px;
 
 }
 
@@ -384,27 +384,25 @@ hr {
 
 .project-card:hover {
 
-background: rgba(12,12,12,.22);
+    background: rgba(12, 12, 12, .22);
 
-backdrop-filter: blur(34px) saturate(200%);
--webkit-backdrop-filter: blur(34px) saturate(200%);
+    backdrop-filter: blur(34px) saturate(200%);
+    -webkit-backdrop-filter: blur(34px) saturate(200%);
 
-box-shadow:
-    0 26px 60px rgba(0,0,0,.55),
-    0 0 20px rgba(38,218,14,.08),
-    inset 0 1px rgba(255,255,255,.16),
-    inset 0 -1px rgba(0,0,0,.5);
+    box-shadow:
+        0 26px 60px rgba(0, 0, 0, .55),
+        0 0 20px rgba(38, 218, 14, .08),
+        inset 0 1px rgba(255, 255, 255, .16),
+        inset 0 -1px rgba(0, 0, 0, .5);
 
-transform: translateY(-10px);
-    opacity: 1;    
+    transform: translateY(-10px);
+    opacity: 1;
 
 }
 
-.project-card:hover::before{
+.project-card:hover::before {
     transform:
-        translateX(12px)
-        translateY(-8px)
-        rotate(-2deg);
+        translateX(12px) translateY(-8px) rotate(-2deg);
 
     opacity: .9;
 }
