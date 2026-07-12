@@ -562,3 +562,30 @@ document.querySelectorAll(".project-card").forEach(card => {
 const track = document.getElementById("track1")
 const track = document.getElementById("tarck2")
 
+let pos1 = 0;
+let pos2 = 0;
+
+const SPEED = 0.45;
+
+function animatenMarquee(){
+     pos1-= SPEED;
+     pos2 += SPEED;
+
+     const limit1 = track1.scrollwidth / 2;
+     const limit2 = track2.scrollwidth / 2;
+
+     if (Math.abs(pos1) >= limit1) {
+        pos1 = 0
+     }
+    
+     if (pos2 >= limit2) {
+        pos2 = 0
+     }
+
+     track1.style.transform = `translateX(${pos1}px)`;
+     track2.style.transform = `translateX(${-limit2 + pos2}px)`;
+
+    requestAnimationFrame(animatenMarquee);
+}
+
+animatenMarquee();
