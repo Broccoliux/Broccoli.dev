@@ -257,9 +257,9 @@ hr {
 .projects-grid {
 
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3,1fr);
     gap: 32px;
-    align-items: start;
+    margin-top: 40px;
 
 }
 
@@ -271,7 +271,7 @@ hr {
     overflow: hidden;
     border-radius: 24px;
     width: 100%;
-    max-width: 520px;
+    max-width: none;
 
     background: rgba(12, 12, 12, 0.28);
     backdrop-filter: blur(28px) saturate(180%);
@@ -470,14 +470,18 @@ transform: translateY(-10px);
     top: 15%;
 }
 
-@media (max-width:900px) {
+@media (max-width:1100px){
 
-    .projects-grid {
-        grid-template-columns: 1fr;
+    .projects-grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    .project-card {
-        max-width: none;
+}
+
+@media (max-width:768px){
+
+    .projects-grid{
+        grid-template-columns:1fr;
     }
 
 }
