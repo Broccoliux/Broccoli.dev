@@ -599,7 +599,7 @@ function animateMeteor() {
     const w = meteor.offsetHeight;
 
     if (x < 0 || x + w > window.innerWidth) {
-        
+
     vx *= -1;
     x = Math.max(0, Math.min(x, window.innerWidth - w));
 
@@ -608,13 +608,14 @@ function animateMeteor() {
 if (y < 0 || y + h > window.innerHeight) {
 
     vy *= -1;
-    y = Math.max(0, Math.min (y, window.innerHeight - h));
+    y = Math.max(0, Math.min(y, window.innerHeight - h));
 
 }
 
-meteor.style.transform =  `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+ meteor.style.transform =
+        `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
 
-requestAnimationFrame(animateMetore);
+    requestAnimationFrame(animateMeteor);
 
 }
 
