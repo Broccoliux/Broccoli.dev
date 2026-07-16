@@ -583,8 +583,8 @@ function animateMeteor() {
 
     //tiny random movemnt
 
-    vx +=(Math.random() - 0.5) * 0.002;
-    vy +=(math.random() - 0.5) * 0.002;
+    vx += (Math.random() - 0.5) * 0.002;
+    vy += (Math.random() - 0.5) * 0.002;
 
     // clamp speed
     vx = Math.max(-0.35, Math.min(0.35, vx));
