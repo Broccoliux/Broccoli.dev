@@ -592,7 +592,7 @@ function animateMeteor() {
 
     //roation
     rotation += rotationSpeed;
-
+    
     // Bounce
 
     const h = meteor.offsetHeight;
