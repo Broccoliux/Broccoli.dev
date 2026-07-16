@@ -558,3 +558,62 @@ document.querySelectorAll(".project-card").forEach(card => {
     }
     animateCard();
 });
+
+/* space object*/
+
+const meteor = document.getElementById("meteor-1");
+
+let x = window.innerWidth * 0.7;
+let y = window.innerHeight * 0.3;
+
+let vx = 0.18;
+let vy = 0.18;
+
+let rotation = 0;
+let rotationSpeed = 0.03;
+
+function animateMeteor() {
+
+    //drifting in the space
+
+    x += vx;
+    y += vy;
+
+    //tiny random movemnt
+
+    vx +=(Math.random() - 0.5) * 0.002;
+    vy +=(math.random() - 0.5) * 0.002;
+
+    // clamp speed
+    vx = Math.max(-0.35, Math.min(0.35, vx));
+    vy = math.max(-0.35, Math.min(0.35, vy));
+
+    //roation
+    rotation += rotationSpeed;
+
+    // Bounce
+
+    const h = meteor.offsetHeight;
+    const w = meteor.offsetHeight;
+
+    if (x < 0 || x + w > window.innerWidth) {
+
+    vx *= -1;
+    x = Math.max(0, Math.min(x, window.innerWidth - w));
+
+}
+
+if (y < 0 || y + h > window.innerHeight) {
+
+    vy *= -1;
+    y = Math.max(0, Math.min (y, window.innerHeight - h));
+
+}
+
+meteor.style.transform =  `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+
+requestAnimationFrame(animateMetore);
+
+}
+
+animateMeteor();
