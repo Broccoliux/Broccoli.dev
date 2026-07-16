@@ -599,7 +599,7 @@ function animateMeteor() {
     const w = meteor.offsetHeight;
 
     if (x < 0 || x + w > window.innerWidth) {
-
+        
     vx *= -1;
     x = Math.max(0, Math.min(x, window.innerWidth - w));
 
