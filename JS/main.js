@@ -567,7 +567,7 @@ let x = window.innerWidth * 0.7;
 let y = window.innerHeight * 0.3;
 
 let vx = 0.18;
-let vy = 0.18;
+let vy = 0.11;
 
 let rotation = 0;
 let rotationSpeed = 0.03;
