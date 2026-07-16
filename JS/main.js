@@ -572,6 +572,8 @@ let vy = 0.18;
 let rotation = 0;
 let rotationSpeed = 0.03;
 
+
+
 function animateMeteor() {
 
     //drifting in the space
