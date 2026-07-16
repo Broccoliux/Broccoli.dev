@@ -588,7 +588,7 @@ function animateMeteor() {
 
     // clamp speed
     vx = Math.max(-0.35, Math.min(0.35, vx));
-    vy = math.max(-0.35, Math.min(0.35, vy));
+    vy = Math.max(-0.35, Math.min(0.35, vy));
 
     //roation
     rotation += rotationSpeed;
