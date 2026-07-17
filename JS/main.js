@@ -563,15 +563,22 @@ document.querySelectorAll(".project-card").forEach(card => {
 
 const meteor = document.getElementById("meteor-1");
 
-let x = window.innerWidth * 0.7;
-let y = window.innerHeight * 0.3;
+//random spawn
 
-let vx = 0.18;
-let vy = 0.11;
+let x = Math.random() * Math.PI * 2;
 
-let rotation = 0;
-let rotationSpeed = 0.03;
+//random speed
 
+let speed = 0.12 + Math.random( ) * 0.25;
+
+let vx = Math.cos(angle) * speed;
+let vy = Math.sin(angle) * speed;
+
+// random rotation 
+let rotation = Math.random() * 360;
+
+// random spin direction and speed
+let rotaionspeed = (Math.random() - 0.5) * 0.08;
 
 
 function animateMeteor() {
