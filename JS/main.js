@@ -553,35 +553,78 @@ document.querySelectorAll(".project-card").forEach(card => {
             rotateY(${currentRotateY}deg)
             translateY(${currentLift}px)
         `;
-        
+
         requestAnimationFrame(animateCard);
     }
     animateCard();
 });
 
-/* space object*/
 
-const meteor = document.getElementById("meteor-1");
-
-//random spawn
+/* space object */
 
 
-//random direction
+const meteors = [];
 
-let x = Math.random() * Math.PI * 2;
+document.querySelectorAll(".space-object").forEach(meteor => {
 
-//random speed
+    meteors.push({
 
-let speed = 0.12 + Math.random( ) * 0.25;
+        el: meteor,
 
-let vx = Math.cos(angle) * speed;
-let vy = Math.sin(angle) * speed;
+        x: Math.random() * (window.innerWidth - 250),
+        y: Math.random() * (window.innerHeight - 250),
 
-// random rotation
-let rotation = Math.random() * 360;
+        angle: Math.random() * Math.PI * 2,
 
-// random spin direction and speed
-let rotaionspeed = (Math.random() - 0.5) * 0.08;
+        speed: 0.15 + Math.random() * 0.35,
+
+        rotation: Math.random() * 360,
+
+        rotationSpeed: (Math.random() - 0.5) * 0.08
+
+    });
+
+});
+
+function animateSpace(){
+
+    meteors.forEach(m => {
+
+        m.x += Math.cos(m.angle) * m.speed;
+        m.y += Math.sin(m.angle) * m.speed;
+
+        // Tiny random drift
+        m.angle += (Math.random() - 0.5) * 0.002;
+
+        m.rotation += m.rotationSpeed;
+
+        const w = m.el.offsetWidth;
+        const h = m.el.offsetHeight;
+
+        // Bounce
+        if(m.x < 0 || m.x + w > window.innerWidth){
+
+            m.angle = Math.PI - m.angle;
+
+        }
+
+        if(m.y < 0 || m.y + h > window.innerHeight){
+
+            m.angle = -m.angle;
+
+        }
+
+        m.el.style.transform =
+        `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
+
+    });
+
+    requestAnimationFrame(animateSpace);
+
+}
+
+animateSpace();
+
 
 
 function animateMeteor() {
@@ -602,7 +645,7 @@ function animateMeteor() {
 
     //roation
     rotation += rotationSpeed;
-    
+
     // Bounce
 
     const h = meteor.offsetHeight;
@@ -610,19 +653,19 @@ function animateMeteor() {
 
     if (x < 0 || x + w > window.innerWidth) {
 
-    vx *= -1;
-    x = Math.max(0, Math.min(x, window.innerWidth - w));
+        vx *= -1;
+        x = Math.max(0, Math.min(x, window.innerWidth - w));
 
-}
+    }
 
-if (y < 0 || y + h > window.innerHeight) {
+    if (y < 0 || y + h > window.innerHeight) {
 
-    vy *= -1;
-    y = Math.max(0, Math.min(y, window.innerHeight - h));
+        vy *= -1;
+        y = Math.max(0, Math.min(y, window.innerHeight - h));
 
-}
+    }
 
- meteor.style.transform =
+    meteor.style.transform =
         `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
 
     requestAnimationFrame(animateMeteor);
