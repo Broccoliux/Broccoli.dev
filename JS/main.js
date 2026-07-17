@@ -565,6 +565,9 @@ const meteor = document.getElementById("meteor-1");
 
 //random spawn
 
+
+//random direction
+
 let x = Math.random() * Math.PI * 2;
 
 //random speed
@@ -574,7 +577,7 @@ let speed = 0.12 + Math.random( ) * 0.25;
 let vx = Math.cos(angle) * speed;
 let vy = Math.sin(angle) * speed;
 
-// random rotation 
+// random rotation
 let rotation = Math.random() * 360;
 
 // random spin direction and speed
