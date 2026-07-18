@@ -501,12 +501,15 @@ transform: translateY(-10px);
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    z-index: -5;
+    z-index: -1;
 }
 
 .space-object{
 
     position: absolute;
-    width: 140px;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    will-change: transform;
     user-select: none;
 }
