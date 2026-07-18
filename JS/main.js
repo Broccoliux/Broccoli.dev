@@ -572,16 +572,15 @@ document.querySelectorAll(".space-object").forEach(meteor => {
         el: meteor,
 
         x: Math.random() * (window.innerWidth - 250),
-        y: Math.random() * (window.innerHeight - 250),
+        y: Math.random() * (window.innerHeight - 250),           
 
         angle: Math.random() * Math.PI * 2,
-
         speed: 0.15 + Math.random() * 0.35,
 
         rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 0.08,
 
-        rotationSpeed: (Math.random() - 0.5) * 0.08
-
+        size: 50 + Math.random() * 160
     });
 
 });
@@ -614,62 +613,19 @@ function animateSpace(){
 
         }
 
+        m.el.style.width = `${m.size}px`;
+        m.el.style.height = "auto";
+
         m.el.style.transform =
         `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
+
 
     });
 
     requestAnimationFrame(animateSpace);
 
+
 }
 
+console.log(meteors);
 animateSpace();
-
-
-
-function animateMeteor() {
-
-    //drifting in the space
-
-    x += vx;
-    y += vy;
-
-    //tiny random movemnt
-
-    vx += (Math.random() - 0.5) * 0.002;
-    vy += (Math.random() - 0.5) * 0.002;
-
-    // clamp speed
-    vx = Math.max(-0.35, Math.min(0.35, vx));
-    vy = Math.max(-0.35, Math.min(0.35, vy));
-
-    //roation
-    rotation += rotationSpeed;
-
-    // Bounce
-
-    const h = meteor.offsetHeight;
-    const w = meteor.offsetHeight;
-
-    if (x < 0 || x + w > window.innerWidth) {
-
-        vx *= -1;
-        x = Math.max(0, Math.min(x, window.innerWidth - w));
-
-    }
-
-    if (y < 0 || y + h > window.innerHeight) {
-
-        vy *= -1;
-        y = Math.max(0, Math.min(y, window.innerHeight - h));
-
-    }
-
-    meteor.style.transform =
-        `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
-
-    requestAnimationFrame(animateMeteor);
-
-}
-
-animateMeteor();
