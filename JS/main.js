@@ -562,17 +562,20 @@ document.querySelectorAll(".project-card").forEach(card => {
 
 /* space object */
 
-
-const meteors = [];
+const spaceObjects = [];
 
 document.querySelectorAll(".space-object").forEach(meteor => {
 
-    meteors.push({
+    const isMeteor = meteor.classList.contains("meteor");
+    const isBroccoli = meteor.classList.contains("broccoli");
+    const isShip = meteor.classList.contains("ship");
+
+    spaceObjects.push({
 
         el: meteor,
 
         x: Math.random() * (window.innerWidth - 250),
-        y: Math.random() * (window.innerHeight - 250),           
+        y: Math.random() * (window.innerHeight - 250),
 
         angle: Math.random() * Math.PI * 2,
         speed: 0.15 + Math.random() * 0.35,
@@ -580,14 +583,27 @@ document.querySelectorAll(".space-object").forEach(meteor => {
         rotation: Math.random() * 360,
         rotationSpeed: (Math.random() - 0.5) * 0.08,
 
-        size: 50 + Math.random() * 160
+        size:
+            isBroccoli ? 140 :
+                isShip ? 110 :
+                    50 + Math.random() * 160,
+
+        radius:
+            isBroccoli ? 70 :
+                isShip ? 55 :
+                    0,
+
+        isMeteor,
+        isBroccoli,
+        isShip
+
     });
 
 });
 
-function animateSpace(){
+function animateSpace() {
 
-    meteors.forEach(m => {
+    spaceObjects.forEach(m => {
 
         m.x += Math.cos(m.angle) * m.speed;
         m.y += Math.sin(m.angle) * m.speed;
@@ -601,13 +617,13 @@ function animateSpace(){
         const h = m.el.offsetHeight;
 
         // Bounce
-        if(m.x < 0 || m.x + w > window.innerWidth){
+        if (m.x < 0 || m.x + w > window.innerWidth) {
 
             m.angle = Math.PI - m.angle;
 
         }
 
-        if(m.y < 0 || m.y + h > window.innerHeight){
+        if (m.y < 0 || m.y + h > window.innerHeight) {
 
             m.angle = -m.angle;
 
@@ -617,15 +633,13 @@ function animateSpace(){
         m.el.style.height = "auto";
 
         m.el.style.transform =
-        `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
+            `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
 
 
     });
 
     requestAnimationFrame(animateSpace);
 
-
 }
-
-console.log(meteors);
+console.log(spaceObjects);
 animateSpace();
