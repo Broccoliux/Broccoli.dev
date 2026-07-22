@@ -1,14 +1,14 @@
 // types.js
 
 new Typed("#element", {
-    strings: [
-        "AI/ML Engineering",
-        "Embedded Systems Developeing",
-        "IOT Engineering", "yapper"
-    ],
-    typeSpeed: 35,
-    backSpeed: 35,
-    loop: true
+  strings: [
+    "AI/ML Engineering",
+    "Embedded Systems Developeing",
+    "IOT Engineering", "yapper"
+  ],
+  typeSpeed: 35,
+  backSpeed: 35,
+  loop: true
 });
 
 // magnatic dock
@@ -26,17 +26,17 @@ const state = [];
 
 items.forEach((item, index) => {
 
-    state.push({
+  state.push({
 
-        element: item,
-        scale: 1,
-        targetScale: 1,
-        offsetY: 0,
-        targetOffsetY: 0,
-        velocityScale: 0,
-        velocityY: 0
+    element: item,
+    scale: 1,
+    targetScale: 1,
+    offsetY: 0,
+    targetOffsetY: 0,
+    velocityScale: 0,
+    velocityY: 0
 
-    });
+  });
 
 });
 
@@ -44,25 +44,25 @@ items.forEach((item, index) => {
 
 function clamp(value, min, max) {
 
-    return Math.max(min, Math.min(max, value));
+  return Math.max(min, Math.min(max, value));
 }
 
 function lerp(a, b, t) {
 
-    return a + (b - a) * t;
+  return a + (b - a) * t;
 }
 
 // mouse Position
 
 dock.addEventListener("mousemove", (e) => {
 
-    mouseX = e.clientX;
+  mouseX = e.clientX;
 
 });
 
 dock.addEventListener("mouseleave", () => {
 
-    mouseX = Infinity;
+  mouseX = Infinity;
 
 });
 
@@ -70,30 +70,30 @@ dock.addEventListener("mouseleave", () => {
 
 function updateTargets() {
 
-    state.forEach(obj => {
+  state.forEach(obj => {
 
-        const rect = obj.element.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        const distance = mouseX - center;
-        const abs = Math.abs(distance);
-        let influence = 0;
+    const rect = obj.element.getBoundingClientRect();
+    const center = rect.left + rect.width / 2;
+    const distance = mouseX - center;
+    const abs = Math.abs(distance);
+    let influence = 0;
 
-        if (abs < MAGNETIC_DISTANCE) {
+    if (abs < MAGNETIC_DISTANCE) {
 
-            influence = 1 - abs / MAGNETIC_DISTANCE;
+      influence = 1 - abs / MAGNETIC_DISTANCE;
 
-        }
+    }
 
-        obj.targetScale = lerp(
-            1,
-            MAX_SCALE,
-            influence
-        );
+    obj.targetScale = lerp(
+      1,
+      MAX_SCALE,
+      influence
+    );
 
-        obj.targetOffsetY =
-            -10 * influence;
+    obj.targetOffsetY =
+      -10 * influence;
 
-    });
+  });
 
 }
 
@@ -104,90 +104,90 @@ const DAMPING = 0.50;
 
 function animate() {
 
-    updateTargets();
+  updateTargets();
 
-    let totalWidth = 0;
-    let tallest = ICON_SIZE;
-    let maxScale = 1;
+  let totalWidth = 0;
+  let tallest = ICON_SIZE;
+  let maxScale = 1;
 
-    // Update physics
-    state.forEach(obj => {
+  // Update physics
+  state.forEach(obj => {
 
-        const scaleForce = (obj.targetScale - obj.scale) * SPRING;
-        obj.velocityScale += scaleForce;
-        obj.velocityScale *= DAMPING;
-        obj.scale += obj.velocityScale;
+    const scaleForce = (obj.targetScale - obj.scale) * SPRING;
+    obj.velocityScale += scaleForce;
+    obj.velocityScale *= DAMPING;
+    obj.scale += obj.velocityScale;
 
-        const yForce = (obj.targetOffsetY - obj.offsetY) * SPRING;
-        obj.velocityY += yForce;
-        obj.velocityY *= DAMPING;
-        obj.offsetY += obj.velocityY;
+    const yForce = (obj.targetOffsetY - obj.offsetY) * SPRING;
+    obj.velocityY += yForce;
+    obj.velocityY *= DAMPING;
+    obj.offsetY += obj.velocityY;
 
-        if (obj.scale > maxScale) {
-            maxScale = obj.scale;
-        }
+    if (obj.scale > maxScale) {
+      maxScale = obj.scale;
+    }
 
-        const currentSize = ICON_SIZE * obj.scale;
+    const currentSize = ICON_SIZE * obj.scale;
 
-        totalWidth += currentSize;
+    totalWidth += currentSize;
 
-        if (currentSize > tallest) {
-            tallest = currentSize;
-        }
+    if (currentSize > tallest) {
+      tallest = currentSize;
+    }
 
-    });
+  });
 
-    // Dynamic Dock Size
+  // Dynamic Dock Size
 
-    const GAP = 6;
-    const BASE_PADDING = 10;
+  const GAP = 6;
+  const BASE_PADDING = 10;
 
-    totalWidth += GAP * (state.length - 1);
-    totalWidth += BASE_PADDING * 2;
+  totalWidth += GAP * (state.length - 1);
+  totalWidth += BASE_PADDING * 2;
 
-    dock.style.width = totalWidth + "px";
-    let requiredHeight = 0;
+  dock.style.width = totalWidth + "px";
+  let requiredHeight = 0;
 
-    state.forEach(obj => {
+  state.forEach(obj => {
 
-        const currentSize = ICON_SIZE * obj.scale;
+    const currentSize = ICON_SIZE * obj.scale;
 
-        const iconHeight = currentSize + Math.abs(obj.offsetY);
+    const iconHeight = currentSize + Math.abs(obj.offsetY);
 
-        if (iconHeight > requiredHeight) {
-            requiredHeight = iconHeight;
-        }
+    if (iconHeight > requiredHeight) {
+      requiredHeight = iconHeight;
+    }
 
-    });
+  });
 
-    dock.style.height = (requiredHeight + 24) + "px";
+  dock.style.height = (requiredHeight + 24) + "px";
 
-    // Keep dock perfectly centered
+  // Keep dock perfectly centered
 
-    dock.parentElement.style.left = "50%";
-    dock.parentElement.style.transform = "translateX(-50%)";
+  dock.parentElement.style.left = "50%";
+  dock.parentElement.style.transform = "translateX(-50%)";
 
-    // Position icons
+  // Position icons
 
-    let currentX = BASE_PADDING;
+  let currentX = BASE_PADDING;
 
-    state.forEach(obj => {
+  state.forEach(obj => {
 
-        const currentSize = ICON_SIZE * obj.scale;
+    const currentSize = ICON_SIZE * obj.scale;
 
-        obj.element.style.position = "absolute";
-        obj.element.style.left = currentX + "px";
-        obj.element.style.bottom = "8px";
-        obj.element.style.width = currentSize + "px";
-        obj.element.style.height = currentSize + "px";
-        obj.element.style.transform =
-            `translateY(${obj.offsetY}px)`;
+    obj.element.style.position = "absolute";
+    obj.element.style.left = currentX + "px";
+    obj.element.style.bottom = "8px";
+    obj.element.style.width = currentSize + "px";
+    obj.element.style.height = currentSize + "px";
+    obj.element.style.transform =
+      `translateY(${obj.offsetY}px)`;
 
-        currentX += currentSize + GAP;
+    currentX += currentSize + GAP;
 
-    });
+  });
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
 
 animate();
@@ -196,25 +196,25 @@ animate();
 
 items.forEach(item => {
 
-    item.addEventListener("click", () => {
-        items.forEach(button => {
-            button.classList.remove("active");
-        });
-
-        item.classList.add("active");
-        const section =
-            document.getElementById(
-                item.dataset.section
-            );
-
-        if (section) {
-            section.scrollIntoView({
-                behavior: "smooth"
-            });
-
-        }
-
+  item.addEventListener("click", () => {
+    items.forEach(button => {
+      button.classList.remove("active");
     });
+
+    item.classList.add("active");
+    const section =
+      document.getElementById(
+        item.dataset.section
+      );
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+  });
 
 });
 
@@ -223,113 +223,113 @@ items.forEach(item => {
 
 
 function smoothstep(x) {
-    return x * x * (3 - 2 * x);
+  return x * x * (3 - 2 * x);
 }
 
 function updateTargets() {
 
-    state.forEach((obj, index) => {
-        const rect = obj.element.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        const distance = mouseX - center;
-        const abs = Math.abs(distance);
-        let influence = 0;
+  state.forEach((obj, index) => {
+    const rect = obj.element.getBoundingClientRect();
+    const center = rect.left + rect.width / 2;
+    const distance = mouseX - center;
+    const abs = Math.abs(distance);
+    let influence = 0;
 
-        if (abs < MAGNETIC_DISTANCE) {
-            influence = 1 - (abs / MAGNETIC_DISTANCE);
-            influence = smoothstep(influence);
-        }
-
-        obj.targetScale =
-            1 + influence * (MAX_SCALE - 1);
-
-        obj.targetOffsetY =
-            -14 * influence;
-
-        obj.influence = influence;
-
-    });
-
-    // Neighbor wave (Mac Dock effect)
-
-    for (let i = 0; i < state.length; i++) {
-        let wave = state[i].influence;
-
-        if (state[i - 1]) {
-            wave = Math.max(
-                wave,
-                state[i - 1].influence * 0.55
-            );
-        }
-
-        if (state[i + 1]) {
-            wave = Math.max(
-                wave,
-                state[i + 1].influence * 0.55
-            );
-        }
-
-        state[i].targetScale =
-            1 + wave * (MAX_SCALE - 1);
-
-        state[i].targetOffsetY =
-            -14 * wave;
-
+    if (abs < MAGNETIC_DISTANCE) {
+      influence = 1 - (abs / MAGNETIC_DISTANCE);
+      influence = smoothstep(influence);
     }
+
+    obj.targetScale =
+      1 + influence * (MAX_SCALE - 1);
+
+    obj.targetOffsetY =
+      -14 * influence;
+
+    obj.influence = influence;
+
+  });
+
+  // Neighbor wave (Mac Dock effect)
+
+  for (let i = 0; i < state.length; i++) {
+    let wave = state[i].influence;
+
+    if (state[i - 1]) {
+      wave = Math.max(
+        wave,
+        state[i - 1].influence * 0.55
+      );
+    }
+
+    if (state[i + 1]) {
+      wave = Math.max(
+        wave,
+        state[i + 1].influence * 0.55
+      );
+    }
+
+    state[i].targetScale =
+      1 + wave * (MAX_SCALE - 1);
+
+    state[i].targetOffsetY =
+      -14 * wave;
+
+  }
 }
 
 // Hover Glow
 
 items.forEach(item => {
 
-    item.addEventListener("mouseenter", () => {
-        item.style.boxShadow =
+  item.addEventListener("mouseenter", () => {
+    item.style.boxShadow =
 
-            `0 10px 35px rgba(0,0,0,.45),
+      `0 10px 35px rgba(0,0,0,.45),
         inset 0 1px 0 rgba(255,255,255,.75),
         0 0 28px rgba(255,255,255,.10)`;
 
-    });
+  });
 
-    item.addEventListener("mouseleave", () => {
-        item.style.boxShadow =
+  item.addEventListener("mouseleave", () => {
+    item.style.boxShadow =
 
-            `0 6px 15px rgba(0,0,0,.25),
+      `0 6px 15px rgba(0,0,0,.25),
         inset 0 1px 0 rgba(255,255,255,.55)`;
 
-    });
+  });
 
 });
 
 // Scroll Spy
 
 const sections = [
-    ...document.querySelectorAll("section")
+  ...document.querySelectorAll("section")
 ];
 
 window.addEventListener("scroll", () => {
 
-    let current = "home";
-    sections.forEach(section => {
-        const top =
-            section.offsetTop - 250;
+  let current = "home";
+  sections.forEach(section => {
+    const top =
+      section.offsetTop - 250;
 
-        if (scrollY >= top) {
-            current = section.id;
-        }
+    if (scrollY >= top) {
+      current = section.id;
+    }
 
-    });
+  });
 
-    items.forEach(button => {
+  items.forEach(button => {
 
-        if (button.dataset.section === current) {
-            button.classList.add("active");
-        }
+    if (button.dataset.section === current) {
+      button.classList.add("active");
+    }
 
-        else {
-            button.classList.remove("active");
-        }
-    });
+    else {
+      button.classList.remove("active");
+    }
+  });
 
 });
 
@@ -339,17 +339,17 @@ let idleTime = 0;
 
 function idleFloat() {
 
-    idleTime += 0.02;
+  idleTime += 0.02;
 
-    state.forEach((obj, index) => {
-        const float =
-            Math.sin(idleTime + index * .4) * 1.2;
-        obj.element.style.translate =
-            `0 ${float}px`;
+  state.forEach((obj, index) => {
+    const float =
+      Math.sin(idleTime + index * .4) * 1.2;
+    obj.element.style.translate =
+      `0 ${float}px`;
 
-    });
+  });
 
-    requestAnimationFrame(idleFloat);
+  requestAnimationFrame(idleFloat);
 
 }
 
@@ -358,40 +358,40 @@ idleFloat();
 
 // Componentry SVG Icons + Shine + Active Animation
 
-//  SVG ICONS 
+//  SVG ICONS
 
 const SVG_ICONS = {
 
-    home: `
+  home: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>`,
 
-    about: `
+  about: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="8" r="4"/>
         <path d="M5.5 20a6.5 6.5 0 0 1 13 0"/>
-        </svg>          
+        </svg>
         `,
 
-    experience: `
+  experience: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-        </svg>         
+        </svg>
         `,
 
-    projects: `
+  projects: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
         </svg>
         `,
 
-    skills: `
+  skills: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"/>
@@ -427,7 +427,7 @@ const SVG_ICONS = {
         </svg>
         `,
 
-    contact: `
+  contact: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1
@@ -442,57 +442,57 @@ const SVG_ICONS = {
 // Inject Icons
 
 items.forEach(item => {
-    const icon = item.querySelector(".dock-icon");
-    const key = item.dataset.section;
+  const icon = item.querySelector(".dock-icon");
+  const key = item.dataset.section;
 
-    if (SVG_ICONS[key]) {
-        icon.innerHTML = SVG_ICONS[key];
-    }
+  if (SVG_ICONS[key]) {
+    icon.innerHTML = SVG_ICONS[key];
+  }
 });
 
 // Shine Overlay
 
 items.forEach(item => {
 
-    const shine = document.createElement("div");
-    shine.className = "dock-shine";
-    shine.style.position = "absolute";
-    shine.style.inset = "0";
-    shine.style.pointerEvents = "none";
-    shine.style.borderRadius = "20px";
-    shine.style.background =
-        "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
-    shine.style.opacity = ".55";
-    item.appendChild(shine);
+  const shine = document.createElement("div");
+  shine.className = "dock-shine";
+  shine.style.position = "absolute";
+  shine.style.inset = "0";
+  shine.style.pointerEvents = "none";
+  shine.style.borderRadius = "20px";
+  shine.style.background =
+    "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
+  shine.style.opacity = ".55";
+  item.appendChild(shine);
 
 });
 
 // Active Animation
 
 items.forEach(item => {
-    item.addEventListener("click", () => {
-        item.animate(
-            [
-                { transform: item.style.transform },
-                { transform: item.style.transform + " scale(.92)" },
-                { transform: item.style.transform }
-            ],
+  item.addEventListener("click", () => {
+    item.animate(
+      [
+        { transform: item.style.transform },
+        { transform: item.style.transform + " scale(.92)" },
+        { transform: item.style.transform }
+      ],
 
-            {
-                duration: 220,
-                easing: "ease-out"
-            });
-    });
+      {
+        duration: 220,
+        easing: "ease-out"
+      });
+  });
 });
 
 // Mmouse leave reset
 
 dock.addEventListener("mouseleave", () => {
-    state.forEach(obj => {
-        obj.targetScale = 1;
-        obj.targetOffsetY = 0;
+  state.forEach(obj => {
+    obj.targetScale = 1;
+    obj.targetOffsetY = 0;
 
-    });
+  });
 
 });
 
@@ -501,62 +501,62 @@ dock.addEventListener("mouseleave", () => {
 
 document.querySelectorAll(".project-card").forEach(card => {
 
-    let currentRotateX = 0;
-    let currentRotateY = 0;
-    let currentLift = 0;
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+  let currentLift = 0;
 
-    let targetRotateX = 0;
-    let targetRotateY = 0;
-    let targetLift = 0;
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+  let targetLift = 0;
 
-    card.addEventListener("mousemove", (e) => {
+  card.addEventListener("mousemove", (e) => {
 
-        const rect = card.getBoundingClientRect();
+    const rect = card.getBoundingClientRect();
 
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-        const shineX = ((x / rect.width) * 100).toFixed(1);
-        const shineY = ((y / rect.height) * 100).toFixed(1);
+    const shineX = ((x / rect.width) * 100).toFixed(1);
+    const shineY = ((y / rect.height) * 100).toFixed(1);
 
-        card.style.setProperty("--shine-x", `${shineX}%`);
-        card.style.setProperty("--shine-y", `${shineY}%`);
+    card.style.setProperty("--shine-x", `${shineX}%`);
+    card.style.setProperty("--shine-y", `${shineY}%`);
 
 
-        targetRotateY = ((x - centerX) / centerX) * 7;
-        targetRotateX = ((centerY - y) / centerY) * 7;
+    targetRotateY = ((x - centerX) / centerX) * 7;
+    targetRotateX = ((centerY - y) / centerY) * 7;
 
-        targetLift = -10;
+    targetLift = -10;
 
-    });
+  });
 
-    card.addEventListener("mouseleave", () => {
+  card.addEventListener("mouseleave", () => {
 
-        targetRotateX = 0;
-        targetRotateY = 0;
-        targetLift = 0;
+    targetRotateX = 0;
+    targetRotateY = 0;
+    targetLift = 0;
 
-    });
+  });
 
-    function animateCard() {
+  function animateCard() {
 
-        currentRotateX += (targetRotateX - currentRotateX) * 0.12;
-        currentRotateY += (targetRotateY - currentRotateY) * 0.12;
-        currentLift += (targetLift - currentLift) * 0.12;
+    currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+    currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+    currentLift += (targetLift - currentLift) * 0.12;
 
-        card.style.transform = `
+    card.style.transform = `
             perspective(1200px)
             rotateX(${currentRotateX}deg)
             rotateY(${currentRotateY}deg)
             translateY(${currentLift}px)
         `;
 
-        requestAnimationFrame(animateCard);
-    }
-    animateCard();
+    requestAnimationFrame(animateCard);
+  }
+  animateCard();
 });
 
 
@@ -564,82 +564,98 @@ document.querySelectorAll(".project-card").forEach(card => {
 
 const spaceObjects = [];
 
-document.querySelectorAll(".space-object").forEach(meteor => {
+document.querySelectorAll(".space-object").forEach(obj => {
 
-    const isMeteor = meteor.classList.contains("meteor");
-    const isBroccoli = meteor.classList.contains("broccoli");
-    const isShip = meteor.classList.contains("ship");
+  const isMeteor = obj.classList.contains("meteor");
+  const isBroccoli = obj.classList.contains("broccoli");
+  const isShip = obj.classList.contains("ship")
 
-    spaceObjects.push({
+  const angle = Math.random() * Math.PI * 2;
 
-        el: meteor,
+  const speed =
+    isBroccoli ? 0.18 :
+      isShip ? 0.28 :
+        0.15 + Math.random() * 0.35;
 
-        x: Math.random() * (window.innerWidth - 250),
-        y: Math.random() * (window.innerHeight - 250),
+  const size =
+    isBroccoli ? 140 :
+      isShip ? 110 :
+        50 + Math.random() * 160;
 
-        angle: Math.random() * Math.PI * 2,
-        speed: 0.15 + Math.random() * 0.35,
+  spaceObjects.push({
 
-        rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 0.08,
+    el: obj,
 
-        size:
-            isBroccoli ? 140 :
-                isShip ? 110 :
-                    50 + Math.random() * 160,
+    x: Math.random() * (window.innerWidth - size),
+    y: Math.random() * (window.innerHeight - size),
 
-        radius:
-            isBroccoli ? 70 :
-                isShip ? 55 :
-                    0,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angel) * speed,
 
-        isMeteor,
-        isBroccoli,
-        isShip
+    rotation: Math.random() * 360,
 
-    });
+    rotationSpeed:
+      isBroccoli ? 0 :
+        isShip ? (Math.random() - 0.5) * 0.03 :
+          (Math.random() - 0.5) * 0.08,
 
+    size: size,
+
+    radius:
+      isBroccoli ? size / 2 :
+        isShip ? size / 2 :
+          size / 2,
+
+    mass:
+      isBroccoli ? 8 :
+        isShip ? 4 :
+          1,
+
+    isMeteor,
+    isBroccoli,
+    isShip
+  });
 });
+
 
 function animateSpace() {
 
-    spaceObjects.forEach(m => {
+  spaceObjects.forEach(m => {
 
-        m.x += Math.cos(m.angle) * m.speed;
-        m.y += Math.sin(m.angle) * m.speed;
+    m.x += m.vx;
+    m.y += m.vy;
 
-        // Tiny random drift
-        m.angle += (Math.random() - 0.5) * 0.002;
+    m.rotation += m.rotationSpeed;
 
-        m.rotation += m.rotationSpeed;
+    if (m.x < 0) {
+      m.x = 0;
+      m.vx *= -1;
+    }
 
-        const w = m.el.offsetWidth;
-        const h = m.el.offsetHeight;
+    if (m.x + m.size > window.innerWidth) {
+      m.x = window.innerWidth - m.size;
+      m.vx *= -1;
+    }
 
-        // Bounce
-        if (m.x < 0 || m.x + w > window.innerWidth) {
+    if (m.y < 0) {
+      m.y = 0;
+      m.vy *= -1;
+    }
 
-            m.angle = Math.PI - m.angle;
+    if (m.y + m.size > window.innerHeight) {
+      m.y = window.innerHeight - m.size;
+      m.vy *= -1;
+    }
 
-        }
+    m.el.style.width = `${m.size}px`;
+    m.el.style.height = "auto";
 
-        if (m.y < 0 || m.y + h > window.innerHeight) {
+    m.el.style.transform =
+      `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
 
-            m.angle = -m.angle;
+  });
 
-        }
-
-        m.el.style.width = `${m.size}px`;
-        m.el.style.height = "auto";
-
-        m.el.style.transform =
-            `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
-
-
-    });
-
-    requestAnimationFrame(animateSpace);
-
+  requestAnimationFrame(animateSpace);
 }
-console.log(spaceObjects);
+
 animateSpace();
