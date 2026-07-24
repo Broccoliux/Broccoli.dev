@@ -560,7 +560,8 @@ document.querySelectorAll(".project-card").forEach(card => {
 });
 
 
-/* space object */
+
+  // SPACE OBJECTS
 
 const spaceObjects = [];
 
@@ -568,14 +569,17 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
   const isMeteor = obj.classList.contains("meteor");
   const isBroccoli = obj.classList.contains("broccoli");
-  const isShip = obj.classList.contains("ship")
+  const isShip = obj.classList.contains("ship");
+
 
   const angle = Math.random() * Math.PI * 2;
+
 
   const speed =
     isBroccoli ? 0.18 :
       isShip ? 0.28 :
         0.15 + Math.random() * 0.35;
+
 
   const size =
     isBroccoli ? 140 :
@@ -590,7 +594,7 @@ document.querySelectorAll(".space-object").forEach(obj => {
     y: Math.random() * (window.innerHeight - size),
 
     vx: Math.cos(angle) * speed,
-    vy: Math.sin(angel) * speed,
+    vy: Math.sin(angle) * speed,
 
     rotation: Math.random() * 360,
 
@@ -602,9 +606,9 @@ document.querySelectorAll(".space-object").forEach(obj => {
     size: size,
 
     radius:
-      isBroccoli ? size / 2 :
-        isShip ? size / 2 :
-          size / 2,
+        isBroccoli ? size * 0.32:
+        isShip ? size * 0.32:
+        size * 0.28,
 
     mass:
       isBroccoli ? 8 :
@@ -614,7 +618,9 @@ document.querySelectorAll(".space-object").forEach(obj => {
     isMeteor,
     isBroccoli,
     isShip
+
   });
+
 });
 
 
@@ -622,10 +628,13 @@ function animateSpace() {
 
   spaceObjects.forEach(m => {
 
+
     m.x += m.vx;
     m.y += m.vy;
 
+
     m.rotation += m.rotationSpeed;
+
 
     if (m.x < 0) {
       m.x = 0;
@@ -655,7 +664,71 @@ function animateSpace() {
 
   });
 
+  for (let i = 0; i < spaceObjects.length; i++) {
+
+    for (let j = i + 1; j < spaceObjects.length; j++) {
+
+      const a = spaceObjects[i];
+      const b = spaceObjects[j];
+
+      if (a.isMeteor && b.isMeteor) continue;
+
+      if ((a.isMeteor && b.isShip) ||
+        (a.isShip && b.isMeteor))
+        continue;
+
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const minDistance = a.radius + b.radius;
+
+      if (distance >= minDistance)
+        continue;
+
+      const nx = dx / distance;
+      const ny = dy / distance;
+
+      const overlap = minDistance - distance;
+
+      a.x -= nx * overlap * 0.5;
+      a.y -= ny * overlap * 0.5;
+
+      b.x += nx * overlap * 0.5;
+      b.y += ny * overlap * 0.5;
+
+      const rvx = b.vx - a.vx;
+      const rvy = b.vy - a.vy;
+
+      const velAlongNormal =
+        rvx * nx +
+        rvy * ny;
+
+      if (velAlongNormal > 0)
+        continue;
+
+      const restitution = 1;
+
+      const impulse =
+        -(1 + restitution) *
+        velAlongNormal /
+        ((1 / a.mass) + (1 / b.mass));
+
+      const ix = impulse * nx;
+      const iy = impulse * ny;
+
+      a.vx -= ix / a.mass;
+      a.vy -= iy / a.mass;
+
+      b.vx += ix / b.mass;
+      b.vy += iy / b.mass;
+
+    }
+
+  }
   requestAnimationFrame(animateSpace);
+
 }
 
 animateSpace();
