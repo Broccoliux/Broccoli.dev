@@ -514,3 +514,28 @@ transform: translateY(-10px);
     user-select: none;
 }
 
+#meteor-tooltip{
+    position: fixed;
+    width: 180px;
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(10,10,10,.75);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.12);
+    color:white;
+    opacity: 0;
+    pointer-events: none;
+    transition: .18s;
+    z-index: 999999;
+}
+
+#tooltip-open{
+    margin-top: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border:none;
+    background: #26da0e;
+    color: black;
+    cursor: pointer;
+}
