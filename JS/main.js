@@ -599,7 +599,7 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
     rotationSpeed:
       isBroccoli
-          ? 0.5
+          ? 0.3
           : (Math.random() - 0.5) * 0.08,
 
     size: size,
