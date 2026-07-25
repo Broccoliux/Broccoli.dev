@@ -559,31 +559,82 @@ document.querySelectorAll(".project-card").forEach(card => {
   animateCard();
 });
 
-
-
   // SPACE OBJECTS
 
+const languages = [
+
+  {
+    language: "Python",
+    hours: 250,
+    image: "img_assets/meteor_1-removebg-preview.png"
+  },
+
+  {
+    language: "C",
+    hours: 140,
+    image: "meteor_2-removebg-preview.png"
+  },
+
+  {
+    language: "HTML",
+    hours: 90,
+    image: "meteor BG removed.png"
+  },
+
+  {
+    language: "CSS",
+    hours: 65,
+    image: "meteor_1-removebg-preview.png"
+  }
+
+];
+
 const spaceObjects = [];
+
+function languageToSize(hours) {
+
+  const minHours = 1;
+  const maxHours = 250;
+
+  const minSize = 55;
+  const maxSize = 170;
+
+  return minSize +
+
+    ((hours - minHours) / (maxHours - minHours))
+
+    * (maxSize - minSize);
+
+}
+
+let languageIndex = 0;
 
 document.querySelectorAll(".space-object").forEach(obj => {
 
   const isMeteor = obj.classList.contains("meteor");
   const isBroccoli = obj.classList.contains("broccoli");
 
+  let lang = null;
+  let size;
+
+  if (isMeteor) {
+
+    lang = languages[languageIndex++];
+    size = languageToSize(lang.hours);
+    obj.src = `img_assets/${lang.image}`;
+
+  }
+  else {
+
+    size = 220;
+
+  }
 
   const angle = Math.random() * Math.PI * 2;
-
-
   const speed =
       isBroccoli
           ? 1
           : 0.08 + Math.random() * 0.18
-
-
-  const size =
-      isBroccoli
-          ? 210
-          : 50+ Math.random() * 160;
 
   spaceObjects.push({
 
@@ -596,26 +647,17 @@ document.querySelectorAll(".space-object").forEach(obj => {
     vy: Math.sin(angle) * speed,
 
     rotation: Math.random() * 360,
-
-    rotationSpeed:
-      isBroccoli
-          ? 0.3
-          : (Math.random() - 0.5) * 0.08,
+    rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
 
     size: size,
+    radius: size * 0.42,
+    mass: isBroccoli ? 8 : 1,
 
-    radius:
-        isBroccoli
-         ? size * 0.32
-         : size * 0.28,
-
-    mass:
-      isBroccoli
-       ? 8
-       : 1,
+    language: lang?.language,
+    hours: lang?.hours,
 
     isMeteor,
-    isBroccoli,
+    isBroccoli
 
   });
 
