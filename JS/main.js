@@ -569,22 +569,21 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
   const isMeteor = obj.classList.contains("meteor");
   const isBroccoli = obj.classList.contains("broccoli");
-  const isShip = obj.classList.contains("ship");
 
 
   const angle = Math.random() * Math.PI * 2;
 
 
   const speed =
-    isBroccoli ? 0.18 :
-      isShip ? 0.28 :
-        0.15 + Math.random() * 0.35;
+      isBroccoli
+          ? 1
+          : 0.08 + Math.random() * 0.18
 
 
   const size =
-    isBroccoli ? 140 :
-      isShip ? 110 :
-        50 + Math.random() * 160;
+      isBroccoli
+          ? 210
+          : 50+ Math.random() * 160;
 
   spaceObjects.push({
 
@@ -599,25 +598,24 @@ document.querySelectorAll(".space-object").forEach(obj => {
     rotation: Math.random() * 360,
 
     rotationSpeed:
-      isBroccoli ? 0 :
-        isShip ? (Math.random() - 0.5) * 0.03 :
-          (Math.random() - 0.5) * 0.08,
+      isBroccoli
+          ? 0.5
+          : (Math.random() - 0.5) * 0.08,
 
     size: size,
 
     radius:
-        isBroccoli ? size * 0.32:
-        isShip ? size * 0.32:
-        size * 0.28,
+        isBroccoli
+         ? size * 0.32
+         : size * 0.28,
 
     mass:
-      isBroccoli ? 8 :
-        isShip ? 4 :
-          1,
+      isBroccoli
+       ? 8
+       : 1,
 
     isMeteor,
     isBroccoli,
-    isShip
 
   });
 
@@ -673,14 +671,13 @@ function animateSpace() {
 
       if (a.isMeteor && b.isMeteor) continue;
 
-      if ((a.isMeteor && b.isShip) ||
-        (a.isShip && b.isMeteor))
-        continue;
-
       const dx = b.x - a.x;
       const dy = b.y - a.y;
 
-      const distance = Math.sqrt(dx * dx + dy * dy);
+      const distance = Math.max(
+        Math.sqrt(dx * dx + dy * dy),
+        0.0001
+      );
 
       const minDistance = a.radius + b.radius;
 
