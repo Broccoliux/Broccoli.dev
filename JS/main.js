@@ -559,14 +559,14 @@ document.querySelectorAll(".project-card").forEach(card => {
   animateCard();
 });
 
-  // SPACE OBJECTS
+// SPACE OBJECTS
 
 const languages = [
 
   {
     language: "Python",
     hours: 250,
-    image: "img_assets/meteor_1-removebg-preview.png"
+    image: "meteor_1-removebg-preview.png"
   },
 
   {
@@ -591,6 +591,8 @@ const languages = [
 
 const spaceObjects = [];
 
+let hoveredMeteor = null;
+
 function languageToSize(hours) {
 
   const minHours = 1;
@@ -600,9 +602,7 @@ function languageToSize(hours) {
   const maxSize = 170;
 
   return minSize +
-
     ((hours - minHours) / (maxHours - minHours))
-
     * (maxSize - minSize);
 
 }
@@ -615,26 +615,22 @@ document.querySelectorAll(".space-object").forEach(obj => {
   const isBroccoli = obj.classList.contains("broccoli");
 
   let lang = null;
-  let size;
+  let size = 220;
 
   if (isMeteor) {
 
-    lang = languages[languageIndex++];
+    lang = languages[languageIndex];
+    languageIndex++;
     size = languageToSize(lang.hours);
     obj.src = `img_assets/${lang.image}`;
-
-  }
-  else {
-
-    size = 220;
 
   }
 
   const angle = Math.random() * Math.PI * 2;
   const speed =
-      isBroccoli
-          ? 1
-          : 0.08 + Math.random() * 0.18
+    isBroccoli
+      ? 1
+      : 0.08 + Math.random() * 0.18
 
   spaceObjects.push({
 
@@ -650,12 +646,13 @@ document.querySelectorAll(".space-object").forEach(obj => {
     rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
 
     size: size,
-    radius: size * 0.42,
+    radius: size * 0.5,
     mass: isBroccoli ? 8 : 1,
 
     language: lang?.language,
     hours: lang?.hours,
 
+    scale: 1,
     isMeteor,
     isBroccoli
 
@@ -668,13 +665,10 @@ function animateSpace() {
 
   spaceObjects.forEach(m => {
 
-
     m.x += m.vx;
     m.y += m.vy;
 
-
     m.rotation += m.rotationSpeed;
-
 
     if (m.x < 0) {
       m.x = 0;
@@ -699,8 +693,11 @@ function animateSpace() {
     m.el.style.width = `${m.size}px`;
     m.el.style.height = "auto";
 
-    m.el.style.transform =
-      `translate(${m.x}px, ${m.y}px) rotate(${m.rotation}deg)`;
+    m.el.style.transform = `
+    translate(${m.x}px, ${m.y}px)
+    rotate(${m.rotation}deg)
+    scale(${m.scale})
+    `;
 
   });
 
@@ -771,3 +768,24 @@ function animateSpace() {
 }
 
 animateSpace();
+console.log(spaceObjects);
+
+window.addEventListener("mousemove", (e) => {
+
+  spaceObjects.forEach(obj => {
+
+    if (!obj.isMeteor) return;
+
+    const rect = obj.el.getBoundingClientRect();
+
+    const hovering =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+
+    obj.scale = hovering ? 1.4 : 1;
+
+  });
+
+});
