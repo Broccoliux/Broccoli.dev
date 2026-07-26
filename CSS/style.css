@@ -524,7 +524,7 @@ transform: translateY(-10px);
     border: 1px solid rgba(255,255,255,.12);
     color:white;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
     transition: .18s;
     z-index: 999999;
 }
@@ -538,4 +538,9 @@ transform: translateY(-10px);
     background: #26da0e;
     color: black;
     cursor: pointer;
+}
+
+.space-object {
+  position: absolute;
+  transform-origin: center center;
 }
