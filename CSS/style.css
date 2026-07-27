@@ -514,21 +514,6 @@ transform: translateY(-10px);
     user-select: none;
 }
 
-#meteor-tooltip{
-    position: fixed;
-    width: 180px;
-    padding: 14px;
-    border-radius: 18px;
-    background: rgba(10,10,10,.75);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,.12);
-    color:white;
-    opacity: 0;
-    pointer-events: auto;
-    transition: .18s;
-    z-index: 999999;
-}
-
 #tooltip-open{
     margin-top: 12px;
     width: 34px;
@@ -543,4 +528,31 @@ transform: translateY(-10px);
 .space-object {
   position: absolute;
   transform-origin: center center;
+}
+
+#meteor-tooltip{
+    position: fixed;
+    pointer-events: none;
+
+    background: rgba(18, 18, 18,.92);
+    backdrop-filter: blur(10px);
+
+    border:1px solid rgba(255, 255, 255, .08);
+    border-radius:18px;
+    padding: 14px 18px;
+    color: white;
+    opacity: 0;
+    transition: .18s;
+    z-index: 9999;
+    min-width: 170px;
+}
+
+#meteor-tooltip h3{
+    margin: 0;
+    font-size: 18px;
+}
+
+#meteor-tooltip p{
+    margin-top: 6px;
+    color:#9cff7a;
 }
