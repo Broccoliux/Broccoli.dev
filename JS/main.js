@@ -1,5 +1,9 @@
 // types.js
 
+const tooltip = document.getElementById("meteor-tooltip");
+const tooltipLanguage = document.getElementById("tooltip-language");
+const tooltipHours = document.getElementById("tooltip-hours");
+
 new Typed("#element", {
   strings: [
     "AI/ML Engineering",
@@ -593,6 +597,11 @@ const spaceObjects = [];
 
 let hoveredMeteor = null;
 
+let mouse = {
+    x: 0,
+    y: 0
+};
+
 function languageToSize(hours) {
 
   const minHours = 1;
@@ -701,6 +710,46 @@ function animateSpace() {
 
   });
 
+  let hoveringAnyMeteor = false;
+
+  let hoveringAnyMeteor = false;
+
+  spaceObjects.forEach(obj => {
+
+    if (!obj.isMeteor) return;
+
+    const centerX = obj.x + obj.size / 2;
+    const centerY = obj.y + obj.size / 2;
+
+    const dx = mouse.x - centerX;
+    const dy = mouse.y - centerY;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const hovering = distance < obj.radius;
+
+    obj.scale = hovering ? 1.4 : 1;
+
+    if (hovering) {
+
+      hoveringAnyMeteor = true;
+
+      tooltip.style.opacity = "1";
+      tooltip.style.left = (mouse.x + 20) + "px";
+      tooltip.style.top = (mouse.y + 20) + "px";
+
+      tooltipLanguage.textContent = obj.language;
+      tooltipHours.textContent = `${obj.hours} hrs`;
+
+    }
+
+  });
+
+  if (!hoveringAnyMeteor) {
+
+    tooltip.style.opacity = "0";
+
+  }
+
   for (let i = 0; i < spaceObjects.length; i++) {
 
     for (let j = i + 1; j < spaceObjects.length; j++) {
@@ -771,21 +820,6 @@ animateSpace();
 console.log(spaceObjects);
 
 window.addEventListener("mousemove", (e) => {
-
-  spaceObjects.forEach(obj => {
-
-    if (!obj.isMeteor) return;
-
-    const rect = obj.el.getBoundingClientRect();
-
-    const hovering =
-      e.clientX >= rect.left &&
-      e.clientX <= rect.right &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom;
-
-    obj.scale = hovering ? 1.4 : 1;
-
-  });
-
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
 });
