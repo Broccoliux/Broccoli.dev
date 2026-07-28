@@ -1,8 +1,12 @@
 // types.js
 
-const tooltip = document.getElementById("meteor-tooltip");
+const tooltip = document.getElementById("tooltip");
 const tooltipLanguage = document.getElementById("tooltip-language");
-const tooltipHours = document.getElementById("tooltip-hours");
+const tooltiphours = document.getElementById("tooltip-hours");
+
+console.log(tooltip);
+console.log(tooltipLanguage)
+console.log(tooltiphours)
 
 new Typed("#element", {
   strings: [
@@ -641,6 +645,9 @@ document.querySelectorAll(".space-object").forEach(obj => {
       ? 1
       : 0.08 + Math.random() * 0.18
 
+
+  obj.style.width = `${size}px`;
+  obj.style.height = "auto";
   spaceObjects.push({
 
     el: obj,
@@ -699,8 +706,6 @@ function animateSpace() {
       m.vy *= -1;
     }
 
-    m.el.style.width = `${m.size}px`;
-    m.el.style.height = "auto";
 
     m.el.style.transform = `
     translate(${m.x}px, ${m.y}px)
@@ -709,8 +714,6 @@ function animateSpace() {
     `;
 
   });
-
-  let hoveringAnyMeteor = false;
 
   let hoveringAnyMeteor = false;
 
@@ -725,7 +728,7 @@ function animateSpace() {
     const dy = mouse.y - centerY;
 
     const distance = Math.sqrt(dx * dx + dy * dy);
-    const hovering = distance < obj.radius;
+    const hovering = distance < (obj.radius * obj.scale);
 
     obj.scale = hovering ? 1.4 : 1;
 
@@ -734,8 +737,10 @@ function animateSpace() {
       hoveringAnyMeteor = true;
 
       tooltip.style.opacity = "1";
-      tooltip.style.left = (mouse.x + 20) + "px";
-      tooltip.style.top = (mouse.y + 20) + "px";
+      const x = Math.min(mouse.x + 20, window.innerWidth - 220);
+      const y = Math.min(mouse.y + 20, window.innerHeight - 120);
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
 
       tooltipLanguage.textContent = obj.language;
       tooltipHours.textContent = `${obj.hours} hrs`;
@@ -767,7 +772,10 @@ function animateSpace() {
         0.0001
       );
 
-      const minDistance = a.radius + b.radius;
+      const radiusA = a.radius * (a.scale || 1);
+      const radiusB = b.radius * (b.scale || 1);
+
+      const minDistance = radiusA + radiusB;
 
       if (distance >= minDistance)
         continue;
