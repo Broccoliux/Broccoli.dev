@@ -614,7 +614,9 @@ const languages = [
   },
 
   {
-
+    language: "Panadas",
+    hours: 9999999999999999999999999999999,
+    image: "meteor_1-removebg-preview.png"
   }
 
 ];
