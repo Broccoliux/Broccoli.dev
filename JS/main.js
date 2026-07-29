@@ -1,12 +1,12 @@
 // types.js
 
-const tooltip = document.getElementById("tooltip");
-const tooltipLanguage = document.getElementById("tooltip-language");
-const tooltiphours = document.getElementById("tooltip-hours");
+const tooltip = document.querySelector("#hover-tooltip, #tooltip");
+const tooltipLanguage = document.querySelector("#hover-tooltip-language, #tooltip-language");
+const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hours");
 
 console.log(tooltip);
-console.log(tooltipLanguage)
-console.log(tooltiphours)
+console.log(tooltipLanguage);
+console.log(tooltipHours);
 
 new Typed("#element", {
   strings: [
@@ -602,8 +602,8 @@ const spaceObjects = [];
 let hoveredMeteor = null;
 
 let mouse = {
-    x: 0,
-    y: 0
+  x: 0,
+  y: 0
 };
 
 function languageToSize(hours) {
@@ -670,7 +670,10 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
     scale: 1,
     isMeteor,
-    isBroccoli
+    isBroccoli,
+    isHoverStopped: false,
+    storedVx: 0,
+    storedVy: 0
 
   });
 
@@ -716,6 +719,7 @@ function animateSpace() {
   });
 
   let hoveringAnyMeteor = false;
+  hoveredMeteor = null;
 
   spaceObjects.forEach(obj => {
 
@@ -735,6 +739,14 @@ function animateSpace() {
     if (hovering) {
 
       hoveringAnyMeteor = true;
+      hoveredMeteor = obj;
+      if (!obj.isHoverStopped) {
+        obj.storedVx = obj.vx;
+        obj.storedVy = obj.vy;
+        obj.isHoverStopped = true;
+      }
+      obj.vx = 0;
+      obj.vy = 0;
 
       tooltip.style.opacity = "1";
       const x = Math.min(mouse.x + 20, window.innerWidth - 220);
@@ -750,6 +762,12 @@ function animateSpace() {
   });
 
   if (!hoveringAnyMeteor) {
+    spaceObjects.forEach(obj => {
+      if (!obj.isHoverStopped) return;
+      obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.15 : -0.15);
+      obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.15 : -0.15);
+      obj.isHoverStopped = false;
+    });
 
     tooltip.style.opacity = "0";
 
@@ -761,8 +779,6 @@ function animateSpace() {
 
       const a = spaceObjects[i];
       const b = spaceObjects[j];
-
-      if (a.isMeteor && b.isMeteor) continue;
 
       const dx = b.x - a.x;
       const dy = b.y - a.y;
@@ -820,6 +836,26 @@ function animateSpace() {
     }
 
   }
+
+  if (hoveredMeteor) {
+    spaceObjects.forEach(obj => {
+      if (!obj.isMeteor || obj === hoveredMeteor) return;
+
+      const dx = hoveredMeteor.x - obj.x;
+      const dy = hoveredMeteor.y - obj.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist === 0) return;
+
+      const assistStrength = 0.0006;
+      obj.vx += (dx / dist) * assistStrength;
+      obj.vy += (dy / dist) * assistStrength;
+
+      obj.vx = clamp(obj.vx, -1.2, 1.2);
+      obj.vy = clamp(obj.vy, -1.2, 1.2);
+    });
+  }
+
   requestAnimationFrame(animateSpace);
 
 }
@@ -828,6 +864,6 @@ animateSpace();
 console.log(spaceObjects);
 
 window.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
