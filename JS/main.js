@@ -595,6 +595,12 @@ const languages = [
     image: "meteor_1-removebg-preview.png"
   }
 
+  {
+    language: "Java script",
+    hours: 27,
+    image: "meteor_1-removebg-preview.png"
+  }
+
 ];
 
 const spaceObjects = [];
