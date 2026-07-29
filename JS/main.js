@@ -593,12 +593,28 @@ const languages = [
     language: "CSS",
     hours: 65,
     image: "meteor_1-removebg-preview.png"
-  }
+  },
 
   {
-    language: "Java script",
+    language: "JAVA SCRIPT",
     hours: 27,
     image: "meteor_1-removebg-preview.png"
+  },
+
+  {
+    language: "VIBE CODING",
+    hours: 2,
+    image: "meteor BG removed.png"
+  },
+
+  {
+    language: "BASH TERMINAL",
+    hours: 2,
+    image: "meteor BG removed.png"
+  },
+
+  {
+
   }
 
 ];
