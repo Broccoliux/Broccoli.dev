@@ -641,6 +641,10 @@ const languages = [
     language: "LAPSE",
     hours: 86,
     image: "meteor_1-removebg-preview.png"
+  },
+
+  {
+    language: ""
   }
 
 ];
