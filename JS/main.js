@@ -903,12 +903,12 @@ function animateSpace() {
 
       if (dist === 0) return;
 
-      const assistStrength = 0.0006;
+      const assistStrength = 0.00022;
       obj.vx += (dx / dist) * assistStrength;
       obj.vy += (dy / dist) * assistStrength;
 
-      obj.vx = clamp(obj.vx, -1.2, 1.2);
-      obj.vy = clamp(obj.vy, -1.2, 1.2);
+      obj.vx = clamp(obj.vx, -0.35, 0.35);
+      obj.vy = clamp(obj.vy, -0.35, 0.35);
     });
   }
 
