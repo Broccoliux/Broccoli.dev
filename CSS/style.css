@@ -555,11 +555,9 @@ hr {
 #meteor-tooltip {
   position: fixed;
   pointer-events: none;
-
-  background: rgba(18, 18, 18, .92);
+  background: rgba(10, 10, 10, .95);
   backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 18px;
   padding: 14px 18px;
   color: white;
@@ -567,6 +565,7 @@ hr {
   transition: .18s;
   z-index: 9999;
   min-width: 170px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
 }
 
 #meteor-tooltip h3 {
