@@ -638,7 +638,8 @@ const languages = [
   },
 
   {
-    language: 
+    language: "LAPSE",
+    hours: 
   }
 
 ];
