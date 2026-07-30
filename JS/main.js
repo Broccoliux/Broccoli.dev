@@ -573,25 +573,25 @@ const languages = [
 
   {
     language: "Python",
-    hours: 250,
+    hours: 40,
     image: "meteor_1-removebg-preview.png"
   },
 
   {
     language: "C",
-    hours: 140,
+    hours: 333,
     image: "meteor_2-removebg-preview.png"
   },
 
   {
     language: "HTML",
-    hours: 90,
+    hours: 23,
     image: "meteor BG removed.png"
   },
 
   {
     language: "CSS",
-    hours: 65,
+    hours: 12,
     image: "meteor_1-removebg-preview.png"
   },
 
@@ -614,10 +614,33 @@ const languages = [
   },
 
   {
-    language: "Panadas",
-    hours: 9999999999999999999999999999999,
+    language: "Journaling",
+    hours: 8,
     image: "meteor_1-removebg-preview.png"
+  },
+
+  {
+    language: "Antigravity",
+    hours: 0.2,
+    image: "meteor BG removed.png"
+  },
+
+  {
+    language: "JSON",
+    hours: 0.30,
+    image: "meteor_2-removebg-preview.png"
+  },
+
+  {
+    language: "FREE CAD",
+    hours: 5,
+    image: "meteor BG removed.png"
   }
+
+
+
+
+
 
 ];
 
@@ -630,17 +653,19 @@ let mouse = {
   y: 0
 };
 
-function languageToSize(hours) {
+function languageToSize(hours, index = 0) {
 
-  const minHours = 1;
-  const maxHours = 250;
+  const safeHours = Math.max(Number(hours) || 0, 0.1);
+  const normalized = Math.min(
+    Math.log10(safeHours + 1) / Math.log10(151),
+    1
+  );
 
-  const minSize = 55;
-  const maxSize = 170;
+  const baseSize = 70 + normalized * 78;
+  const variation = ((index % 3) - 1) * 10 + (Math.random() * 14 - 7);
+  const size = Math.round(baseSize + variation);
 
-  return minSize +
-    ((hours - minHours) / (maxHours - minHours))
-    * (maxSize - minSize);
+  return Math.max(62, Math.min(165, size));
 
 }
 
@@ -658,7 +683,7 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
     lang = languages[languageIndex];
     languageIndex++;
-    size = languageToSize(lang.hours);
+    size = languageToSize(lang.hours, languageIndex - 1);
     obj.src = `img_assets/${lang.image}`;
 
   }
@@ -758,7 +783,7 @@ function animateSpace() {
     const distance = Math.sqrt(dx * dx + dy * dy);
     const hovering = distance < (obj.radius * obj.scale);
 
-    obj.scale = hovering ? 1.4 : 1;
+    obj.scale = hovering ? 1.16 : 1;
 
     if (hovering) {
 
