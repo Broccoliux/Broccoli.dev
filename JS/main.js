@@ -635,12 +635,11 @@ const languages = [
     language: "FREE CAD",
     hours: 5,
     image: "meteor BG removed.png"
+  },
+
+  {
+    language: 
   }
-
-
-
-
-
 
 ];
 
