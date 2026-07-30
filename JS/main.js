@@ -644,7 +644,9 @@ const languages = [
   },
 
   {
-    language: ""
+    language: "TYPE SCRIPT",
+    hours: 0.4,
+    image: "meteor_2-removebg-preview.png"
   }
 
 ];
@@ -696,8 +698,8 @@ document.querySelectorAll(".space-object").forEach(obj => {
   const angle = Math.random() * Math.PI * 2;
   const speed =
     isBroccoli
-      ? 1
-      : 0.08 + Math.random() * 0.18
+      ? 0.45
+      : 0.03 + Math.random() * 0.08
 
 
   obj.style.width = `${size}px`;
@@ -818,8 +820,8 @@ function animateSpace() {
   if (!hoveringAnyMeteor) {
     spaceObjects.forEach(obj => {
       if (!obj.isHoverStopped) return;
-      obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.15 : -0.15);
-      obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.15 : -0.15);
+      obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
+      obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
       obj.isHoverStopped = false;
     });
 
