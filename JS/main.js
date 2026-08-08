@@ -1,8 +1,8 @@
-// hacktime auth
-const HACKTIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
-const HACKTIME_REDIRECT_URL = "http://localhost:5500/";
-const HACKTIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
-const HACKTIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
+// hackatime auth
+const HACKATIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
+const HACKATIME_REDIRECT_URI = "http://localhost:5500/";
+const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
+const HACKATIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
 
 // HACKATIME PKCE
 function generateRandomString(length = 64) {
@@ -74,6 +74,30 @@ async function loginToHackatime() {
     `${HACKATIME_AUTH_URL}?${params.toString()}`;
 }
 
+// Hackatime callback
+
+async function handleHackatimeCallback() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const code = params.get("code");
+    const state = params.get("state");
+    const error = params.get("error");
+
+    //user denied auth
+
+    if (error) {
+      console.error("Hackatime authorization error:", error);
+      return;
+    }
+
+    // No authorization code
+    if (!code) {
+      return;
+    }
+
+    const 
+}
 
 // LOGIN BUTTON
 
