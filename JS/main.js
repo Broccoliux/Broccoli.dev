@@ -1,3 +1,85 @@
+// hacktime auth
+const HACKTIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
+const HACKTIME_REDIRECT_URL = "http://localhost:5500/";
+const HACKTIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
+const HACKTIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
+
+// HACKATIME PKCE
+
+function generateRandomString(length = 64) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+
+  let result = "";
+
+  const randomValues = new Uint8Array(length);
+  crypto.getRandomValues(randomValues);
+
+  for (let i = 0; i < length; i++) {
+    result += chars[randomValues[i] % chars.length];
+  }
+
+  return result;
+}
+
+
+async function generateCodeChallenge(verifier) {
+
+  const data = new TextEncoder().encode(verifier);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  const bytes = new Uint8Array(hash);
+  let binary = "";
+
+  bytes.forEach(byte => {
+    binary += String.fromCharCode(byte);
+  });
+
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
+}
+
+
+async function loginToHackatime() {
+
+  const codeVerifier = generateRandomString(64);
+
+  const codeChallenge =
+    await generateCodeChallenge(codeVerifier);
+
+  const state = generateRandomString(32);
+
+  sessionStorage.setItem(
+    "hackatime_code_verifier",
+    codeVerifier
+  );
+
+  sessionStorage.setItem(
+    "hackatime_oauth_state",
+    state
+  );
+
+  const params = new URLSearchParams({
+
+    client_id: HACKATIME_CLIENT_ID,
+    redirect_uri: HACKATIME_REDIRECT_URI,
+    response_type: "code",
+    scope: "profile read",
+    state: state,
+    code_challenge: codeChallenge,
+    code_challenge_method: "S256"
+
+  });
+
+  window.location.href =
+    `${HACKATIME_AUTH_URL}?${params.toString()}`;
+}
+
+document.getElementById("login-button").addEventListener("click",() => {console.log("Hackatime button clicked");
+  loginToHackatime();
+});
+
 // types.js
 
 const tooltip = document.querySelector("#hover-tooltip, #tooltip");
@@ -63,15 +145,11 @@ function lerp(a, b, t) {
 // mouse Position
 
 dock.addEventListener("mousemove", (e) => {
-
   mouseX = e.clientX;
-
 });
 
 dock.addEventListener("mouseleave", () => {
-
   mouseX = Infinity;
-
 });
 
 // calculate Targets
@@ -647,6 +725,12 @@ const languages = [
     language: "TYPE SCRIPT",
     hours: 0.4,
     image: "meteor_2-removebg-preview.png"
+  },
+
+  {
+    language: "C++",
+    hours: 5,
+    image: "meteor_1-removebg-preview.png"
   }
 
 ];
