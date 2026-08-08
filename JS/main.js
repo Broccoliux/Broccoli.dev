@@ -129,12 +129,28 @@ async function handleHackatimeCallback() {
       }
     );
 
-    const data = await  response.json();
+    const data = await response.json();
     if (!response.ok) {
-        console.error("Hackatime token error:", data);
-        return;
+      console.error("Hackatime token error:", data);
+      return;
     }
-}
+
+    console.log("Hacktime authentication successful");
+    console.log("Token received:", data);
+    sessionStorage.setItem("hackatime_access_token", data.access_token);
+
+    // clean Oauth data
+    sessionStorage.removeItem("hackatime_codee_verifier");
+    sessionStorage.removeItem("hackatime_oauth_state");
+
+    // remove code from URL
+    window.history.replaceState(
+      {},
+      document.title,
+      window.location.pathname
+    );
+
+  }
 
 // LOGIN BUTTON
 
