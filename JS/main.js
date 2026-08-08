@@ -96,7 +96,12 @@ async function handleHackatimeCallback() {
       return;
     }
 
-    const 
+    const savedState = sessionStorage.getItem("hackatime_oauth_state");
+    const codeVerifier = sessionStorage.getItem("hactime_code_verifier");
+
+    // Security check
+    if (!SavedState || returnedState !== savedState) {
+      console.error("Hacktime OAuth")
 }
 
 // LOGIN BUTTON
