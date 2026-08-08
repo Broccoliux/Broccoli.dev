@@ -150,365 +150,374 @@ async function handleHackatimeCallback() {
       window.location.pathname
     );
 
+  } catch (error) {
+
+    console.error(
+      "Hackatime token request failed:",
+      error
+    );
+
   }
+
+}
 
 // LOGIN BUTTON
 
 document.addEventListener("DOMContentLoaded", () => {
-    const loginButton = document.getElementById("login-button");
-    if (!loginButton) return;
+  const loginButton = document.getElementById("login-button");
+  if (!loginButton) return;
 
-    loginButton.addEventListener("click", () => {
-      console.log("Hackatime button clicked");
-      loginToHackatime();
-    });
+  loginButton.addEventListener("click", () => {
+    console.log("Hackatime button clicked");
+    loginToHackatime();
+  });
+});
+
+// types.js
+
+const tooltip = document.querySelector("#hover-tooltip, #tooltip");
+const tooltipLanguage = document.querySelector("#hover-tooltip-language, #tooltip-language");
+const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hours");
+
+console.log(tooltip);
+console.log(tooltipLanguage);
+console.log(tooltipHours);
+
+new Typed("#element", {
+  strings: [
+    "AI/ML Engineering",
+    "Embedded Systems Developeing",
+    "IOT Engineering", "yapper"
+  ],
+  typeSpeed: 35,
+  backSpeed: 35,
+  loop: true
+});
+
+// magnatic dock
+
+const dock = document.getElementById("dock");
+const items = [...document.querySelectorAll(".dock-item")];
+
+const ICON_SIZE = 45;
+const MAX_SCALE = 1.38;
+const MAGNETIC_DISTANCE = 150;
+
+let mouseX = Infinity;
+
+const state = [];
+
+items.forEach((item, index) => {
+
+  state.push({
+
+    element: item,
+    scale: 1,
+    targetScale: 1,
+    offsetY: 0,
+    targetOffsetY: 0,
+    velocityScale: 0,
+    velocityY: 0
+
   });
 
-  // types.js
+});
 
-  const tooltip = document.querySelector("#hover-tooltip, #tooltip");
-  const tooltipLanguage = document.querySelector("#hover-tooltip-language, #tooltip-language");
-  const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hours");
+// helper
 
-  console.log(tooltip);
-  console.log(tooltipLanguage);
-  console.log(tooltipHours);
+function clamp(value, min, max) {
 
-  new Typed("#element", {
-    strings: [
-      "AI/ML Engineering",
-      "Embedded Systems Developeing",
-      "IOT Engineering", "yapper"
-    ],
-    typeSpeed: 35,
-    backSpeed: 35,
-    loop: true
+  return Math.max(min, Math.min(max, value));
+}
+
+function lerp(a, b, t) {
+
+  return a + (b - a) * t;
+}
+
+// mouse Position
+
+dock.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+});
+
+dock.addEventListener("mouseleave", () => {
+  mouseX = Infinity;
+});
+
+// Spring Animation
+
+const SPRING = 0.14;
+const DAMPING = 0.50;
+
+function animate() {
+
+  updateTargets();
+
+  let totalWidth = 0;
+  let tallest = ICON_SIZE;
+  let maxScale = 1;
+
+  // Update physics
+  state.forEach(obj => {
+
+    const scaleForce = (obj.targetScale - obj.scale) * SPRING;
+    obj.velocityScale += scaleForce;
+    obj.velocityScale *= DAMPING;
+    obj.scale += obj.velocityScale;
+
+    const yForce = (obj.targetOffsetY - obj.offsetY) * SPRING;
+    obj.velocityY += yForce;
+    obj.velocityY *= DAMPING;
+    obj.offsetY += obj.velocityY;
+
+    if (obj.scale > maxScale) {
+      maxScale = obj.scale;
+    }
+
+    const currentSize = ICON_SIZE * obj.scale;
+
+    totalWidth += currentSize;
+
+    if (currentSize > tallest) {
+      tallest = currentSize;
+    }
+
   });
 
-  // magnatic dock
+  // Dynamic Dock Size
 
-  const dock = document.getElementById("dock");
-  const items = [...document.querySelectorAll(".dock-item")];
+  const GAP = 6;
+  const BASE_PADDING = 10;
 
-  const ICON_SIZE = 45;
-  const MAX_SCALE = 1.38;
-  const MAGNETIC_DISTANCE = 150;
+  totalWidth += GAP * (state.length - 1);
+  totalWidth += BASE_PADDING * 2;
 
-  let mouseX = Infinity;
+  dock.style.width = totalWidth + "px";
+  let requiredHeight = 0;
 
-  const state = [];
+  state.forEach(obj => {
 
-  items.forEach((item, index) => {
+    const currentSize = ICON_SIZE * obj.scale;
 
-    state.push({
+    const iconHeight = currentSize + Math.abs(obj.offsetY);
 
-      element: item,
-      scale: 1,
-      targetScale: 1,
-      offsetY: 0,
-      targetOffsetY: 0,
-      velocityScale: 0,
-      velocityY: 0
-
-    });
+    if (iconHeight > requiredHeight) {
+      requiredHeight = iconHeight;
+    }
 
   });
 
-  // helper
+  dock.style.height = (requiredHeight + 24) + "px";
 
-  function clamp(value, min, max) {
+  // Keep dock perfectly centered
 
-    return Math.max(min, Math.min(max, value));
-  }
+  dock.parentElement.style.left = "50%";
+  dock.parentElement.style.transform = "translateX(-50%)";
 
-  function lerp(a, b, t) {
+  // Position icons
 
-    return a + (b - a) * t;
-  }
+  let currentX = BASE_PADDING;
 
-  // mouse Position
+  state.forEach(obj => {
 
-  dock.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
+    const currentSize = ICON_SIZE * obj.scale;
+
+    obj.element.style.position = "absolute";
+    obj.element.style.left = currentX + "px";
+    obj.element.style.bottom = "8px";
+    obj.element.style.width = currentSize + "px";
+    obj.element.style.height = currentSize + "px";
+    obj.element.style.transform =
+      `translateY(${obj.offsetY}px)`;
+
+    currentX += currentSize + GAP;
+
   });
 
-  dock.addEventListener("mouseleave", () => {
-    mouseX = Infinity;
-  });
+  requestAnimationFrame(animate);
+}
 
-  // Spring Animation
+animate();
 
-  const SPRING = 0.14;
-  const DAMPING = 0.50;
+// Click Active State
 
-  function animate() {
+items.forEach(item => {
 
-    updateTargets();
-
-    let totalWidth = 0;
-    let tallest = ICON_SIZE;
-    let maxScale = 1;
-
-    // Update physics
-    state.forEach(obj => {
-
-      const scaleForce = (obj.targetScale - obj.scale) * SPRING;
-      obj.velocityScale += scaleForce;
-      obj.velocityScale *= DAMPING;
-      obj.scale += obj.velocityScale;
-
-      const yForce = (obj.targetOffsetY - obj.offsetY) * SPRING;
-      obj.velocityY += yForce;
-      obj.velocityY *= DAMPING;
-      obj.offsetY += obj.velocityY;
-
-      if (obj.scale > maxScale) {
-        maxScale = obj.scale;
-      }
-
-      const currentSize = ICON_SIZE * obj.scale;
-
-      totalWidth += currentSize;
-
-      if (currentSize > tallest) {
-        tallest = currentSize;
-      }
-
+  item.addEventListener("click", () => {
+    items.forEach(button => {
+      button.classList.remove("active");
     });
 
-    // Dynamic Dock Size
+    item.classList.add("active");
+    const section =
+      document.getElementById(
+        item.dataset.section
+      );
 
-    const GAP = 6;
-    const BASE_PADDING = 10;
-
-    totalWidth += GAP * (state.length - 1);
-    totalWidth += BASE_PADDING * 2;
-
-    dock.style.width = totalWidth + "px";
-    let requiredHeight = 0;
-
-    state.forEach(obj => {
-
-      const currentSize = ICON_SIZE * obj.scale;
-
-      const iconHeight = currentSize + Math.abs(obj.offsetY);
-
-      if (iconHeight > requiredHeight) {
-        requiredHeight = iconHeight;
-      }
-
-    });
-
-    dock.style.height = (requiredHeight + 24) + "px";
-
-    // Keep dock perfectly centered
-
-    dock.parentElement.style.left = "50%";
-    dock.parentElement.style.transform = "translateX(-50%)";
-
-    // Position icons
-
-    let currentX = BASE_PADDING;
-
-    state.forEach(obj => {
-
-      const currentSize = ICON_SIZE * obj.scale;
-
-      obj.element.style.position = "absolute";
-      obj.element.style.left = currentX + "px";
-      obj.element.style.bottom = "8px";
-      obj.element.style.width = currentSize + "px";
-      obj.element.style.height = currentSize + "px";
-      obj.element.style.transform =
-        `translateY(${obj.offsetY}px)`;
-
-      currentX += currentSize + GAP;
-
-    });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  // Click Active State
-
-  items.forEach(item => {
-
-    item.addEventListener("click", () => {
-      items.forEach(button => {
-        button.classList.remove("active");
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth"
       });
 
-      item.classList.add("active");
-      const section =
-        document.getElementById(
-          item.dataset.section
-        );
-
-      if (section) {
-        section.scrollIntoView({
-          behavior: "smooth"
-        });
-
-      }
-
-    });
+    }
 
   });
 
+});
 
-  // MacOS Neighbor Wave + Scroll Spy + Hover Glow
+
+// MacOS Neighbor Wave + Scroll Spy + Hover Glow
 
 
-  function smoothstep(x) {
-    return x * x * (3 - 2 * x);
-  }
+function smoothstep(x) {
+  return x * x * (3 - 2 * x);
+}
 
-  function updateTargets() {
+function updateTargets() {
 
-    state.forEach((obj, index) => {
-      const rect = obj.element.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
-      const distance = mouseX - center;
-      const abs = Math.abs(distance);
-      let influence = 0;
+  state.forEach((obj, index) => {
+    const rect = obj.element.getBoundingClientRect();
+    const center = rect.left + rect.width / 2;
+    const distance = mouseX - center;
+    const abs = Math.abs(distance);
+    let influence = 0;
 
-      if (abs < MAGNETIC_DISTANCE) {
-        influence = 1 - (abs / MAGNETIC_DISTANCE);
-        influence = smoothstep(influence);
-      }
-
-      obj.targetScale =
-        1 + influence * (MAX_SCALE - 1);
-
-      obj.targetOffsetY =
-        -14 * influence;
-
-      obj.influence = influence;
-
-    });
-
-    // Neighbor wave (Mac Dock effect)
-
-    for (let i = 0; i < state.length; i++) {
-      let wave = state[i].influence;
-
-      if (state[i - 1]) {
-        wave = Math.max(
-          wave,
-          state[i - 1].influence * 0.55
-        );
-      }
-
-      if (state[i + 1]) {
-        wave = Math.max(
-          wave,
-          state[i + 1].influence * 0.55
-        );
-      }
-
-      state[i].targetScale =
-        1 + wave * (MAX_SCALE - 1);
-
-      state[i].targetOffsetY =
-        -14 * wave;
-
+    if (abs < MAGNETIC_DISTANCE) {
+      influence = 1 - (abs / MAGNETIC_DISTANCE);
+      influence = smoothstep(influence);
     }
+
+    obj.targetScale =
+      1 + influence * (MAX_SCALE - 1);
+
+    obj.targetOffsetY =
+      -14 * influence;
+
+    obj.influence = influence;
+
+  });
+
+  // Neighbor wave (Mac Dock effect)
+
+  for (let i = 0; i < state.length; i++) {
+    let wave = state[i].influence;
+
+    if (state[i - 1]) {
+      wave = Math.max(
+        wave,
+        state[i - 1].influence * 0.55
+      );
+    }
+
+    if (state[i + 1]) {
+      wave = Math.max(
+        wave,
+        state[i + 1].influence * 0.55
+      );
+    }
+
+    state[i].targetScale =
+      1 + wave * (MAX_SCALE - 1);
+
+    state[i].targetOffsetY =
+      -14 * wave;
+
   }
+}
 
-  // Hover Glow
+// Hover Glow
 
-  items.forEach(item => {
+items.forEach(item => {
 
-    item.addEventListener("mouseenter", () => {
-      item.style.boxShadow =
+  item.addEventListener("mouseenter", () => {
+    item.style.boxShadow =
 
-        `0 10px 35px rgba(0,0,0,.45),
+      `0 10px 35px rgba(0,0,0,.45),
         inset 0 1px 0 rgba(255,255,255,.75),
         0 0 28px rgba(255,255,255,.10)`;
 
-    });
+  });
 
-    item.addEventListener("mouseleave", () => {
-      item.style.boxShadow =
+  item.addEventListener("mouseleave", () => {
+    item.style.boxShadow =
 
-        `0 6px 15px rgba(0,0,0,.25),
+      `0 6px 15px rgba(0,0,0,.25),
         inset 0 1px 0 rgba(255,255,255,.55)`;
 
-    });
+  });
+
+});
+
+// Scroll Spy
+
+const sections = [
+  ...document.querySelectorAll("section")
+];
+
+window.addEventListener("scroll", () => {
+
+  let current = "home";
+  sections.forEach(section => {
+    const top =
+      section.offsetTop - 250;
+
+    if (scrollY >= top) {
+      current = section.id;
+    }
 
   });
 
-  // Scroll Spy
+  items.forEach(button => {
 
-  const sections = [
-    ...document.querySelectorAll("section")
-  ];
+    if (button.dataset.section === current) {
+      button.classList.add("active");
+    }
 
-  window.addEventListener("scroll", () => {
+    else {
+      button.classList.remove("active");
+    }
+  });
 
-    let current = "home";
-    sections.forEach(section => {
-      const top =
-        section.offsetTop - 250;
+});
 
-      if (scrollY >= top) {
-        current = section.id;
-      }
+// Small Floating Idle Animation
 
-    });
+let idleTime = 0;
 
-    items.forEach(button => {
+function idleFloat() {
 
-      if (button.dataset.section === current) {
-        button.classList.add("active");
-      }
+  idleTime += 0.02;
 
-      else {
-        button.classList.remove("active");
-      }
-    });
+  state.forEach((obj, index) => {
+    const float =
+      Math.sin(idleTime + index * .4) * 1.2;
+    obj.element.style.translate =
+      `0 ${float}px`;
 
   });
 
-  // Small Floating Idle Animation
+  requestAnimationFrame(idleFloat);
 
-  let idleTime = 0;
+}
 
-  function idleFloat() {
-
-    idleTime += 0.02;
-
-    state.forEach((obj, index) => {
-      const float =
-        Math.sin(idleTime + index * .4) * 1.2;
-      obj.element.style.translate =
-        `0 ${float}px`;
-
-    });
-
-    requestAnimationFrame(idleFloat);
-
-  }
-
-  idleFloat();
+idleFloat();
 
 
-  // Componentry SVG Icons + Shine + Active Animation
+// Componentry SVG Icons + Shine + Active Animation
 
-  //  SVG ICONS
+//  SVG ICONS
 
-  const SVG_ICONS = {
+const SVG_ICONS = {
 
-    home: `
+  home: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>`,
 
-    about: `
+  about: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="8" r="4"/>
@@ -516,21 +525,21 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>
         `,
 
-    experience: `
+  experience: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
         </svg>
         `,
 
-    projects: `
+  projects: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/>
         </svg>
         `,
 
-    skills: `
+  skills: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="3"/>
@@ -566,7 +575,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>
         `,
 
-    contact: `
+  contact: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1
@@ -576,487 +585,489 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>
         `
 
-  };
+};
 
-  // Inject Icons
+// Inject Icons
 
-  items.forEach(item => {
-    const icon = item.querySelector(".dock-icon");
-    const key = item.dataset.section;
+items.forEach(item => {
+  const icon = item.querySelector(".dock-icon");
+  const key = item.dataset.section;
 
-    if (SVG_ICONS[key]) {
-      icon.innerHTML = SVG_ICONS[key];
-    }
+  if (SVG_ICONS[key]) {
+    icon.innerHTML = SVG_ICONS[key];
+  }
+});
+
+// Shine Overlay
+
+items.forEach(item => {
+
+  const shine = document.createElement("div");
+  shine.className = "dock-shine";
+  shine.style.position = "absolute";
+  shine.style.inset = "0";
+  shine.style.pointerEvents = "none";
+  shine.style.borderRadius = "20px";
+  shine.style.background =
+    "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
+  shine.style.opacity = ".55";
+  item.appendChild(shine);
+
+});
+
+// Active Animation
+
+items.forEach(item => {
+  item.addEventListener("click", () => {
+    item.animate(
+      [
+        { transform: item.style.transform },
+        { transform: item.style.transform + " scale(.92)" },
+        { transform: item.style.transform }
+      ],
+
+      {
+        duration: 220,
+        easing: "ease-out"
+      });
+  });
+});
+
+// Mmouse leave reset
+
+dock.addEventListener("mouseleave", () => {
+  state.forEach(obj => {
+    obj.targetScale = 1;
+    obj.targetOffsetY = 0;
+
   });
 
-  // Shine Overlay
+});
 
-  items.forEach(item => {
 
-    const shine = document.createElement("div");
-    shine.className = "dock-shine";
-    shine.style.position = "absolute";
-    shine.style.inset = "0";
-    shine.style.pointerEvents = "none";
-    shine.style.borderRadius = "20px";
-    shine.style.background =
-      "linear-gradient(135deg,rgba(255,255,255,.55) 0%,transparent 45%,transparent 100%)";
-    shine.style.opacity = ".55";
-    item.appendChild(shine);
+// Project Card 3D Tilt
 
-  });
+document.querySelectorAll(".project-card").forEach(card => {
 
-  // Active Animation
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+  let currentLift = 0;
 
-  items.forEach(item => {
-    item.addEventListener("click", () => {
-      item.animate(
-        [
-          { transform: item.style.transform },
-          { transform: item.style.transform + " scale(.92)" },
-          { transform: item.style.transform }
-        ],
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+  let targetLift = 0;
 
-        {
-          duration: 220,
-          easing: "ease-out"
-        });
-    });
-  });
+  card.addEventListener("mousemove", (e) => {
 
-  // Mmouse leave reset
+    const rect = card.getBoundingClientRect();
 
-  dock.addEventListener("mouseleave", () => {
-    state.forEach(obj => {
-      obj.targetScale = 1;
-      obj.targetOffsetY = 0;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    });
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const shineX = ((x / rect.width) * 100).toFixed(1);
+    const shineY = ((y / rect.height) * 100).toFixed(1);
+
+    card.style.setProperty("--shine-x", `${shineX}%`);
+    card.style.setProperty("--shine-y", `${shineY}%`);
+
+
+    targetRotateY = ((x - centerX) / centerX) * 7;
+    targetRotateX = ((centerY - y) / centerY) * 7;
+
+    targetLift = -10;
 
   });
 
+  card.addEventListener("mouseleave", () => {
 
-  // Project Card 3D Tilt
+    targetRotateX = 0;
+    targetRotateY = 0;
+    targetLift = 0;
 
-  document.querySelectorAll(".project-card").forEach(card => {
+  });
 
-    let currentRotateX = 0;
-    let currentRotateY = 0;
-    let currentLift = 0;
+  function animateCard() {
 
-    let targetRotateX = 0;
-    let targetRotateY = 0;
-    let targetLift = 0;
+    currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+    currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+    currentLift += (targetLift - currentLift) * 0.12;
 
-    card.addEventListener("mousemove", (e) => {
-
-      const rect = card.getBoundingClientRect();
-
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const shineX = ((x / rect.width) * 100).toFixed(1);
-      const shineY = ((y / rect.height) * 100).toFixed(1);
-
-      card.style.setProperty("--shine-x", `${shineX}%`);
-      card.style.setProperty("--shine-y", `${shineY}%`);
-
-
-      targetRotateY = ((x - centerX) / centerX) * 7;
-      targetRotateX = ((centerY - y) / centerY) * 7;
-
-      targetLift = -10;
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-      targetRotateX = 0;
-      targetRotateY = 0;
-      targetLift = 0;
-
-    });
-
-    function animateCard() {
-
-      currentRotateX += (targetRotateX - currentRotateX) * 0.12;
-      currentRotateY += (targetRotateY - currentRotateY) * 0.12;
-      currentLift += (targetLift - currentLift) * 0.12;
-
-      card.style.transform = `
+    card.style.transform = `
             perspective(1200px)
             rotateX(${currentRotateX}deg)
             rotateY(${currentRotateY}deg)
             translateY(${currentLift}px)
         `;
 
-      requestAnimationFrame(animateCard);
-    }
-    animateCard();
-  });
+    requestAnimationFrame(animateCard);
+  }
+  animateCard();
+});
 
-  // SPACE OBJECTS
+// SPACE OBJECTS
 
-  const languages = [
+const languages = [
 
-    {
-      language: "Python",
-      hours: 40,
-      image: "meteor_1-removebg-preview.png"
-    },
+  {
+    language: "Python",
+    hours: 40,
+    image: "meteor_1-removebg-preview.png"
+  },
 
-    {
-      language: "C",
-      hours: 333,
-      image: "meteor_2-removebg-preview.png"
-    },
+  {
+    language: "C",
+    hours: 333,
+    image: "meteor_2-removebg-preview.png"
+  },
 
-    {
-      language: "HTML",
-      hours: 23,
-      image: "meteor BG removed.png"
-    },
+  {
+    language: "HTML",
+    hours: 23,
+    image: "meteor BG removed.png"
+  },
 
-    {
-      language: "CSS",
-      hours: 12,
-      image: "meteor_1-removebg-preview.png"
-    },
+  {
+    language: "CSS",
+    hours: 12,
+    image: "meteor_1-removebg-preview.png"
+  },
 
-    {
-      language: "JAVA SCRIPT",
-      hours: 27,
-      image: "meteor_1-removebg-preview.png"
-    },
+  {
+    language: "JAVA SCRIPT",
+    hours: 27,
+    image: "meteor_1-removebg-preview.png"
+  },
 
-    {
-      language: "VIBE CODING",
-      hours: 2,
-      image: "meteor BG removed.png"
-    },
+  {
+    language: "VIBE CODING",
+    hours: 2,
+    image: "meteor BG removed.png"
+  },
 
-    {
-      language: "BASH TERMINAL",
-      hours: 2,
-      image: "meteor BG removed.png"
-    },
+  {
+    language: "BASH TERMINAL",
+    hours: 2,
+    image: "meteor BG removed.png"
+  },
 
-    {
-      language: "Journaling",
-      hours: 8,
-      image: "meteor_1-removebg-preview.png"
-    },
+  {
+    language: "Journaling",
+    hours: 8,
+    image: "meteor_1-removebg-preview.png"
+  },
 
-    {
-      language: "Antigravity",
-      hours: 0.2,
-      image: "meteor BG removed.png"
-    },
+  {
+    language: "Antigravity",
+    hours: 0.2,
+    image: "meteor BG removed.png"
+  },
 
-    {
-      language: "JSON",
-      hours: 0.30,
-      image: "meteor_2-removebg-preview.png"
-    },
+  {
+    language: "JSON",
+    hours: 0.30,
+    image: "meteor_2-removebg-preview.png"
+  },
 
-    {
-      language: "FREE CAD",
-      hours: 5,
-      image: "meteor BG removed.png"
-    },
+  {
+    language: "FREE CAD",
+    hours: 5,
+    image: "meteor BG removed.png"
+  },
 
-    {
-      language: "LAPSE",
-      hours: 86,
-      image: "meteor_1-removebg-preview.png"
-    },
+  {
+    language: "LAPSE",
+    hours: 86,
+    image: "meteor_1-removebg-preview.png"
+  },
 
-    {
-      language: "TYPE SCRIPT",
-      hours: 0.4,
-      image: "meteor_2-removebg-preview.png"
-    },
+  {
+    language: "TYPE SCRIPT",
+    hours: 0.4,
+    image: "meteor_2-removebg-preview.png"
+  },
 
-    {
-      language: "C++",
-      hours: 5,
-      image: "meteor_1-removebg-preview.png"
-    }
+  {
+    language: "C++",
+    hours: 5,
+    image: "meteor_1-removebg-preview.png"
+  }
 
-  ];
+];
 
-  const spaceObjects = [];
+const spaceObjects = [];
 
-  let hoveredMeteor = null;
+let hoveredMeteor = null;
 
-  let mouse = {
-    x: 0,
-    y: 0
-  };
+let mouse = {
+  x: 0,
+  y: 0
+};
 
-  function languageToSize(hours, index = 0) {
+function languageToSize(hours, index = 0) {
 
-    const safeHours = Math.max(Number(hours) || 0, 0.1);
-    const normalized = Math.min(
-      Math.log10(safeHours + 1) / Math.log10(151),
-      1
-    );
+  const safeHours = Math.max(Number(hours) || 0, 0.1);
+  const normalized = Math.min(
+    Math.log10(safeHours + 1) / Math.log10(151),
+    1
+  );
 
-    const baseSize = 70 + normalized * 78;
-    const variation = ((index % 3) - 1) * 10 + (Math.random() * 14 - 7);
-    const size = Math.round(baseSize + variation);
+  const baseSize = 70 + normalized * 78;
+  const variation = ((index % 3) - 1) * 10 + (Math.random() * 14 - 7);
+  const size = Math.round(baseSize + variation);
 
-    return Math.max(62, Math.min(165, size));
+  return Math.max(62, Math.min(165, size));
+
+}
+
+let languageIndex = 0;
+
+document.querySelectorAll(".space-object").forEach(obj => {
+
+  const isMeteor = obj.classList.contains("meteor");
+  const isBroccoli = obj.classList.contains("broccoli");
+
+  let lang = null;
+  let size = 220;
+
+  if (isMeteor) {
+
+    lang = languages[languageIndex];
+    languageIndex++;
+    size = languageToSize(lang.hours, languageIndex - 1);
+    obj.src = `img_assets/${lang.image}`;
 
   }
 
-  let languageIndex = 0;
-
-  document.querySelectorAll(".space-object").forEach(obj => {
-
-    const isMeteor = obj.classList.contains("meteor");
-    const isBroccoli = obj.classList.contains("broccoli");
-
-    let lang = null;
-    let size = 220;
-
-    if (isMeteor) {
-
-      lang = languages[languageIndex];
-      languageIndex++;
-      size = languageToSize(lang.hours, languageIndex - 1);
-      obj.src = `img_assets/${lang.image}`;
-
-    }
-
-    const angle = Math.random() * Math.PI * 2;
-    const speed =
-      isBroccoli
-        ? 0.45
-        : 0.03 + Math.random() * 0.08
+  const angle = Math.random() * Math.PI * 2;
+  const speed =
+    isBroccoli
+      ? 0.45
+      : 0.03 + Math.random() * 0.08
 
 
-    obj.style.width = `${size}px`;
-    obj.style.height = "auto";
-    spaceObjects.push({
+  obj.style.width = `${size}px`;
+  obj.style.height = "auto";
+  spaceObjects.push({
 
-      el: obj,
+    el: obj,
 
-      x: Math.random() * (window.innerWidth - size),
-      y: Math.random() * (window.innerHeight - size),
+    x: Math.random() * (window.innerWidth - size),
+    y: Math.random() * (window.innerHeight - size),
 
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
 
-      rotation: Math.random() * 360,
-      rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
+    rotation: Math.random() * 360,
+    rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
 
-      size: size,
-      radius: size * 0.5,
-      mass: isBroccoli ? 8 : 1,
+    size: size,
+    radius: size * 0.5,
+    mass: isBroccoli ? 8 : 1,
 
-      language: lang?.language,
-      hours: lang?.hours,
+    language: lang?.language,
+    hours: lang?.hours,
 
-      scale: 1,
-      isMeteor,
-      isBroccoli,
-      isHoverStopped: false,
-      storedVx: 0,
-      storedVy: 0
-
-    });
+    scale: 1,
+    isMeteor,
+    isBroccoli,
+    isHoverStopped: false,
+    storedVx: 0,
+    storedVy: 0
 
   });
 
-
-  function animateSpace() {
-
-    spaceObjects.forEach(m => {
-
-      m.x += m.vx;
-      m.y += m.vy;
-
-      m.rotation += m.rotationSpeed;
-
-      if (m.x < 0) {
-        m.x = 0;
-        m.vx *= -1;
-      }
-
-      if (m.x + m.size > window.innerWidth) {
-        m.x = window.innerWidth - m.size;
-        m.vx *= -1;
-      }
-
-      if (m.y < 0) {
-        m.y = 0;
-        m.vy *= -1;
-      }
-
-      if (m.y + m.size > window.innerHeight) {
-        m.y = window.innerHeight - m.size;
-        m.vy *= -1;
-      }
+});
 
 
-      m.el.style.transform = `
+function animateSpace() {
+
+  spaceObjects.forEach(m => {
+
+    m.x += m.vx;
+    m.y += m.vy;
+
+    m.rotation += m.rotationSpeed;
+
+    if (m.x < 0) {
+      m.x = 0;
+      m.vx *= -1;
+    }
+
+    if (m.x + m.size > window.innerWidth) {
+      m.x = window.innerWidth - m.size;
+      m.vx *= -1;
+    }
+
+    if (m.y < 0) {
+      m.y = 0;
+      m.vy *= -1;
+    }
+
+    if (m.y + m.size > window.innerHeight) {
+      m.y = window.innerHeight - m.size;
+      m.vy *= -1;
+    }
+
+
+    m.el.style.transform = `
     translate(${m.x}px, ${m.y}px)
     rotate(${m.rotation}deg)
     scale(${m.scale})
     `;
 
-    });
+  });
 
-    let hoveringAnyMeteor = false;
-    hoveredMeteor = null;
+  let hoveringAnyMeteor = false;
+  hoveredMeteor = null;
 
+  spaceObjects.forEach(obj => {
+
+    if (!obj.isMeteor) return;
+
+    const centerX = obj.x + obj.size / 2;
+    const centerY = obj.y + obj.size / 2;
+
+    const dx = mouse.x - centerX;
+    const dy = mouse.y - centerY;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const hovering = distance < (obj.radius * obj.scale);
+
+    obj.scale = hovering ? 1.16 : 1;
+
+    if (hovering) {
+
+      hoveringAnyMeteor = true;
+      hoveredMeteor = obj;
+      if (!obj.isHoverStopped) {
+        obj.storedVx = obj.vx;
+        obj.storedVy = obj.vy;
+        obj.isHoverStopped = true;
+      }
+      obj.vx = 0;
+      obj.vy = 0;
+
+      tooltip.style.opacity = "1";
+      const x = Math.min(mouse.x + 20, window.innerWidth - 220);
+      const y = Math.min(mouse.y + 20, window.innerHeight - 120);
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+
+      tooltipLanguage.textContent = obj.language;
+      tooltipHours.textContent = `${obj.hours} hrs`;
+
+    }
+
+  });
+
+  if (!hoveringAnyMeteor) {
     spaceObjects.forEach(obj => {
-
-      if (!obj.isMeteor) return;
-
-      const centerX = obj.x + obj.size / 2;
-      const centerY = obj.y + obj.size / 2;
-
-      const dx = mouse.x - centerX;
-      const dy = mouse.y - centerY;
-
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const hovering = distance < (obj.radius * obj.scale);
-
-      obj.scale = hovering ? 1.16 : 1;
-
-      if (hovering) {
-
-        hoveringAnyMeteor = true;
-        hoveredMeteor = obj;
-        if (!obj.isHoverStopped) {
-          obj.storedVx = obj.vx;
-          obj.storedVy = obj.vy;
-          obj.isHoverStopped = true;
-        }
-        obj.vx = 0;
-        obj.vy = 0;
-
-        tooltip.style.opacity = "1";
-        const x = Math.min(mouse.x + 20, window.innerWidth - 220);
-        const y = Math.min(mouse.y + 20, window.innerHeight - 120);
-        tooltip.style.left = x + "px";
-        tooltip.style.top = y + "px";
-
-        tooltipLanguage.textContent = obj.language;
-        tooltipHours.textContent = `${obj.hours} hrs`;
-
-      }
-
+      if (!obj.isHoverStopped) return;
+      obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
+      obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
+      obj.isHoverStopped = false;
     });
 
-    if (!hoveringAnyMeteor) {
-      spaceObjects.forEach(obj => {
-        if (!obj.isHoverStopped) return;
-        obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
-        obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
-        obj.isHoverStopped = false;
-      });
-
-      tooltip.style.opacity = "0";
-
-    }
-
-    for (let i = 0; i < spaceObjects.length; i++) {
-
-      for (let j = i + 1; j < spaceObjects.length; j++) {
-
-        const a = spaceObjects[i];
-        const b = spaceObjects[j];
-
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-
-        const distance = Math.max(
-          Math.sqrt(dx * dx + dy * dy),
-          0.0001
-        );
-
-        const radiusA = a.radius * (a.scale || 1);
-        const radiusB = b.radius * (b.scale || 1);
-
-        const minDistance = radiusA + radiusB;
-
-        if (distance >= minDistance)
-          continue;
-
-        const nx = dx / distance;
-        const ny = dy / distance;
-
-        const overlap = minDistance - distance;
-
-        a.x -= nx * overlap * 0.5;
-        a.y -= ny * overlap * 0.5;
-
-        b.x += nx * overlap * 0.5;
-        b.y += ny * overlap * 0.5;
-
-        const rvx = b.vx - a.vx;
-        const rvy = b.vy - a.vy;
-
-        const velAlongNormal =
-          rvx * nx +
-          rvy * ny;
-
-        if (velAlongNormal > 0)
-          continue;
-
-        const restitution = 1;
-
-        const impulse =
-          -(1 + restitution) *
-          velAlongNormal /
-          ((1 / a.mass) + (1 / b.mass));
-
-        const ix = impulse * nx;
-        const iy = impulse * ny;
-
-        a.vx -= ix / a.mass;
-        a.vy -= iy / a.mass;
-
-        b.vx += ix / b.mass;
-        b.vy += iy / b.mass;
-
-      }
-
-    }
-
-    if (hoveredMeteor) {
-      spaceObjects.forEach(obj => {
-        if (!obj.isMeteor || obj === hoveredMeteor) return;
-
-        const dx = hoveredMeteor.x - obj.x;
-        const dy = hoveredMeteor.y - obj.y;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist === 0) return;
-
-        const assistStrength = 0.00022;
-        obj.vx += (dx / dist) * assistStrength;
-        obj.vy += (dy / dist) * assistStrength;
-
-        obj.vx = clamp(obj.vx, -0.35, 0.35);
-        obj.vy = clamp(obj.vy, -0.35, 0.35);
-      });
-    }
-
-    requestAnimationFrame(animateSpace);
+    tooltip.style.opacity = "0";
 
   }
 
-  animateSpace();
-  console.log(spaceObjects);
+  for (let i = 0; i < spaceObjects.length; i++) {
 
-  window.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
+    for (let j = i + 1; j < spaceObjects.length; j++) {
+
+      const a = spaceObjects[i];
+      const b = spaceObjects[j];
+
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+
+      const distance = Math.max(
+        Math.sqrt(dx * dx + dy * dy),
+        0.0001
+      );
+
+      const radiusA = a.radius * (a.scale || 1);
+      const radiusB = b.radius * (b.scale || 1);
+
+      const minDistance = radiusA + radiusB;
+
+      if (distance >= minDistance)
+        continue;
+
+      const nx = dx / distance;
+      const ny = dy / distance;
+
+      const overlap = minDistance - distance;
+
+      a.x -= nx * overlap * 0.5;
+      a.y -= ny * overlap * 0.5;
+
+      b.x += nx * overlap * 0.5;
+      b.y += ny * overlap * 0.5;
+
+      const rvx = b.vx - a.vx;
+      const rvy = b.vy - a.vy;
+
+      const velAlongNormal =
+        rvx * nx +
+        rvy * ny;
+
+      if (velAlongNormal > 0)
+        continue;
+
+      const restitution = 1;
+
+      const impulse =
+        -(1 + restitution) *
+        velAlongNormal /
+        ((1 / a.mass) + (1 / b.mass));
+
+      const ix = impulse * nx;
+      const iy = impulse * ny;
+
+      a.vx -= ix / a.mass;
+      a.vy -= iy / a.mass;
+
+      b.vx += ix / b.mass;
+      b.vy += iy / b.mass;
+
+    }
+
+  }
+
+  if (hoveredMeteor) {
+    spaceObjects.forEach(obj => {
+      if (!obj.isMeteor || obj === hoveredMeteor) return;
+
+      const dx = hoveredMeteor.x - obj.x;
+      const dy = hoveredMeteor.y - obj.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist === 0) return;
+
+      const assistStrength = 0.00022;
+      obj.vx += (dx / dist) * assistStrength;
+      obj.vy += (dy / dist) * assistStrength;
+
+      obj.vx = clamp(obj.vx, -0.35, 0.35);
+      obj.vy = clamp(obj.vy, -0.35, 0.35);
+    });
+  }
+
+  requestAnimationFrame(animateSpace);
+
+}
+
+animateSpace();
+console.log(spaceObjects);
+
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+handleHackatimeCallback();
