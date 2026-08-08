@@ -128,6 +128,12 @@ async function handleHackatimeCallback() {
         body: body.toString()
       }
     );
+
+    const data = await  response.json();
+    if (!response.ok) {
+        console.error("Hackatime token error:", data);
+        return;
+    }
 }
 
 // LOGIN BUTTON
