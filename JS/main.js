@@ -77,10 +77,14 @@ async function loginToHackatime() {
 
 // LOGIN BUTTON
 
-document.getElementById("login-button").addEventListener("click", () => {
-  console.log("Hackatime button clicked");
-  loginToHackatime();
+document.addEventListener("DOMContentLoaded", () => {
+  const loginButton = document.getElementById("login-button");
+  if (!loginButton) return;
 
+  loginButton.addEventListener("click", () => {
+    console.log("Hackatime button clicked");
+    loginToHackatime();
+  });
 });
 
 // types.js
