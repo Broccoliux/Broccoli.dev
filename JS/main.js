@@ -5,8 +5,8 @@ const HACKTIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 const HACKTIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
 
 // HACKATIME PKCE
-
 function generateRandomString(length = 64) {
+
   const chars =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
 
@@ -44,10 +44,8 @@ async function generateCodeChallenge(verifier) {
 async function loginToHackatime() {
 
   const codeVerifier = generateRandomString(64);
-
   const codeChallenge =
     await generateCodeChallenge(codeVerifier);
-
   const state = generateRandomString(32);
 
   sessionStorage.setItem(
@@ -76,8 +74,13 @@ async function loginToHackatime() {
     `${HACKATIME_AUTH_URL}?${params.toString()}`;
 }
 
-document.getElementById("login-button").addEventListener("click",() => {console.log("Hackatime button clicked");
+
+// LOGIN BUTTON
+
+document.getElementById("login-button").addEventListener("click", () => {
+  console.log("Hackatime button clicked");
   loginToHackatime();
+
 });
 
 // types.js
