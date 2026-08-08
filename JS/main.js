@@ -155,37 +155,6 @@ dock.addEventListener("mouseleave", () => {
   mouseX = Infinity;
 });
 
-// calculate Targets
-
-function updateTargets() {
-
-  state.forEach(obj => {
-
-    const rect = obj.element.getBoundingClientRect();
-    const center = rect.left + rect.width / 2;
-    const distance = mouseX - center;
-    const abs = Math.abs(distance);
-    let influence = 0;
-
-    if (abs < MAGNETIC_DISTANCE) {
-
-      influence = 1 - abs / MAGNETIC_DISTANCE;
-
-    }
-
-    obj.targetScale = lerp(
-      1,
-      MAX_SCALE,
-      influence
-    );
-
-    obj.targetOffsetY =
-      -10 * influence;
-
-  });
-
-}
-
 // Spring Animation
 
 const SPRING = 0.14;
