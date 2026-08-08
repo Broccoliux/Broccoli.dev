@@ -128,7 +128,7 @@ async function handleHackatimeCallback() {
         body: body.toString()
       }
     );
-  }
+}
 
 // LOGIN BUTTON
 
