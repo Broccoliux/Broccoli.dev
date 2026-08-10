@@ -1071,4 +1071,3 @@ window.addEventListener("mousemove", (e) => {
 });
 
 handleHackatimeCallback();
-wd
