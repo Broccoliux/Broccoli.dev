@@ -100,7 +100,7 @@ async function handleHackatimeCallback() {
     sessionStorage.getItem("hackatime_oauth_state");
   const codeVerifier =
     sessionStorage.getItem("hackatime_code_verifier");
-  if (!savedState || returnedState !== savedState) {
+  if (!savedState || state !== savedState) {
     console.error("Hackatime OAuth state mismatch");
     return;
   }
@@ -140,7 +140,7 @@ async function handleHackatimeCallback() {
     sessionStorage.setItem("hackatime_access_token", data.access_token);
 
     // clean Oauth data
-    sessionStorage.removeItem("hackatime_codee_verifier");
+    sessionStorage.removeItem("hackatime_code_verifier");
     sessionStorage.removeItem("hackatime_oauth_state");
 
     // remove code from URL
