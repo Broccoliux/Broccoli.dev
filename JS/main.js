@@ -96,12 +96,12 @@ async function handleHackatimeCallback() {
     return;
   }
 
-  const savedState = sessionStorage.getItem("hackatime_oauth_state");
-  const codeVerifier = sessionStorage.getItem("hactime_code_verifier");
-
-  // Security check
+  const savedState =
+    sessionStorage.getItem("hackatime_oauth_state");
+  const codeVerifier =
+    sessionStorage.getItem("hackatime_code_verifier");
   if (!savedState || returnedState !== savedState) {
-    console.error("Hacktime OAuth state mismatch");
+    console.error("Hackatime OAuth state mismatch");
     return;
   }
 
