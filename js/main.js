@@ -2,7 +2,7 @@
 const HACKATIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
 const HACKATIME_REDIRECT_URI = "https://broccoli-dev.vercel.app/";
 const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
-const HACKATIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
+
 
 // HACKATIME PKCE
 function generateRandomString(length = 64) {
@@ -118,14 +118,18 @@ async function handleHackatimeCallback() {
   try {
 
     const response = await fetch(
-      HACKATIME_TOKEN_URL,
+      "/api/hackatime-token",
       {
         method: "POST",
         headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
         },
-        body: body.toString()
+        body: JSON.stringify({
+          code: code,
+          code_verifier: codeVerifier,
+          redirect_uri: HACKATIME_REDIRECT_URI,
+          client_id: HACKATIME_CLIENT_ID
+        })
       }
     );
 
