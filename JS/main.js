@@ -100,7 +100,7 @@ async function handleHackatimeCallback() {
   const codeVerifier = sessionStorage.getItem("hactime_code_verifier");
 
   // Security check
-  if (!SavedState || returnedState !== savedState) {
+  if (!savedState || returnedState !== savedState) {
     console.error("Hacktime OAuth state mismatch");
     return;
   }
