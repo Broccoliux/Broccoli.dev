@@ -1,6 +1,6 @@
 // hackatime auth
 const HACKATIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
-const HACKATIME_REDIRECT_URI = "http://localhost:5500/";
+const HACKATIME_REDIRECT_URI = "https://broccoli-dev.vercel.app/";
 const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 const HACKATIME_TOKEN_URL = "https://hackatime.hackclub.com/oauth/token";
 
