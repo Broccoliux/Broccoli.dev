@@ -3,6 +3,12 @@ const HACKATIME_CLIENT_ID = "kvuePzAGn_PdqDlcyp037OYoaW72pFEnXYs1XkZCaUg";
 const HACKATIME_REDIRECT_URI = "https://broccoli-dev.vercel.app/";
 const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 
+const manualProjectHours = {
+  "Flipper Black":99,
+  "ARIA": 23,
+  "Broccoli Board": 65,
+  "N-X-H-desktop-Hud": 23
+};
 
 // HACKATIME PKCE
 function generateRandomString(length = 64) {
