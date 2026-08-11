@@ -161,10 +161,13 @@ async function handleHackatimeCallback() {
     console.log("Project Data:", statsData);
 
     const projectCards = document.querySelectorAll(".project-card");
+
     projectCards.forEach(card => {
+
       const title = card.querySelector("h3")?.textContent.trim();
 
-      if (!title) returns;
+      if (!title) return;
+
       let hours = null;
 
       // 1. Check if this card is connected to Hackatime
@@ -179,7 +182,6 @@ async function handleHackatimeCallback() {
         if (project) {
           hours = project.total_seconds / 3600;
         }
-
       }
 
       // 2. Otherwise use manually entered hours
