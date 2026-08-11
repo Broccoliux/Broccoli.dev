@@ -152,6 +152,8 @@ async function handleHackatimeCallback() {
     );
 
     const statsData = await statsResponse.json();
+    console.log("Project Data:", statsData);
+    console.log("Language Data:", statsData.projects[0].languages);
     console.log("Hackatime Hours:", statsData);
 
     sessionStorage.setItem("hackatime_access_token", data.access_token);
