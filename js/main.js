@@ -143,7 +143,7 @@ async function handleHackatimeCallback() {
     console.log("Token received:", data);
     console.log("ACCESS TOKEN:", data.access_token);
     const statsResponse = await fetch(
-      "https://hackatime.hackclub.com/api/v1/authenticated/hours",
+      "https://hackatime.hackclub.com/api/v1/authenticated/projects",
       {
         headers:{
           Authorization: `Bearer ${data.access_token}`
