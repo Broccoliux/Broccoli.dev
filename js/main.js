@@ -6,7 +6,7 @@ const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 const manualProjectHours = {
   "Flipper Black": 99,
   "ARIA": 23,
-  "Broccoli Board": 65,
+  "Broccoli board": 65,
   "N-X-H-desktop-Hud": 23
 };
 
