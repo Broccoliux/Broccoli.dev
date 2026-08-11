@@ -4,7 +4,7 @@ const HACKATIME_REDIRECT_URI = "https://broccoli-dev.vercel.app/";
 const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 
 const manualProjectHours = {
-  "Flipper Black":99,
+  "Flipper Black": 99,
   "ARIA": 23,
   "Broccoli Board": 65,
   "N-X-H-desktop-Hud": 23
@@ -151,7 +151,7 @@ async function handleHackatimeCallback() {
     const statsResponse = await fetch(
       "https://hackatime.hackclub.com/api/v1/authenticated/projects",
       {
-        headers:{
+        headers: {
           Authorization: `Bearer ${data.access_token}`
         }
       }
@@ -159,6 +159,53 @@ async function handleHackatimeCallback() {
 
     const statsData = await statsResponse.json();
     console.log("Project Data:", statsData);
+
+    const projectCards = document.querySelectorAll(".project-card");
+    projectCards.forEach(card => {
+      const title = card.querySelector("h3")?.textContent.trim();
+
+      if (!title) returns;
+      let hours = null;
+
+      // 1. Check if this card is connected to Hackatime
+      const hackatimeProject = card.dataset.hackatimeProject;
+
+      if (hackatimeProject) {
+
+        const project = data.projects.find(
+          p => p.name === hackatimeProject
+        );
+
+        if (project) {
+          hours = project.total_seconds / 3600;
+        }
+
+      }
+
+      // 2. Otherwise use manually entered hours
+      if (hours === null && manualProjectHours[title] !== undefined) {
+        hours = manualProjectHours[title];
+      }
+
+      // 3. Display the hours
+      if (hours !== null) {
+
+        let timeElement = card.querySelector(".project-time");
+
+        if (!timeElement) {
+          timeElement = document.createElement("div");
+          timeElement.className = "project-time";
+
+          card.querySelector(".project-content")
+            .appendChild(timeElement);
+        }
+
+        timeElement.textContent =
+          `⏱ ${hours.toFixed(1)} hrs`;
+      }
+
+    });
+
     console.log("Language Data:", statsData.projects[0].languages);
     console.log("Hackatime Hours:", statsData);
 
