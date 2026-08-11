@@ -141,6 +141,7 @@ async function handleHackatimeCallback() {
 
     console.log("Hacktime authentication successful");
     console.log("Token received:", data);
+    console.log("ACCESS TOKEN:", data.access_token);
     sessionStorage.setItem("hackatime_access_token", data.access_token);
 
     // clean Oauth data
