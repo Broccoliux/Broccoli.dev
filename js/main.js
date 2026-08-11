@@ -175,7 +175,7 @@ async function handleHackatimeCallback() {
 
       if (hackatimeProject) {
 
-        const project = data.projects.find(
+        const project = statsData.projects.find(
           p => p.name === hackatimeProject
         );
 
