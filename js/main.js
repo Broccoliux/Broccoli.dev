@@ -142,6 +142,18 @@ async function handleHackatimeCallback() {
     console.log("Hacktime authentication successful");
     console.log("Token received:", data);
     console.log("ACCESS TOKEN:", data.access_token);
+    const statsResponse = await fetch(
+      "https://hackatime.hackclub.com/api/hackatime/v1/users/current/statusbar/today",
+      {
+        headers:{
+          Authorization: `Bearer ${data.access_token}`
+        }
+      }
+    );
+
+    const statsData = await statsResponse.json();
+    console.log("Hackatime stats received:", statsData);
+
     sessionStorage.setItem("hackatime_access_token", data.access_token);
 
     // clean Oauth data
