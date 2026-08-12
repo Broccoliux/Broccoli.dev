@@ -905,12 +905,20 @@ async function loadHacktimeLanguage() {
       if (!hacktimeName) return;
 
       const hacktimeLangauge = data.language.find(
-        lang => lang.key.toLowerCase() === hacktimename
-      )
-    })
+        lang => lang.key.toLowerCase() === hacktimename.toLowerCase()
+      );
+
+      if (hacktimeLangauge) {
+        meteor.hours = hackatimeLanguage.total / 3600;
+      }
+    });
+
+    console.log("Update meteor language:", languages);
+    } catch (error) {
+      console.error("Failed to load Hacktime languages data", error);
     }
   }
-}
+  await loadHacktimeLanguage();
 
 
 
