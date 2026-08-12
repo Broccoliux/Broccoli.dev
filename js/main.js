@@ -148,14 +148,16 @@ async function handleHackatimeCallback() {
     console.log("Hacktime authentication successful");
     console.log("Token received:", data);
     console.log("ACCESS TOKEN:", data.access_token);
+
     const statsResponse = await fetch(
-      "https://hackatime.hackclub.com/api/v1/authenticated/projects",
-      {
-        headers: {
-          Authorization: `Bearer ${data.access_token}`
-        }
-      }
+      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
     );
+    if (!statsResponse.ok) {
+      throw new Error(`Hacktime public API failed: &{statsResponse.status}`);
+    }
+
+    const statsData = await statsResponse.json();
+    console
 
     const statsData = await statsResponse.json();
     console.log("Project Data:", statsData);
