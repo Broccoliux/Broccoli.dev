@@ -873,19 +873,23 @@ const languages = [
 
 // load real language hrs from Hacktime
 
-async function loadHacktimeLanguage() {
+// Load real language hours from Hackatime
+async function loadHackatimeLanguages() {
   try {
     const response = await fetch(
       "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
     );
+
     if (!response.ok) {
-      throw new Error(`Hacktime API error: &{response.status}`);
+      throw new Error(`Hackatime API error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("Hacktime language data:", data.language);
 
-    const langaugeMap = {
+    console.log("Hackatime language data:", data.languages);
+
+    // Match your meteor names to Hackatime's language names
+    const languageMap = {
       "Python": "Python",
       "C": "C",
       "HTML": "HTML",
@@ -900,27 +904,27 @@ async function loadHacktimeLanguage() {
     };
 
     languages.forEach(meteor => {
-      const hacktimeName = langauageMap[meteor.language];
+      const hackatimeName = languageMap[meteor.language];
 
-      if (!hacktimeName) return;
+      if (!hackatimeName) return;
 
-      const hacktimeLangauge = data.language.find(
-        lang => lang.key.toLowerCase() === hacktimename.toLowerCase()
+      const hackatimeLanguage = data.languages.find(
+        lang => lang.key.toLowerCase() === hackatimeName.toLowerCase()
       );
 
-      if (hacktimeLangauge) {
+      if (hackatimeLanguage) {
         meteor.hours = hackatimeLanguage.total / 3600;
       }
     });
 
-    console.log("Update meteor language:", languages);
-    } catch (error) {
-      console.error("Failed to load Hacktime languages data", error);
-    }
+    console.log("Updated meteor languages:", languages);
+
+  } catch (error) {
+    console.error("Failed to load Hackatime language data:", error);
   }
-  await loadHacktimeLanguage();
+}
 
-
+await loadHackatimeLanguages();
 
 const spaceObjects = [];
 
