@@ -152,12 +152,14 @@ async function handleHackatimeCallback() {
     const statsResponse = await fetch(
       "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
     );
+
     if (!statsResponse.ok) {
-      throw new Error(`Hacktime public API failed: &{statsResponse.status}`);
+      throw new Error(`Hackatime public API failed: ${statsResponse.status}`);
     }
 
     const statsData = await statsResponse.json();
-    console.log("PUBLIC HACKTIME DTATA:", statsData);
+
+    console.log("PUBLIC HACKATIME DATA:", statsData);
 
     const statsData = await statsResponse.json();
     console.log("Project Data:", statsData);
