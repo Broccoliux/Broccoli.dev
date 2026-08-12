@@ -4,7 +4,7 @@ const HACKATIME_REDIRECT_URI = "https://broccoli-dev.vercel.app/";
 const HACKATIME_AUTH_URL = "https://hackatime.hackclub.com/oauth/authorize";
 
 const manualProjectHours = {
-  "Flipper Black": 99,
+  "Flipper Black": 90,
   "ARIA": 23,
   "Broccoli board": 65,
   "N-X-H-desktop-Hud": 23
@@ -158,12 +158,7 @@ async function handleHackatimeCallback() {
     }
 
     const statsData = await statsResponse.json();
-
     console.log("PUBLIC HACKATIME DATA:", statsData);
-
-    const statsData = await statsResponse.json();
-    console.log("Project Data:", statsData);
-
     const projectCards = document.querySelectorAll(".project-card");
 
     projectCards.forEach(card => {
@@ -174,26 +169,26 @@ async function handleHackatimeCallback() {
 
       let hours = null;
 
-      // 1. Check if this card is connected to Hackatime
+      // hackatime project connection
       const hackatimeProject = card.dataset.hackatimeProject;
 
       if (hackatimeProject) {
 
-        const project = statsData.projects.find(
-          p => p.name === hackatimeProject
+        const project = statsData.projects?.find(
+          p => p.key === hackatimeProject
         );
 
         if (project) {
-          hours = project.total_seconds / 3600;
+          hours = project.total / 3600;
         }
       }
 
-      // 2. Otherwise use manually entered hours
+      // manual hours for projects not tracked by Hackatime
       if (hours === null && manualProjectHours[title] !== undefined) {
         hours = manualProjectHours[title];
       }
 
-      // 3. Display the hours
+      // display hours
       if (hours !== null) {
 
         let timeElement = card.querySelector(".project-time");
