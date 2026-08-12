@@ -883,8 +883,32 @@ async function loadHacktimeLanguage() {
     }
 
     const data = await response.json();
+    console.log("Hacktime language data:", data.language);
 
-    console
+    const langaugeMap = {
+      "Python": "Python",
+      "C": "C",
+      "HTML": "HTML",
+      "CSS": "CSS",
+      "JAVA SCRIPT": "JavaScript",
+      "BASH TERMINAL": "Shell",
+      "JSON": "JSON",
+      "FREE CAD": "FreeCAD",
+      "LAPSE": "Lapse",
+      "TYPE SCRIPT": "TypeScript",
+      "C++": "C++"
+    };
+
+    languages.forEach(meteor => {
+      const hacktimeName = langauageMap[meteor.language];
+
+      if (!hacktimeName) return;
+
+      const hacktimeLangauge = data.language.find(
+        lang => lang.key.toLowerCase() === hacktimename
+      )
+    })
+    }
   }
 }
 
