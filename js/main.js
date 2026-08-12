@@ -786,34 +786,33 @@ document.querySelectorAll(".project-card").forEach(card => {
 // SPACE OBJECTS
 
 const languages = [
-
   {
     language: "Python",
-    hours: 40,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
   {
     language: "C",
-    hours: 333,
+    hours: 0,
     image: "meteor_2-removebg-preview.png"
   },
 
   {
     language: "HTML",
-    hours: 23,
+    hours: 0,
     image: "meteor BG removed.png"
   },
 
   {
     language: "CSS",
-    hours: 12,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
   {
     language: "JAVA SCRIPT",
-    hours: 27,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
@@ -825,7 +824,7 @@ const languages = [
 
   {
     language: "BASH TERMINAL",
-    hours: 2,
+    hours: 0,
     image: "meteor BG removed.png"
   },
 
@@ -843,36 +842,34 @@ const languages = [
 
   {
     language: "JSON",
-    hours: 0.30,
+    hours: 0,
     image: "meteor_2-removebg-preview.png"
   },
 
   {
     language: "FREE CAD",
-    hours: 5,
+    hours: 0,
     image: "meteor BG removed.png"
   },
 
   {
     language: "LAPSE",
-    hours: 86,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
   {
     language: "TYPE SCRIPT",
-    hours: 0.4,
+    hours: 0,
     image: "meteor_2-removebg-preview.png"
   },
 
   {
     language: "C++",
-    hours: 5,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   }
-
 ];
-
 const spaceObjects = [];
 
 let hoveredMeteor = null;
