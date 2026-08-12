@@ -830,7 +830,7 @@ const languages = [
 
   {
     language: "Journaling",
-    hours: 8,
+    hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
@@ -870,6 +870,15 @@ const languages = [
     image: "meteor_1-removebg-preview.png"
   }
 ];
+
+// load real language hrs from Hacktime
+
+async function loadHacktimeLanguage() {
+  try 
+}
+
+
+
 const spaceObjects = [];
 
 let hoveredMeteor = null;
