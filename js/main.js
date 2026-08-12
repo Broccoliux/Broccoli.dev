@@ -926,7 +926,6 @@ async function loadHackatimeLanguages() {
   }
 }
 
-await loadHackatimeLanguages();
 
 const spaceObjects = [];
 
