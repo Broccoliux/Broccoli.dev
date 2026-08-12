@@ -160,6 +160,8 @@ async function handleHackatimeCallback() {
     const statsData = await statsResponse.json();
 
     console.log("PUBLIC HACKATIME DATA:", statsData);
+
+    const statsData = await statsResponse.json();
     console.log("Project Data:", statsData);
 
     const projectCards = document.querySelectorAll(".project-card");
