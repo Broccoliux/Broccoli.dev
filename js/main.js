@@ -874,7 +874,18 @@ const languages = [
 // load real language hrs from Hacktime
 
 async function loadHacktimeLanguage() {
-  try 
+  try {
+    const response = await fetch(
+      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
+    );
+    if (!response.ok) {
+      throw new Error(`Hacktime API error: &{response.status}`);
+    }
+
+    const data = await response.json();
+
+    console
+  }
 }
 
 
