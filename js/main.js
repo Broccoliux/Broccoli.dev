@@ -82,8 +82,15 @@ async function loginToHackatime() {
 
 // Hackatime callback
 
-async function laodPublicHacktimeStats(){
-  
+async function loadPublicHackatimeStats(){
+
+  try {
+
+    console.log("AUTO-LOADING PUBLIC HACKTIME DATA");
+    const statsResponse = await fetch(
+      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
+    );
+  }
 }
 
 async function handleHackatimeCallback() {
