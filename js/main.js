@@ -103,27 +103,61 @@ async function loadPublicHackatimeStats() {
     const hackatimeProjects = statsData.projects || [];
     console.log("USABLE HACKATIME PROJECTS:", hackatimeProjects);
     const projectCards = document.querySelectorAll(".project-card");
-    console.log("PROJECT CARDS FOUND:",projectCards.length);
+    console.log("PROJECT CARDS FOUND:", projectCards.length);
 
-  projectCards.forEach(card => {
+    projectCards.forEach(card => {
 
-    const title = card.querySelector("h3")?.textContent.trim();
-    const hackatimeproject = card.dataset.hackatimeProjects;
+      const title = card.querySelector("h3")?.textContent.trim();
+      const hackatimeproject = card.dataset.hackatimeProjects;
 
-    console.log("CARD:", {
-      title,
-      hackatimeproject
+      console.log("CARD:", {
+        title,
+        hackatimeproject
+      });
+
+      if (!hackatimeProjects) {
+        console.log("NO HACKTIME PROJECT:", title);
+        return;
+      }
+
+      const project = statsData.project.find(
+        p => p.key === hackatimeProject
+      );
+
+      console.log("MATCH RESULTS:", {
+        Requested: hackatimeProject,
+        found: project
+      });
+
+      if (!project) {
+        console.warn(
+          `No Hackatime project found for "${hackatimeProject}"`
+        );
+        return;
+      }
+
+      const hours = project.total / 3600;
+      console.log(
+        `SETTING ${title} → ${hours.toFixed(1)} hrs`
+      );
+
+      let timeElement = card.querySelector(".project-time");
+
+      if (!timeElement) {
+        timeElement = document.createElement("div");
+        timeElement.className = "project-time";
+
+        const content = card.querySelector(".project-content");
+
+        if (!content) {
+          console.error("NO .project-content FOUND:", title);
+          return;
+        }
+        content.appendChild(timeElement);
+      }
+      timeElement.textContent = `⏱ ${hours.toFixed(1)} hrs`;
     });
 
-    if (!hackatimeProjects) {
-      console.log("NO HACKTIME PROJECT:", title);
-      return;
-    }
-
-    const project = statsData.project.find(
-      p => p.key === hackatimeProject
-    );
-  })
 
   } catch (error) {
     console.error(
