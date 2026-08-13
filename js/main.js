@@ -82,10 +82,13 @@ async function loginToHackatime() {
 
 // Hackatime callback
 
+async function laodPublicHacktimeStats(){
+  
+}
+
 async function handleHackatimeCallback() {
 
   const params = new URLSearchParams(window.location.search);
-
   const code = params.get("code");
   const state = params.get("state");
   const error = params.get("error");
@@ -166,14 +169,12 @@ async function handleHackatimeCallback() {
       const title = card.querySelector("h3")?.textContent.trim();
 
       if (!title) return;
-
       let hours = null;
 
       // hackatime project connection
       const hackatimeProject = card.dataset.hackatimeProject;
 
       if (hackatimeProject) {
-
         const project = statsData.projects?.find(
           p => p.key === hackatimeProject
         );
