@@ -108,24 +108,24 @@ async function loadPublicHackatimeStats() {
     projectCards.forEach(card => {
 
       const title = card.querySelector("h3")?.textContent.trim();
-      const hackatimeproject = card.dataset.hackatimeProjects;
+      const hackatimeProject = card.dataset.hackatimeProject;
 
       console.log("CARD:", {
         title,
-        hackatimeproject
+        hackatimeProject
       });
 
-      if (!hackatimeProjects) {
-        console.log("NO HACKTIME PROJECT:", title);
+      if (!hackatimeProject) {
+        console.log("NO HACKATIME PROJECT:", title);
         return;
       }
 
-      const project = statsData.project.find(
+      const project = statsData.projects.find(
         p => p.key === hackatimeProject
       );
 
-      console.log("MATCH RESULTS:", {
-        Requested: hackatimeProject,
+      console.log("MATCH RESULT:", {
+        requested: hackatimeProject,
         found: project
       });
 
