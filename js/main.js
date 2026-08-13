@@ -1202,3 +1202,4 @@ window.addEventListener("mousemove", (e) => {
 });
 
 handleHackatimeCallback();
+loadPublicHackatimeStats();
