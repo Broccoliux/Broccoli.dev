@@ -90,6 +90,63 @@ async function loadPublicHackatimeStats(){
     const statsResponse = await fetch(
       "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
     );
+
+    if (!statsResponse.ok) {
+      throw new Error(
+        `Hacktime public API failed: ${statsResponse.status}`
+      );
+    }
+
+    const statsData = await statsResponse.json();
+    console.log("PUBLIC HACKTIME DATA:", statsData);
+    const projectCards = document.querySelectorAll(".project-card");
+
+    projectCards.forEach(card => {
+
+      const title = card.querySelector("h3")?.textContent.trim();
+      if (!title) return;
+      let hours =  null;
+      const hacktimeProject = card.dataset.hacktimeProject;
+
+      if (hacktimeProject) {
+         const project = statsData.project?.find(p => p.key === hacktimeProject);
+
+        if (project) {
+          hours = project.total / 3600;
+        }
+      }
+
+      if (
+        hours === null &&
+        manualProjectHours[title] !== undefined
+      ) {
+        hours = manualProjectHours[title];
+      }
+
+      if (hours !== null) {
+        let timeElement =
+          card.querySelector(".project-time");
+
+        if (!timeElement) {
+
+          timeElement = document.createElement("div");
+          timeElement.className = "project-time";
+
+          card
+            .querySelector(".project-content")
+            .appendChild(timeElement);
+        }
+        timeElement.textContent =
+          `⏱ ${hours.toFixed(1)} hrs`;
+      }
+
+    });
+
+  } catch (error) {
+    console.error(
+      "Failed to load public Hackatime stats:",
+      error
+    );
   }
 }
 
