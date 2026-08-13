@@ -82,13 +82,139 @@ async function loginToHackatime() {
 
 // Hackatime callback
 
-async function loadPublicHackatimeStats(){
+async function loadPublicHackatimeStats() {
 
   try {
 
     console.log("AUTO-LOADING PUBLIC HACKTIME DATA");
-    console.log("Language Data:", statsData.projects[0].languages);
-    console.log("Hackatime Hours:", statsData);
+    const statsResponse = await fetch(
+      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
+    );
+
+    if (!statsResponse.ok) {
+      throw new Error(
+        `Hacktime public API failed: ${statsResponse.status}`
+      );
+    }
+
+    const statsData = await statsResponse.json();
+    console.log("PUBLIC HACKTIME DATA:", statsData);
+    const projectCards = document.querySelectorAll(".project-card");
+
+    projectCards.forEach(card => {
+
+      const title = card.querySelector("h3")?.textContent.trim();
+      if (!title) return;
+      let hours = null;
+      const hacktimeProject = card.dataset.hacktimeProject;
+
+      if (hacktimeProject) {
+        const project = statsData.project?.find(p => p.key === hacktimeProject);
+
+        if (project) {
+          hours = project.total / 3600;
+        }
+      }
+
+      if (
+        hours === null &&
+        manualProjectHours[title] !== undefined
+      ) {
+        hours = manualProjectHours[title];
+      }
+
+      if (hours !== null) {
+        let timeElement =
+          card.querySelector(".project-time");
+
+        if (!timeElement) {
+
+          timeElement = document.createElement("div");
+          timeElement.className = "project-time";
+
+          card
+            .querySelector(".project-content")
+            .appendChild(timeElement);
+        }
+        timeElement.textContent =
+          `⏱ ${hours.toFixed(1)} hrs`;
+      }
+
+    });
+
+  } catch (error) {
+    console.error(
+      "Failed to load public Hackatime stats:",
+      error
+    );
+  }
+}
+
+async function handleHackatimeCallback() {
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const state = params.get("state");
+  const error = params.get("error");
+
+  //user denied auth
+
+  if (error) {
+    console.error("Hackatime authorization error:", error);
+    return;
+  }
+
+  // No authorization code
+  if (!code) {
+    return;
+  }
+
+  const savedState =
+    sessionStorage.getItem("hackatime_oauth_state");
+  const codeVerifier =
+    sessionStorage.getItem("hackatime_code_verifier");
+  if (!savedState || state !== savedState) {
+    console.error("Hackatime OAuth state mismatch");
+    return;
+  }
+
+  console.log("Hackatime authorization code received");
+
+  const body = new URLSearchParams({
+    client_id: HACKATIME_CLIENT_ID,
+    code: code,
+    redirect_url: HACKATIME_REDIRECT_URI,
+    grant_type: "authorization_code",
+    code_verifier: codeVerifier
+  });
+
+  try {
+
+    const response = await fetch(
+      "/api/hackatime-token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          code: code,
+          code_verifier: codeVerifier,
+          redirect_uri: HACKATIME_REDIRECT_URI,
+          client_id: HACKATIME_CLIENT_ID
+        })
+      }
+    );
+
+    const data = await response.json();
+    if (!response.ok) {
+      console.error("Hackatime token error:", data);
+      return;
+    }
+
+    console.log("Hacktime authentication successful");
+    console.log("Token received:", data);
+    console.log("ACCESS TOKEN:", data.access_token);
 
     sessionStorage.setItem("hackatime_access_token", data.access_token);
 
