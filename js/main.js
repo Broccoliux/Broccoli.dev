@@ -98,8 +98,10 @@ async function loadPublicHackatimeStats() {
     }
 
     const statsData = await statsResponse.json();
-    console.log("PUBLIC HACKTIME DATA:", statsData);
+    console.log("PUBLIC HACKATIME DATA:", statsData);
+    console.log("HACKATIME PROJECTS:", statsData.project);
     const projectCards = document.querySelectorAll(".project-card");
+    console.log("PROJECT CARDS FOUND:",projectCards.length);
 
     projectCards.forEach(card => {
 
