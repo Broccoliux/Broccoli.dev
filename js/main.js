@@ -105,46 +105,25 @@ async function loadPublicHackatimeStats() {
     const projectCards = document.querySelectorAll(".project-card");
     console.log("PROJECT CARDS FOUND:",projectCards.length);
 
-    projectCards.forEach(card => {
+  projectCards.forEach(card => {
 
-      const title = card.querySelector("h3")?.textContent.trim();
-      if (!title) return;
-      let hours = null;
-      const hacktimeProject = card.dataset.hacktimeProject;
+    const title = card.querySelector("h3")?.textContent.trim();
+    const hackatimeproject = card.dataset.hackatimeProjects;
 
-      if (hacktimeProject) {
-        const project = statsData.project?.find(p => p.key === hacktimeProject);
-
-        if (project) {
-          hours = project.total / 3600;
-        }
-      }
-
-      if (
-        hours === null &&
-        manualProjectHours[title] !== undefined
-      ) {
-        hours = manualProjectHours[title];
-      }
-
-      if (hours !== null) {
-        let timeElement =
-          card.querySelector(".project-time");
-
-        if (!timeElement) {
-
-          timeElement = document.createElement("div");
-          timeElement.className = "project-time";
-
-          card
-            .querySelector(".project-content")
-            .appendChild(timeElement);
-        }
-        timeElement.textContent =
-          `⏱ ${hours.toFixed(1)} hrs`;
-      }
-
+    console.log("CARD:", {
+      title,
+      hackatimeproject
     });
+
+    if (!hackatimeProjects) {
+      console.log("NO HACKTIME PROJECT:", title);
+      return;
+    }
+
+    const project = statsData.project.find(
+      p => p.key === hackatimeProject
+    );
+  })
 
   } catch (error) {
     console.error(
