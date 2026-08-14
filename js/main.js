@@ -1054,7 +1054,21 @@ document.querySelectorAll(".space-object").forEach(obj => {
   });
 });
 
+spaceObjects.forEach(obj => {
 
+  if (!obj.isMeteor) return;
+
+  const lang = languages.find(
+    l => l.language === obj.language
+  );
+
+  if (!lang) return;
+
+  obj.hours = lang.hours;
+  const index = languages.indexOf(lang);
+  obj.size = languageToSize(lang.hours, index);
+  obj.el.style.width = `${obj.size}px`;
+});
 
 document.querySelectorAll(".meteor").forEach(meteor => {
 
