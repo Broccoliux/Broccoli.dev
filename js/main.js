@@ -1055,20 +1055,22 @@ document.querySelectorAll(".space-object").forEach(obj => {
   });
 });
 
-Document.querySelectorAll(".meteor").forEach(meteor => {
+document.querySelectorAll(".meteor").forEach(meteor => {
 
   const languageName = meteor.dataset.lang;
   const language = languages.find(
     item => item.language === languageName
   );
+
   if (!language) return;
 
   meteor.addEventListener("mouseenter", () => {
-    document.getElementById("meteor-tooltip-language").textContent =  language.language;
 
-    document.getElementById("meteor-tooltip-language").textContent = language.language;
+    document.getElementById("meteor-tooltip-language").textContent =
+      language.language;
 
-    document.getElementById("meteor-tooltop-time").textContent = `⏱ ${language.hours.toFixed(1)} hrs`;
+    document.getElementById("meteor-tooltip-time").textContent =
+      `⏱ ${language.hours.toFixed(1)} hrs`;
 
     const tooltip = document.getElementById("meteor-tooltip");
     tooltip.style.opacity = "1";
@@ -1077,6 +1079,7 @@ Document.querySelectorAll(".meteor").forEach(meteor => {
   meteor.addEventListener("mouseleave", () => {
     document.getElementById("meteor-tooltip").style.opacity = "0";
   });
+
 });
 
 function animateSpace() {
