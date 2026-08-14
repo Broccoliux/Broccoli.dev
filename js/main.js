@@ -804,12 +804,6 @@ const languages = [
   },
 
   {
-    language: "VIBE CODING",
-    hours: 2,
-    image: "meteor BG removed.png"
-  },
-
-  {
     language: "BASH TERMINAL",
     hours: 0,
     image: "meteor BG removed.png"
@@ -819,12 +813,6 @@ const languages = [
     language: "Markdown",
     hours: 0,
     image: "meteor_1-removebg-preview.png"
-  },
-
-  {
-    language: "AI Coding",
-    hours: 0.2,
-    image: "meteor BG removed.png"
   },
 
   {
@@ -883,8 +871,7 @@ async function loadLanguageHoursFromHackatime() {
       "LAPSE": "Lapse",
       "TYPE SCRIPT": "TypeScript",
       "C++": "C++",
-      "Markdown": "Markdown",
-      "AI Coding": "Python"
+      "Markdown": "Markdown"
     };
 
     languages.forEach(meteor => {
