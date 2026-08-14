@@ -931,6 +931,11 @@ function languageToSize(hours, index = 0) {
   return Math.max(62, Math.min(165, size));
 }
 
+// Format hours for display (1 decimal place for readability)
+function formatHours(hours) {
+  return hours.toFixed(1);
+}
+
 // Initialize space objects with real hackatime data
 function initializeSpaceObjects() {
   let languageIndex = 0;
@@ -1099,7 +1104,7 @@ function animateSpace() {
       tooltip.style.top = y + "px";
 
       tooltipLanguage.textContent = obj.language;
-      tooltipHours.textContent = `${obj.hours} hrs`;
+      tooltipHours.textContent = `${obj.hours.toFixed(1)} hrs`;
 
     }
 
