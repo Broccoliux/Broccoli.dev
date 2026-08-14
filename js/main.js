@@ -116,8 +116,33 @@ async function loadPublicHackatimeStats() {
       });
 
       if (!hackatimeProject) {
-        console.log("NO HACKATIME PROJECT:", title);
-        return;
+        console.log("NO HACKTIME PEOJECT:", title);
+
+        if (manualProjectHours[title] !== undefined) {
+          const hours = manualProjectHours[title];
+
+          console.log(
+            "SETTING MANUAL:",
+            title,
+            "→",
+            hours,
+            "hrs"
+          );
+
+          let timeElement = card.querySelector(".project-time");
+
+          if (!timeElement) {
+            timeElement = document.createElement("div");
+            timeElement.className = "project-time";
+
+            const content = card.querySelector(".project-content");
+
+            if (content) {
+              content.appendChild(timeElement);
+              
+            }
+          }
+        }
       }
 
       const project = statsData.projects.find(
