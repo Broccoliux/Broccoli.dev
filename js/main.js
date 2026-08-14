@@ -816,13 +816,13 @@ const languages = [
   },
 
   {
-    language: "Journaling",
+    language: "Markdown",
     hours: 0,
     image: "meteor_1-removebg-preview.png"
   },
 
   {
-    language: "Antigravity",
+    language: "AI Coding",
     hours: 0.2,
     image: "meteor BG removed.png"
   },
@@ -882,7 +882,9 @@ async function loadLanguageHoursFromHackatime() {
       "FREE CAD": "FreeCAD",
       "LAPSE": "Lapse",
       "TYPE SCRIPT": "TypeScript",
-      "C++": "C++"
+      "C++": "C++",
+      "Markdown": "Markdown",
+      "AI Coding": "Python"
     };
 
     languages.forEach(meteor => {
