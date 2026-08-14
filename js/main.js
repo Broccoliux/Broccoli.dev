@@ -900,11 +900,10 @@ async function loadLanguageHoursFromHackatime() {
   } catch (error) {
     // Hackatime fetch failed, using default hours
   }
+
+  // Initialize space objects AFTER loading real data
+  initializeSpaceObjects();
 }
-
-// Load real hackatime data on page load
-loadLanguageHoursFromHackatime();
-
 
 const spaceObjects = [];
 
@@ -930,87 +929,99 @@ function languageToSize(hours, index = 0) {
   return Math.max(62, Math.min(165, size));
 }
 
-let languageIndex = 0;
+// Initialize space objects with real hackatime data
+function initializeSpaceObjects() {
+  let languageIndex = 0;
 
-document.querySelectorAll(".space-object").forEach(obj => {
+  document.querySelectorAll(".space-object").forEach(obj => {
 
-  const isMeteor = obj.classList.contains("meteor");
-  const isBroccoli = obj.classList.contains("broccoli");
+    const isMeteor = obj.classList.contains("meteor");
+    const isBroccoli = obj.classList.contains("broccoli");
 
-  let lang = null;
-  let size = 220;
+    let lang = null;
+    let size = 220;
 
-  if (isMeteor) {
+    if (isMeteor) {
 
-    lang = languages[languageIndex];
-    languageIndex++;
-    size = languageToSize(lang.hours, languageIndex - 1);
-    obj.src = `img_assets/${lang.image}`;
+      lang = languages[languageIndex];
+      languageIndex++;
+      size = languageToSize(lang.hours, languageIndex - 1);
+      obj.src = `img_assets/${lang.image}`;
 
-  }
+    }
 
-  const angle = Math.random() * Math.PI * 2;
-  const speed =
-    isBroccoli
-      ? 0.45
-      : 0.03 + Math.random() * 0.08
+    const angle = Math.random() * Math.PI * 2;
+    const speed =
+      isBroccoli
+        ? 0.45
+        : 0.03 + Math.random() * 0.08
 
 
-  obj.style.width = `${size}px`;
-  obj.style.height = "auto";
-  spaceObjects.push({
+    obj.style.width = `${size}px`;
+    obj.style.height = "auto";
+    spaceObjects.push({
 
-    el: obj,
+      el: obj,
 
-    x: Math.random() * (window.innerWidth - size),
-    y: Math.random() * (window.innerHeight - size),
+      x: Math.random() * (window.innerWidth - size),
+      y: Math.random() * (window.innerHeight - size),
 
-    vx: Math.cos(angle) * speed,
-    vy: Math.sin(angle) * speed,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
 
-    rotation: Math.random() * 360,
-    rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
+      rotation: Math.random() * 360,
+      rotationSpeed: isBroccoli ? 0.3 : (Math.random() - 0.5) * 0.08,
 
-    size: size,
-    radius: size * 0.5,
-    mass: isBroccoli ? 8 : 1,
+      size: size,
+      radius: size * 0.5,
+      mass: isBroccoli ? 8 : 1,
 
-    language: lang?.language || "",
-    hours: lang?.hours ?? 0,
+      language: lang?.language || "",
+      hours: lang?.hours ?? 0,
 
-    scale: 1,
-    isMeteor,
-    isBroccoli,
-    isHoverStopped: false,
-    storedVx: 0,
-    storedVy: 0
+      scale: 1,
+      isMeteor,
+      isBroccoli,
+      isHoverStopped: false,
+      storedVx: 0,
+      storedVy: 0
+
+    });
+  });
+}
+
+// Load real hackatime data on page load
+loadLanguageHoursFromHackatime();
+
+// Setup meteor hover tooltips
+function setupMeteorTooltips() {
+  document.querySelectorAll(".meteor").forEach(meteor => {
+
+    const languageName = meteor.dataset.lang;
+    const language = languages.find(
+      item => item.language === languageName
+    );
+
+    if (!language) return;
+
+    meteor.addEventListener("mouseenter", () => {
+      document.getElementById("meteor-tooltip-language").textContent =
+        language.language;
+      document.getElementById("meteor-tooltip-time").textContent =
+        `⏱ ${language.hours.toFixed(1)} hrs`;
+      const tooltip = document.getElementById("meteor-tooltip");
+      tooltip.style.opacity = "1";
+    });
+
+    meteor.addEventListener("mouseleave", () => {
+      document.getElementById("meteor-tooltip").style.opacity = "0";
+    });
 
   });
-});
+}
 
-document.querySelectorAll(".meteor").forEach(meteor => {
-
-  const languageName = meteor.dataset.lang;
-  const language = languages.find(
-    item => item.language === languageName
-  );
-
-  if (!language) return;
-
-  meteor.addEventListener("mouseenter", () => {
-    document.getElementById("meteor-tooltip-language").textContent =
-      language.language;
-    document.getElementById("meteor-tooltip-time").textContent =
-      `⏱ ${language.hours.toFixed(1)} hrs`;
-    const tooltip = document.getElementById("meteor-tooltip");
-    tooltip.style.opacity = "1";
-  });
-
-  meteor.addEventListener("mouseleave", () => {
-    document.getElementById("meteor-tooltip").style.opacity = "0";
-  });
-
-});
+// Setup tooltips after space objects are initialized
+setupMeteorTooltips();
 
 function animateSpace() {
 
@@ -1192,6 +1203,11 @@ function animateSpace() {
 }
 
 animateSpace();
+
+// Refresh tooltips when space objects update
+window.addEventListener("load", () => {
+  setTimeout(setupMeteorTooltips, 500);
+});
 
 window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
