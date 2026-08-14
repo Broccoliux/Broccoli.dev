@@ -143,7 +143,7 @@ async function loadPublicHackatimeStats() {
             }
           }
           if (timeElement) {
-            timeElement, textContent = `⏱ ${hours.toFixed(1)} hrs`;
+            timeElement.textContent = `⏱ ${hours.toFixed(1)} hrs`;
           }
         }
         return;
