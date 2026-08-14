@@ -139,10 +139,14 @@ async function loadPublicHackatimeStats() {
 
             if (content) {
               content.appendChild(timeElement);
-              
+
             }
           }
+          if (timeElement) {
+            timeElement, textContent = `⏱ ${hours.toFixed(1)} hrs`;
+          }
         }
+        return;
       }
 
       const project = statsData.projects.find(
