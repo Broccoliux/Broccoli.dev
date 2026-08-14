@@ -1042,8 +1042,8 @@ document.querySelectorAll(".space-object").forEach(obj => {
     radius: size * 0.5,
     mass: isBroccoli ? 8 : 1,
 
-    language: lang?.language,
-    hours: lang?.hours,
+    language: lang?.language || "",
+    hours: lang?.hours ?? 0,
 
     scale: 1,
     isMeteor,
@@ -1053,9 +1053,31 @@ document.querySelectorAll(".space-object").forEach(obj => {
     storedVy: 0
 
   });
-
 });
 
+Document.querySelectorAll(".meteor").forEach(meteor => {
+
+  const languageName = meteor.dataset.lang;
+  const language = languages.find(
+    item => item.language === languageName
+  );
+  if (!language) return;
+
+  meteor.addEventListener("mouseenter", () => {
+    document.getElementById("meteor-tooltip-language").textContent =  language.language;
+
+    document.getElementById("meteor-tooltip-language").textContent = language.language;
+
+    document.getElementById("meteor-tooltop-time").textContent = `⏱ ${language.hours.toFixed(1)} hrs`;
+
+    const tooltip = document.getElementById("meteor-tooltip");
+    tooltip.style.opacity = "1";
+  });
+
+  meteor.addEventListener("mouseleave", () => {
+    document.getElementById("meteor-tooltip").style.opacity = "0";
+  });
+});
 
 function animateSpace() {
 
@@ -1063,7 +1085,6 @@ function animateSpace() {
 
     m.x += m.vx;
     m.y += m.vy;
-
     m.rotation += m.rotationSpeed;
 
     if (m.x < 0) {
