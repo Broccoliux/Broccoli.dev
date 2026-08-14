@@ -858,7 +858,52 @@ const languages = [
   }
 ];
 
+// FETCH REAL HACKATIME LANGUAGE HOURS
+async function loadLanguageHoursFromHackatime() {
+  try {
+    const response = await fetch(
+      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
+    );
 
+    if (!response.ok) {
+      throw new Error(`Hackatime API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    const languageMap = {
+      "Python": "Python",
+      "C": "C",
+      "HTML": "HTML",
+      "CSS": "CSS",
+      "JAVA SCRIPT": "JavaScript",
+      "BASH TERMINAL": "Shell",
+      "JSON": "JSON",
+      "FREE CAD": "FreeCAD",
+      "LAPSE": "Lapse",
+      "TYPE SCRIPT": "TypeScript",
+      "C++": "C++"
+    };
+
+    languages.forEach(meteor => {
+      const hackatimeName = languageMap[meteor.language];
+      if (!hackatimeName) return;
+
+      const hackatimeLanguage = data.languages.find(
+        lang => lang.key.toLowerCase() === hackatimeName.toLowerCase()
+      );
+
+      if (hackatimeLanguage) {
+        meteor.hours = hackatimeLanguage.total / 3600;
+      }
+    });
+  } catch (error) {
+    // Hackatime fetch failed, using default hours
+  }
+}
+
+// Load real hackatime data on page load
+loadLanguageHoursFromHackatime();
 
 
 const spaceObjects = [];
