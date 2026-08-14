@@ -994,7 +994,6 @@ function languageToSize(hours, index = 0) {
   const size = Math.round(baseSize + variation);
 
   return Math.max(62, Math.min(165, size));
-
 }
 
 let languageIndex = 0;
@@ -1054,6 +1053,8 @@ document.querySelectorAll(".space-object").forEach(obj => {
 
   });
 });
+
+
 
 document.querySelectorAll(".meteor").forEach(meteor => {
 
