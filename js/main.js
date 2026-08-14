@@ -98,36 +98,17 @@ async function loadPublicHackatimeStats() {
     }
 
     const statsData = await statsResponse.json();
-    console.log("PUBLIC HACKATIME DATA:", statsData);
-    console.log("HACKATIME PROJECTS:", statsData.projects);
-    const hackatimeProjects = statsData.projects || [];
-    console.log("USABLE HACKATIME PROJECTS:", hackatimeProjects);
     const projectCards = document.querySelectorAll(".project-card");
-    console.log("PROJECT CARDS FOUND:", projectCards.length);
 
     projectCards.forEach(card => {
 
       const title = card.querySelector("h3")?.textContent.trim();
       const hackatimeProject = card.dataset.hackatimeProject;
 
-      console.log("CARD:", {
-        title,
-        hackatimeProject
-      });
-
       if (!hackatimeProject) {
-        console.log("NO HACKTIME PEOJECT:", title);
 
         if (manualProjectHours[title] !== undefined) {
           const hours = manualProjectHours[title];
-
-          console.log(
-            "SETTING MANUAL:",
-            title,
-            "→",
-            hours,
-            "hrs"
-          );
 
           let timeElement = card.querySelector(".project-time");
 
@@ -153,11 +134,6 @@ async function loadPublicHackatimeStats() {
         p => p.key === hackatimeProject
       );
 
-      console.log("MATCH RESULT:", {
-        requested: hackatimeProject,
-        found: project
-      });
-
       if (!project) {
         console.warn(
           `No Hackatime project found for "${hackatimeProject}"`
@@ -166,9 +142,6 @@ async function loadPublicHackatimeStats() {
       }
 
       const hours = project.total / 3600;
-      console.log(
-        `SETTING ${title} → ${hours.toFixed(1)} hrs`
-      );
 
       let timeElement = card.querySelector(".project-time");
 
@@ -203,14 +176,10 @@ async function handleHackatimeCallback() {
   const state = params.get("state");
   const error = params.get("error");
 
-  //user denied auth
-
   if (error) {
-    console.error("Hackatime authorization error:", error);
     return;
   }
 
-  // No authorization code
   if (!code) {
     return;
   }
@@ -220,19 +189,8 @@ async function handleHackatimeCallback() {
   const codeVerifier =
     sessionStorage.getItem("hackatime_code_verifier");
   if (!savedState || state !== savedState) {
-    console.error("Hackatime OAuth state mismatch");
     return;
   }
-
-  console.log("Hackatime authorization code received");
-
-  const body = new URLSearchParams({
-    client_id: HACKATIME_CLIENT_ID,
-    code: code,
-    redirect_url: HACKATIME_REDIRECT_URI,
-    grant_type: "authorization_code",
-    code_verifier: codeVerifier
-  });
 
   try {
 
@@ -254,13 +212,8 @@ async function handleHackatimeCallback() {
 
     const data = await response.json();
     if (!response.ok) {
-      console.error("Hackatime token error:", data);
       return;
     }
-
-    console.log("Hacktime authentication successful");
-    console.log("Token received:", data);
-    console.log("ACCESS TOKEN:", data.access_token);
 
     sessionStorage.setItem("hackatime_access_token", data.access_token);
 
@@ -276,12 +229,7 @@ async function handleHackatimeCallback() {
     );
 
   } catch (error) {
-
-    console.error(
-      "Hackatime token request failed:",
-      error
-    );
-
+    // Token request failed
   }
 
 }
@@ -293,7 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!loginButton) return;
 
   loginButton.addEventListener("click", () => {
-    console.log("Hackatime button clicked");
     loginToHackatime();
   });
 });
@@ -303,10 +250,6 @@ document.addEventListener("DOMContentLoaded", () => {
 const tooltip = document.querySelector("#hover-tooltip, #tooltip");
 const tooltipLanguage = document.querySelector("#hover-tooltip-language, #tooltip-language");
 const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hours");
-
-console.log(tooltip);
-console.log(tooltipLanguage);
-console.log(tooltipHours);
 
 new Typed("#element", {
   strings: [
@@ -353,11 +296,6 @@ items.forEach((item, index) => {
 function clamp(value, min, max) {
 
   return Math.max(min, Math.min(max, value));
-}
-
-function lerp(a, b, t) {
-
-  return a + (b - a) * t;
 }
 
 // mouse Position
@@ -920,56 +858,7 @@ const languages = [
   }
 ];
 
-// load real language hrs from Hacktime
 
-async function loadHackatimeLanguages() {
-  try {
-    const response = await fetch(
-      "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
-    );
-
-    if (!response.ok) {
-      throw new Error(`Hackatime API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    console.log("Hackatime language data:", data.languages);
-
-    // Match your meteor names to Hackatime's language names
-    const languageMap = {
-      "Python": "Python",
-      "C": "C",
-      "HTML": "HTML",
-      "CSS": "CSS",
-      "JAVA SCRIPT": "JavaScript",
-      "BASH TERMINAL": "Shell",
-      "JSON": "JSON",
-      "FREE CAD": "FreeCAD",
-      "LAPSE": "Lapse",
-      "TYPE SCRIPT": "TypeScript",
-      "C++": "C++"
-    };
-
-    languages.forEach(meteor => {
-      const hackatimeName = languageMap[meteor.language];
-
-      if (!hackatimeName) return;
-
-      const hackatimeLanguage = data.languages.find(
-        lang => lang.key.toLowerCase() === hackatimeName.toLowerCase()
-      );
-
-      if (hackatimeLanguage) {
-        meteor.hours = hackatimeLanguage.total / 3600;
-      }
-    });
-    console.log("UPDATED LANGUAGES:", languages);
-
-  } catch (error) {
-    console.error("Failed to load Hackatime language data:", error);
-  }
-}
 
 
 const spaceObjects = [];
@@ -1054,22 +943,6 @@ document.querySelectorAll(".space-object").forEach(obj => {
   });
 });
 
-spaceObjects.forEach(obj => {
-
-  if (!obj.isMeteor) return;
-
-  const lang = languages.find(
-    l => l.language === obj.language
-  );
-
-  if (!lang) return;
-
-  obj.hours = lang.hours;
-  const index = languages.indexOf(lang);
-  obj.size = languageToSize(lang.hours, index);
-  obj.el.style.width = `${obj.size}px`;
-});
-
 document.querySelectorAll(".meteor").forEach(meteor => {
 
   const languageName = meteor.dataset.lang;
@@ -1080,13 +953,10 @@ document.querySelectorAll(".meteor").forEach(meteor => {
   if (!language) return;
 
   meteor.addEventListener("mouseenter", () => {
-
     document.getElementById("meteor-tooltip-language").textContent =
       language.language;
-
     document.getElementById("meteor-tooltip-time").textContent =
       `⏱ ${language.hours.toFixed(1)} hrs`;
-
     const tooltip = document.getElementById("meteor-tooltip");
     tooltip.style.opacity = "1";
   });
@@ -1277,7 +1147,6 @@ function animateSpace() {
 }
 
 animateSpace();
-console.log(spaceObjects);
 
 window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
