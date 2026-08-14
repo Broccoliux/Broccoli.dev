@@ -922,7 +922,6 @@ const languages = [
 
 // load real language hrs from Hacktime
 
-// Load real language hours from Hackatime
 async function loadHackatimeLanguages() {
   try {
     const response = await fetch(
@@ -965,8 +964,7 @@ async function loadHackatimeLanguages() {
         meteor.hours = hackatimeLanguage.total / 3600;
       }
     });
-
-    console.log("Updated meteor languages:", languages);
+    console.log("UPDATED LANGUAGES:", languages);
 
   } catch (error) {
     console.error("Failed to load Hackatime language data:", error);
