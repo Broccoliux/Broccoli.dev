@@ -269,7 +269,32 @@ hr {
 }
 
 
+.project-card {
+  position: relative;
+  --shine-x: 30%;
+  --shine-y: 20%;
+  overflow: hidden;
+  border-radius: 24px;
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 560px;
 
+  background: rgba(12, 12, 12, .28);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, .10);
+
+  cursor: pointer;
+
+  box-shadow:
+  0 18px 45px rgba(0, 0, 0, 0.45),
+  inset 0 1px rgba(255, 255, 255, 0.10),
+  
+}
 
 .project-card * {
 
