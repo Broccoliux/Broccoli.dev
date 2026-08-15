@@ -207,12 +207,6 @@ hr {
   overflow: hidden;
 }
 
-#element {
-  color: #26da0e;
-  white-space: nowrap;
-  display: inline-block;
-}
-
 .typed-cursor {
   font-size: 34px;
   color: #fff;
@@ -476,10 +470,10 @@ hr {
 }
 
 .space-object {
-
   position: absolute;
   left: 0;
   top: 0;
+  transform-origin: center center;
   pointer-events: none;
   will-change: transform;
   user-select: none;
@@ -519,11 +513,6 @@ hr {
   background: #26da0e;
   color: black;
   cursor: pointer;
-}
-
-.space-object {
-  position: absolute;
-  transform-origin: center center;
 }
 
 #meteor-tooltip {
