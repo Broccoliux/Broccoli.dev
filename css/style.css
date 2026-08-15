@@ -326,13 +326,9 @@ hr {
     .project-card::before {
 
       content: "";
-
       position: absolute;
-
       inset: 0;
-
       border-radius: inherit;
-
       pointer-events: none;
 
       background:
@@ -577,4 +573,3 @@ hr {
   margin-top: 6px;
   color: #9cff7a;
 }
-
