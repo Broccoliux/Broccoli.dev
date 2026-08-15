@@ -254,7 +254,7 @@ const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hour
 new Typed("#element", {
   strings: [
     "AI/ML Engineering",
-    "Embedded Systems Developeing",
+    "Embedded Systems Developing",
     "IOT Engineering", "yapper"
   ],
   typeSpeed: 35,
@@ -1210,4 +1210,3 @@ window.addEventListener("mousemove", (e) => {
 
 handleHackatimeCallback();
 loadPublicHackatimeStats();
-
