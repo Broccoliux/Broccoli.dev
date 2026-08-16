@@ -1011,6 +1011,13 @@ function setupMeteorTooltips() {
       document.getElementById("meteor-tooltip").style.opacity = "0";
     });
 
+    const detailsButton = document.getElementById("tooltip-open");
+
+    detailsButton.addEventListener("click", () => {
+      window.location,herf =
+      `stats.html?language=${encodeURIComponent(language.language)}`;
+    });
+
   });
 }
 
