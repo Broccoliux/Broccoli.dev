@@ -1058,7 +1058,6 @@ function animateSpace() {
   });
 
   let hoveringAnyMeteor = false;
-  hoveredMeteor = null;
 
   spaceObjects.forEach(obj => {
 
