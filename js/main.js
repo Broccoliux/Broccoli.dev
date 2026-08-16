@@ -1093,7 +1093,7 @@ function animateSpace() {
 
       tooltip.style.opacity = "1";
       const x = Math.min(mouse.x + 20, window.innerWidth - 220);
-      const y = Math.min(mouse.y + 20, window.innerHeight - 120);
+      const y = Math.min(mouse.y + 20, window.innerHeight - 160);
       tooltip.style.left = x + "px";
       tooltip.style.top = y + "px";
 
