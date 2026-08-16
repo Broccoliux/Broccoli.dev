@@ -521,7 +521,7 @@ hr {
 
 #meteor-tooltip {
   position: fixed;
-  pointer-events: none;
+  pointer-events: auto;
   background: rgba(10, 10, 10, .95);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, .12);
@@ -530,7 +530,7 @@ hr {
   color: white;
   opacity: 0;
   transition: .18s;
-  z-index: 9999;
+  z-index: 99999;
   min-width: 170px;
   box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
 }
