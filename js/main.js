@@ -1100,11 +1100,19 @@ function animateSpace() {
       tooltipLanguage.textContent = obj.language;
       tooltipHours.textContent = `${obj.hours.toFixed(1)} hrs`;
 
+      const detailsButton = document.getElementById("tooltip-open");
+
+      detailsButton.onclick = () => {
+        window.location.href =
+          `stats.html?language=${encodeURIComponent(obj.language)}`;
+      };
     }
 
   });
 
-  if (!hoveringAnyMeteor) {
+  const tooltipHoverd = tooltip.matches(":hover");
+
+  if (!hoveringAnyMeteor && !tooltipHoverd) {
     spaceObjects.forEach(obj => {
       if (!obj.isHoverStopped) return;
       obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
@@ -1113,7 +1121,6 @@ function animateSpace() {
     });
 
     tooltip.style.opacity = "0";
-
   }
 
   for (let i = 0; i < spaceObjects.length; i++) {
