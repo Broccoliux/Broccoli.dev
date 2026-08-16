@@ -505,13 +505,14 @@ hr {
 
 #tooltip-open {
   margin-top: 12px;
-  width: 34px;
-  height: 34px;
+  padding: 8px 14px;
   border-radius: 8px;
   border: none;
   background: #26da0e;
   color: black;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 #meteor-tooltip {
