@@ -247,9 +247,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // types.js
 
-const tooltip = document.querySelector("#hover-tooltip, #tooltip");
-const tooltipLanguage = document.querySelector("#hover-tooltip-language, #tooltip-language");
-const tooltipHours = document.querySelector("#hover-tooltip-hours, #tooltip-hours");
+const tooltip = document.getElementById("meteor-tooltip");
+const tooltipLanguage = document.getElementById("meteor-tooltip-language");
+const tooltipHours = document.getElementById("meteor-tooltip-time");
+
+const tooltipButton = document.getElementById("tooltip-open");
+
+tooltip.addEventListener("mouseenter", () => {
+  tooltipHovered = true;
+
+  if (hoveredMeteor) {
+    hoveredMeteor.vx = 0;
+    hoveredMeteor.vy = 0;
+  }
+});
+
+tooltip.addEventListener("mouseleave", () => {
+  tooltipHovered = false;
+});
 
 new Typed("#element", {
   strings: [
@@ -897,6 +912,7 @@ async function loadLanguageHoursFromHackatime() {
 const spaceObjects = [];
 
 let hoveredMeteor = null;
+let tooltipHovered = false;
 
 let mouse = {
   x: 0,
@@ -987,42 +1003,22 @@ function initializeSpaceObjects() {
 // Load real hackatime data on page load
 loadLanguageHoursFromHackatime();
 
-// Setup meteor hover tooltips
-function setupMeteorTooltips() {
-  document.querySelectorAll(".meteor").forEach(meteor => {
+// Button click handler for meteor tooltip
+tooltipButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
 
-    const languageName = meteor.dataset.lang;
-    const language = languages.find(
-      item => item.language === languageName
-    );
+  const language = tooltip.dataset.language;
+  console.log("DIG IN clicked:", language);
 
-    if (!language) return;
+  if (!language) {
+    console.error("No language stored in tooltip");
+    return;
+  }
 
-    meteor.addEventListener("mouseenter", () => {
-      document.getElementById("meteor-tooltip-language").textContent =
-        language.language;
-      document.getElementById("meteor-tooltip-time").textContent =
-        `⏱ ${language.hours.toFixed(1)} hrs`;
-      const tooltip = document.getElementById("meteor-tooltip");
-      tooltip.style.opacity = "1";
-    });
-
-    meteor.addEventListener("mouseleave", () => {
-      document.getElementById("meteor-tooltip").style.opacity = "0";
-    });
-
-    const detailsButton = document.getElementById("tooltip-open");
-
-    detailsButton.addEventListener("click", () => {
-      window.location,herf =
-      `stats.html?language=${encodeURIComponent(language.language)}`;
-    });
-
-  });
-}
-
-// Setup tooltips after space objects are initialized
-setupMeteorTooltips();
+  window.location.href =
+    `stats.html?language=${encodeURIComponent(language)}`;
+});
 
 function animateSpace() {
 
@@ -1080,7 +1076,6 @@ function animateSpace() {
     obj.scale = hovering ? 1.16 : 1;
 
     if (hovering) {
-
       hoveringAnyMeteor = true;
       hoveredMeteor = obj;
       if (!obj.isHoverStopped) {
@@ -1092,35 +1087,43 @@ function animateSpace() {
       obj.vy = 0;
 
       tooltip.style.opacity = "1";
+      tooltip.dataset.language = obj.language;
       const x = Math.min(mouse.x + 20, window.innerWidth - 220);
-      const y = Math.min(mouse.y + 20, window.innerHeight - 160);
+      const y = Math.min(mouse.y + 20, window.innerHeight - 120);
       tooltip.style.left = x + "px";
       tooltip.style.top = y + "px";
 
       tooltipLanguage.textContent = obj.language;
       tooltipHours.textContent = `${obj.hours.toFixed(1)} hrs`;
-
-      const detailsButton = document.getElementById("tooltip-open");
-
-      detailsButton.onclick = () => {
-        window.location.href =
-          `stats.html?language=${encodeURIComponent(obj.language)}`;
-      };
     }
-
   });
 
-  const tooltipHoverd = tooltip.matches(":hover");
+  // Check if tooltip or button is being hovered
+  const tooltipElement = document.getElementById("meteor-tooltip");
+  const tooltipRect = tooltipElement.getBoundingClientRect();
+  const buttonRect = tooltipElement.querySelector("#tooltip-open").getBoundingClientRect();
 
-  if (!hoveringAnyMeteor && !tooltipHoverd) {
+  // Expand hover zone to include tooltip and button
+  const isNearTooltip = (mouse.x >= tooltipRect.left - 10 && mouse.x <= tooltipRect.right + 10 &&
+    mouse.y >= tooltipRect.top - 10 && mouse.y <= tooltipRect.bottom + 10);
+  const isNearButton = (mouse.x >= buttonRect.left - 5 && mouse.x <= buttonRect.right + 5 &&
+    mouse.y >= buttonRect.top - 5 && mouse.y <= buttonRect.bottom + 5);
+
+  // Unfreeze only if not hovering meteor AND not near tooltip AND not near button
+  if (!hoveringAnyMeteor && !isNearTooltip && !isNearButton && hoveredMeteor) {
     spaceObjects.forEach(obj => {
       if (!obj.isHoverStopped) return;
       obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
       obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
       obj.isHoverStopped = false;
     });
-
     tooltip.style.opacity = "0";
+    hoveredMeteor = null;
+  } else if ((isNearTooltip || isNearButton) && hoveredMeteor) {
+    // Keep frozen while near tooltip or button
+    hoveredMeteor.vx = 0;
+    hoveredMeteor.vy = 0;
+    tooltip.style.opacity = "1";
   }
 
   for (let i = 0; i < spaceObjects.length; i++) {
@@ -1212,11 +1215,7 @@ function animateSpace() {
 
 animateSpace();
 
-// Refresh tooltips when space objects update
-window.addEventListener("load", () => {
-  setTimeout(setupMeteorTooltips, 500);
-});
-
+// Setup on mouse move to track position
 window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
