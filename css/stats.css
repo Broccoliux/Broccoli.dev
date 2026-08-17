@@ -1,0 +1,30 @@
+.stats-main {
+  min-height: 100vh;
+  padding: 120px 10%;
+}
+
+.stats-hero {
+  max-width: 900;
+}
+
+
+.stats-eyebrow {
+  color: #26da0e;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.stats-hero h1 {
+  font-size: 64px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.stats-description {
+  max-width: 650px;
+  color: #b8b8b8;
+  font-size: 20px;
+  line-height: 1.6;
+}
