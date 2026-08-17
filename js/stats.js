@@ -40,6 +40,9 @@ async function loadStats() {
     document.getElementById("stats-language").textContent =
       selectedLanguage;
 
+    document.getElementById("project-count").textContent =
+      data.projects.length;
+
   } catch (error) {
     console.error("Failed to load stats:", error);
   }
