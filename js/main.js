@@ -1020,6 +1020,23 @@ tooltipButton.addEventListener("click", (e) => {
     `stats.html?language=${encodeURIComponent(language)}`;
 });
 
+function resetMeteorHoverState() {
+  if (!hoveredMeteor) {
+    tooltip.style.opacity = "0";
+    return;
+  }
+
+  spaceObjects.forEach(obj => {
+    if (!obj.isMeteor || !obj.isHoverStopped) return;
+    obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
+    obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
+    obj.isHoverStopped = false;
+  });
+
+  tooltip.style.opacity = "0";
+  hoveredMeteor = null;
+}
+
 function animateSpace() {
 
   spaceObjects.forEach(m => {
@@ -1108,16 +1125,9 @@ function animateSpace() {
   const isNearButton = (mouse.x >= buttonRect.left - 5 && mouse.x <= buttonRect.right + 5 &&
     mouse.y >= buttonRect.top - 5 && mouse.y <= buttonRect.bottom + 5);
 
-  // Unfreeze only if not hovering meteor AND not near tooltip AND not near button
-  if (!hoveringAnyMeteor && !isNearTooltip && !isNearButton && hoveredMeteor) {
-    spaceObjects.forEach(obj => {
-      if (!obj.isHoverStopped) return;
-      obj.vx = obj.storedVx || (Math.random() > 0.5 ? 0.06 : -0.06);
-      obj.vy = obj.storedVy || (Math.random() > 0.5 ? 0.06 : -0.06);
-      obj.isHoverStopped = false;
-    });
-    tooltip.style.opacity = "0";
-    hoveredMeteor = null;
+  // Hide immediately when the pointer leaves the active meteor, without waiting for another meteor hover.
+  if (!hoveringAnyMeteor && !isNearTooltip && !isNearButton) {
+    resetMeteorHoverState();
   } else if ((isNearTooltip || isNearButton) && hoveredMeteor) {
     // Keep frozen while near tooltip or button
     hoveredMeteor.vx = 0;
