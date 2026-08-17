@@ -98,7 +98,7 @@ hr {
   left: 50%;
   bottom: 22px;
   transform: translateX(-50%);
-  z-index: 99999;
+  z-index: 1000;
 }
 
 .dock {
@@ -465,13 +465,14 @@ hr {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 100000;
+  z-index: 1;
 }
 
 .space-object {
   position: absolute;
   left: 0;
   top: 0;
+  z-index: 0;
   transform-origin: center center;
   pointer-events: none;
   will-change: transform;
