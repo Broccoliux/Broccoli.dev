@@ -1,4 +1,5 @@
-const API_URL = "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time";
+const API_URL =
+  "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time";
 
 async function loadStats() {
   const params = new URLSearchParams(window.location.search);
@@ -10,7 +11,7 @@ async function loadStats() {
     const response = await fetch(API_URL);
 
     if (!response.ok) {
-      throw new Error(`Hacktime API error: ${response.status}`);
+      throw new Error(`Hackatime API error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -22,25 +23,26 @@ async function loadStats() {
     };
 
     const apiLanguage =
-      langaugeMap[selectedLangauge] || selectedLanguage;
+      languageMap[selectedLanguage] || selectedLanguage;
 
-    const languageData = data.langauge.find(
-      langauge =>
+    const languageData = data.languages.find(
+      language =>
         language.key.toLowerCase() === apiLanguage.toLowerCase()
     );
 
     const hours = languageData
-      ? langauge.total / 3600
+      ? languageData.total / 3600
       : 0;
 
-    document.getElementsByName("total-hours").textContent =
+    document.getElementById("total-hours").textContent =
       `${hours.toFixed(1)} hrs`;
 
     document.getElementById("stats-language").textContent =
       selectedLanguage;
 
-    } catch (error) {
-      console.error("Failed to load stats:", error);
-    }
+  } catch (error) {
+    console.error("Failed to load stats:", error);
   }
+}
+
 loadStats();
