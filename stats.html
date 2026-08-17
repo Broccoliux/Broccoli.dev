@@ -9,19 +9,61 @@
 
   <link rel="stylesheet" href="css/style.css">
 </head>
-<script></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const language = params.get("language");
+
+  document.getElementById("stats-language").textContent =
+    language || "Software Activity";
+</script>
+
 <body>
 
   <main class="stats-main">
     <section class="stats-hero">
 
       <p class="stats-eyebrow">ENGINNEERING ACTIVITY</p>
-      <h1 id="stats-language">Python</h1>
+      <h1 id="stats-language">Software Activity</h1>
 
       <p class="stats-description">
         Detailed development activity, projects, and time spent building.
       </p>
     </section>
+
+    <section>
+      <div class="stat-card">
+        <span>Total Time</span>
+        <strong id="total-hours">--</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Active days</span>
+        <strong id="active-days">--</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Project</span>
+        <strong id="project-count">--</strong>
+      </div>
+    </section>
+
+    <section class="activity-section">
+
+    <section class="activity-section">
+      <h2>Activity</h2>
+      <div id="activity-heatmap"></div>
+    </section>
+
+    <section class="projects-section">
+      <h2>Projects using this language</h2>
+      <div id="language-projects"></div>
+    </section>
+
+    <section class="github-section">
+      <h2>GitHub</h2>
+      <div id="github-projects"></div>
+    </section>
+
   </main>
 
 </body>
