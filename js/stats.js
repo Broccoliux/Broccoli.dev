@@ -40,8 +40,12 @@ async function loadStats() {
     document.getElementById("stats-language").textContent =
       selectedLanguage;
 
-    document.getElementById("project-count").textContent =
-      data.projects.length;
+    const languageProjects = data.languageProjects.filter(project =>
+      project.language?.some(
+        language =>
+          language.key.toLowerCase() === apiLanguage.toLowerCase()
+      )
+    )
 
   } catch (error) {
     console.error("Failed to load stats:", error);
