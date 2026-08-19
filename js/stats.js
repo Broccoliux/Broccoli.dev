@@ -246,8 +246,9 @@ async function loadActivityHeatmap() {
 
 loadStats();
 
+/
 function renderHeatmap() {
-  const container = document.getElementById("heatmapGrid");
+  const container = document.getElementById("activity-heatmap");
   if (!container) return;
 
   container.innerHTML = "";
@@ -271,7 +272,3 @@ function renderHeatmap() {
     container.appendChild(weekDiv);
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  renderHeatmap();
-});
