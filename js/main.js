@@ -54,12 +54,12 @@ async function loginToHackatime() {
     await generateCodeChallenge(codeVerifier);
   const state = generateRandomString(32);
 
-  sessionStorage.setItem(
+  localStorage.setItem(
     "hackatime_code_verifier",
     codeVerifier
   );
 
-  sessionStorage.setItem(
+  localStorage.setItem(
     "hackatime_oauth_state",
     state
   );
@@ -184,10 +184,10 @@ async function handleHackatimeCallback() {
     return;
   }
 
-  const savedState =
-    sessionStorage.getItem("hackatime_oauth_state");
+  const savedState = localStorage.getItem("hackatime_oauth_state");
+
   const codeVerifier =
-    sessionStorage.getItem("hackatime_code_verifier");
+    localStorage.getItem("hackatime_code_verifier");
   if (!savedState || state !== savedState) {
     return;
   }
@@ -215,11 +215,14 @@ async function handleHackatimeCallback() {
       return;
     }
 
-    sessionStorage.setItem("hackatime_access_token", data.access_token);
+    localStorage.setItem(
+      "hackatime_access_token",
+      data.access_token
+    );
 
     // clean Oauth data
-    sessionStorage.removeItem("hackatime_code_verifier");
-    sessionStorage.removeItem("hackatime_oauth_state");
+    localStorage.removeItem("hackatime_code_verifier");
+    localStorage.removeItem("hackatime_oauth_state");
 
     // remove code from URL
     window.history.replaceState(
