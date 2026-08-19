@@ -246,10 +246,9 @@ async function loadActivityHeatmap() {
 
 loadStats();
 
-
 function renderHeatmap() {
-  const continer = document.getElementById("heatmapGrid");
-  if (!continer) return;
+  const container = document.getElementById("heatmapGrid");
+  if (!container) return;
 
   container.innerHTML = "";
   const totalWeeks = 12;
@@ -266,6 +265,7 @@ function renderHeatmap() {
       const randomLevel = Math.floor(Math.random() * 5);
       dayDiv.classList.add(`level-${randomLevel}`);
       dayDiv.title = `Activity Level: ${randomLevel}`;
+
       weekDiv.appendChild(dayDiv);
     }
     container.appendChild(weekDiv);
