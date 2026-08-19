@@ -61,17 +61,26 @@ async function loadStats() {
 
     // PROJECTS
 
+    const token = localStorage.getItem("hackatime_access_token");
+
+    if (!token) {
+      document.getElementById("project-count").textContent = "Login required";
+      renderProjects([]);
+      await loadActivityHeatmap();
+      return;
+    }
+
     const projectsData =
       await fetchJSON(`${AUTH_API}/projects`);
 
     const matchingProjects =
-      projectsData.projects.filter(project =>
-        project.languages?.some(
-          language =>
-            language.toLowerCase() ===
-            apiLanguage.toLowerCase()
-        )
-      );
+      (projectsData.projects || []).filter(project => {
+        const projectLanguages = getProjectLanguages(project);
+
+        return projectLanguages.some(language =>
+          language.toLowerCase() === apiLanguage.toLowerCase()
+        );
+      });
 
     document.getElementById("project-count").textContent =
       matchingProjects.length;
@@ -88,6 +97,24 @@ async function loadStats() {
   } catch (error) {
     console.error("Failed to load stats:", error);
   }
+}
+
+function getProjectLanguages(project) {
+  if (Array.isArray(project.languages)) {
+    return project.languages
+      .map(language =>
+        typeof language === "string"
+          ? language
+          : language.name || language.key
+      )
+      .filter(Boolean);
+  }
+
+  if (project.languages && typeof project.languages === "object") {
+    return Object.keys(project.languages);
+  }
+
+  return project.language ? [project.language] : [];
 }
 
 
@@ -107,9 +134,7 @@ function renderProjects(projects) {
   }
 
   projects
-    .sort((a, b) =>
-      b.total_seconds - a.total_seconds
-    )
+    .sort((a, b) => getProjectSeconds(b) - getProjectSeconds(a))
     .forEach(project => {
 
       const card =
@@ -117,8 +142,9 @@ function renderProjects(projects) {
 
       card.className = "stats-project";
 
-      const hours =
-        project.total_seconds / 3600;
+      const hours = getProjectSeconds(project) / 3600;
+
+      const projectLanguages = getProjectLanguages(project);
 
       card.innerHTML = `
         <div>
@@ -127,12 +153,16 @@ function renderProjects(projects) {
         </div>
 
         <span>
-          ${project.languages.join(" · ")}
+          ${projectLanguages.join(" · ")}
         </span>
       `;
 
       container.appendChild(card);
     });
+}
+
+function getProjectSeconds(project) {
+  return Number(project.total_seconds ?? project.total ?? 0);
 }
 
 // dAILY ACTIVITY HEATMAP
