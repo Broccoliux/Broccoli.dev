@@ -167,7 +167,87 @@ function getProjectSeconds(project) {
 
 // dAILY ACTIVITY HEATMAP
 
-function loadActivityHeatmap() {
+async function loadActivityHeatmap() {
+
+  const token =
+    localStorage.getItem("hackatime_access_token");
+
+  const container =
+    document.getElementById("activity-heatmap");
+
+  if (!token) {
+    container.innerHTML =
+      "<p>Connect Hackatime to view daily activity.</p>";
+    return;
+  }
+
+  const days = 84;
+
+  const today =
+    new Date();
+
+  const requests = [];
+
+  for (let i = days - 1; i >= 0; i--) {
+
+    const date =
+      new Date(today);
+
+    date.setDate(
+      today.getDate() - i
+    );
+
+    const iso =
+      date.toISOString().split("T")[0];
+
+    requests.push(
+      fetchJSON(
+        `${AUTH_API}/hours?start_date=${iso}&end_date=${iso}`
+      ).then(data => ({
+        date: iso,
+        seconds: data.total_seconds || 0
+      }))
+    );
+  }
+
+  const activity =
+    await Promise.all(requests);
+
+  const maxSeconds =
+    Math.max(
+      ...activity.map(day => day.seconds),
+      1
+    );
+
+  container.innerHTML = "";
+
+  activity.forEach(day => {
+
+    const cell =
+      document.createElement("div");
+
+    const intensity =
+      day.seconds / maxSeconds;
+
+    cell.className = "activity-cell";
+
+    cell.style.opacity =
+      day.seconds === 0
+        ? "0.12"
+        : String(0.25 + intensity * 0.75);
+
+    cell.title =
+      `${day.date} — ${(day.seconds / 3600).toFixed(1)} hrs`;
+
+    container.appendChild(cell);
+  });
+}
+
+
+loadStats();
+
+
+function renderHeatmap() {
   const container = document.getElementById("activity-heatmap");
   if (!container) return;
 
@@ -192,6 +272,3 @@ function loadActivityHeatmap() {
     container.appendChild(weekDiv);
   }
 }
-
-
-loadStats();
