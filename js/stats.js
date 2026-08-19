@@ -12,7 +12,7 @@ const languageMap = {
 };
 
 async function fetchJSON(url) {
-  const token = sessionStorage.getItem("hackatime_access_token");
+  localStorage.getItem("hackatime_access_token")
 
   const headers = token
     ? { Authorization: `Bearer ${token}` }
@@ -140,7 +140,7 @@ function renderProjects(projects) {
 async function loadActivityHeatmap() {
 
   const token =
-    sessionStorage.getItem("hackatime_access_token");
+    localStorage.getItem("hackatime_access_token")
 
   const container =
     document.getElementById("activity-heatmap");
