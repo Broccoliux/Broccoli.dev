@@ -242,4 +242,36 @@ async function loadActivityHeatmap() {
     container.appendChild(cell);
   });
 }
+
+
 loadStats();
+
+
+function renderHeatmap() {
+  const continer = document.getElementById("heatmapGrid");
+  if (!continer) return;
+
+  container.innerHTML = "";
+  const totalWeeks = 12;
+  const daysPerWeek = 7;
+
+  for (let w = 0; w < totalWeeks; w++) {
+    const weekDiv = document.createElement("div");
+    weekDiv.className = "heatmap-week";
+
+    for (let d = 0; d < daysPerWeek; d++) {
+      const dayDiv = document.createElement("div");
+      dayDiv.className = "heatmap-day";
+
+      const randomLevel = Math.floor(Math.random() * 5);
+      dayDiv.classList.add(`level-${randomLevel}`);
+      dayDiv.title = `Activity Level: ${randomLevel}`;
+      weekDiv.appendChild(dayDiv);
+    }
+    container.appendChild(weekDiv);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHeatmap();
+});
