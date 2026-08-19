@@ -246,7 +246,6 @@ async function loadActivityHeatmap() {
 
 loadStats();
 
-/
 function renderHeatmap() {
   const container = document.getElementById("activity-heatmap");
   if (!container) return;
