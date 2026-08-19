@@ -149,7 +149,7 @@
 
 .stats-project {
   background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(11, 255, 235, 0.08);
   border-radius: 12px;
   padding: 18px 22px;
   margin-bottom: 12px;
@@ -161,7 +161,7 @@
 }
 
 .stats-project:hover {
-  border-color: rgb(6, 255, 234);
+  border-color: rgba(6, 255, 234, 0.4);
   transform: translateY(-2px);
 }
 
