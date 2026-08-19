@@ -44,12 +44,26 @@ async function loadStats() {
     document.getElementById("stats-language").textContent = selectedLanguage;
     document.getElementById("total-hours").textContent = `${hours.toFixed(1)} hrs`;
 
+    let activeDaysCount = 0;
+    if (summary.days && Array.isArray(summary.days)) {
+      activeDaysCount = summary.days.filter(day => {
+        if (!day.languages) return false;
+        return day.languages.some(l =>
+          (l.key || l.name || "").toLowerCase() === apiLanguage.toLowerCase()
+        );
+      }).length;
+    }
+
+    const activeDaysEl = document.getElementById("active-days");
+    if (activeDaysEl) {
+      activeDaysEl.textContent = activeDaysCount;
+    }
+
     const token = localStorage.getItem("hackatime_access_token");
 
     if (!token) {
       document.getElementById("project-count").textContent = "Login required";
       renderProjects([]);
-      await loadActivityHeatmap();
       return;
     }
 
@@ -72,7 +86,6 @@ async function loadStats() {
     document.getElementById("project-count").textContent = matchingProjects.length;
     renderProjects(matchingProjects);
 
-    await loadActivityHeatmap();
   } catch (error) {
     console.error("Failed to load stats:", error);
   }
