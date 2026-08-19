@@ -30,13 +30,7 @@
 }
 
 /* Activity Section & Heatmap Styles */
-.activity-section {
-  background: rgba(17, 24, 39, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 40px;
-}
+
 
 .section-header {
   margin-bottom: 20px;
