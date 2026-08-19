@@ -17,7 +17,9 @@ async function fetchJSON(url) {
   const response = await fetch(url, { headers });
 
   if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
+    const error = new Error(`${response.status} ${response.statusText}`);
+    error.status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -51,13 +53,21 @@ async function loadStats() {
       return;
     }
 
-    const projectsData = await fetchJSON(`${AUTH_API}/projects`);
-    const matchingProjects = (projectsData.projects || []).filter(project => {
-      const projectLanguages = getProjectLanguages(project);
-      return projectLanguages.some(
-        language => language.toLowerCase() === apiLanguage.toLowerCase()
-      );
-    });
+    let matchingProjects = [];
+
+    try {
+      const projectsData = await fetchJSON(`${AUTH_API}/projects`);
+      matchingProjects = (projectsData.projects || []).filter(project => {
+        const projectLanguages = getProjectLanguages(project);
+        return projectLanguages.some(
+          language => language.toLowerCase() === apiLanguage.toLowerCase()
+        );
+      });
+    } catch (error) {
+      console.error("Failed to load projects:", error);
+      document.getElementById("project-count").textContent =
+        error.status === 401 ? "Login required" : "Unavailable";
+    }
 
     document.getElementById("project-count").textContent = matchingProjects.length;
     renderProjects(matchingProjects);
@@ -142,13 +152,24 @@ async function loadActivityHeatmap() {
       fetchJSON(`${AUTH_API}/hours?start_date=${iso}&end_date=${iso}`)
         .then(data => ({
           date: iso,
-          seconds: data.total_seconds || 0
+          seconds: data.total_seconds || 0,
+          unauthorized: false
         }))
-        .catch(() => ({ date: iso, seconds: 0 }))
+        .catch(error => ({
+          date: iso,
+          seconds: 0,
+          unauthorized: error.status === 401
+        }))
     );
   }
 
   const activity = await Promise.all(requests);
+
+  if (activity.some(day => day.unauthorized)) {
+    container.innerHTML = "<p>Reconnect Hackatime to view daily activity.</p>";
+    return;
+  }
+
   const maxSeconds = Math.max(...activity.map(day => day.seconds), 1);
 
   container.innerHTML = "";
