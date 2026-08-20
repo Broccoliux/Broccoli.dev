@@ -547,45 +547,37 @@ hr {
 }
 
 
-.skills-category-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+#skills > p {
+  font-size: 1.1rem;
+  color: #d1d5db;
+  margin-bottom: 25px;
 }
 
-.category-label {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-left: 2px;
+.skills-marquee-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 25px;
+  width: 100%;
 }
 
 .liquid-track-wrapper {
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding: 10px 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.5) 100%);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 50px;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.15),
-    inset 0 -5px 10px rgba(0, 0, 0, 0.8),
-    0 12px 35px rgba(0, 0, 0, 0.6);
+  padding: 8px 0;
+  background: transparent;
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .marquee-track {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   width: max-content;
   will-change: transform;
 }
 
-/* Movement animations */
 .scroll-right {
   animation: scrollRight 32s linear infinite;
 }
@@ -596,7 +588,7 @@ hr {
 
 @keyframes scrollRight {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(-33.33%);
   }
 
   100% {
@@ -610,35 +602,41 @@ hr {
   }
 
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-33.33%);
   }
 }
 
-/* Individual liquid glass pills */
 .liquid-pill {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f3f4f6;
-  padding: 10px 24px;
-  border-radius: 35px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  white-space: nowrap;
+  background: rgba(17, 24, 39, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.25),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.7),
-    0 4px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 .liquid-pill:hover {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border-color: rgba(99, 102, 241, 0.6);
+  background: rgba(0, 255, 102, 0.18);
+  border-color: rgba(0, 255, 102, 0.6);
+  color: #00ff66;
   box-shadow:
-    inset 0 1px 3px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(99, 102, 241, 0.4);
+    0 8px 32px rgba(0, 255, 102, 0.25),
+    0 0 20px rgba(0, 255, 102, 0.4);
   transform: translateY(-2px);
-  color: #ffffff;
+}
+
+#skills {
+  padding-bottom: 10px !important;
+  margin-bottom: 0 !important;
+}
+
+.skills-marquee-container {
+  margin-bottom: 10px;
 }
