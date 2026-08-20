@@ -1081,3 +1081,16 @@ hr {
   box-shadow: 0 0 20px rgba(38, 218, 14, 0.4);
   transform: translateY(-2px);
 }
+
+
+/* locked card */
+
+.achievement-card.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, .01) !important;
+}
+
+.achievement-card.locked:hover {
+  
+}
