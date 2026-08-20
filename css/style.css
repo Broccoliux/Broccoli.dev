@@ -902,14 +902,182 @@ hr {
   text-decoration: none;
 }
 
-.glass-social-icon:hover {
-  background: rgba(0, 255, 102, 0.2);
-  border-color: #00ff66;
-  border-top-color: #00ff66;
-  color: #00ff66;
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+  align-items: stretch;
+}
+
+.achievement-card {
+  position: relative;
+  --shine-x: 30%;
+  --shine-y: 20%;
+  overflow: hidden;
+  border-radius: 24px;
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 450px;
+
+  background: rgba(12, 12, 12, 0.28);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+
+  border: 1px solid rgba(38, 218, 14, 0.35);
+  cursor: pointer;
+
   box-shadow:
-    0 10px 30px rgba(0, 255, 102, 0.3),
-    inset 0 1px 3px rgba(0, 255, 102, 0.4),
-    0 0 22px rgba(0, 255, 102, 0.5);
-  transform: translateY(-4px);
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    inset 0 1px rgba(255, 255, 255, 0.10),
+    inset 0 -1px rgba(0, 0, 0, 0.45);
+
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s,
+    box-shadow 0.35s,
+    background-color 0.35s,
+    backdrop-filter 0.35s;
+}
+
+.achievement-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at var(--shine-x) var(--shine-y),
+      rgba(255, 255, 255, 0.24),
+      rgba(255, 255, 255, 0.08) 18%,
+      transparent 55%),
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.12),
+      transparent 45%);
+
+  opacity: 0.55;
+
+  transition:
+    opacity 0.35s,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.achievement-card * {
+  transform-style: preserve-3d;
+}
+
+.achievement-card:hover {
+  background: rgba(12, 12, 12, .22);
+
+  backdrop-filter: blur(34px) saturate(200%);
+  -webkit-backdrop-filter: blur(34px) saturate(200%);
+
+  border-color: #26da0e;
+
+  box-shadow:
+    0 26px 60px rgba(0, 0, 0, .55),
+    0 0 20px rgba(38, 218, 14, .15),
+    inset 0 1px rgba(255, 255, 255, .16),
+    inset 0 -1px rgba(0, 0, 0, .5);
+
+  transform: translateY(-10px);
+  opacity: 1;
+}
+
+.achievement-card:hover::before {
+  transform: translateX(12px) translateY(-8px) rotate(-2deg);
+  opacity: .9;
+}
+
+.card-window {
+  width: 88%;
+  align-self: center;
+  margin-top: 24px;
+  height: 160px;
+  background: #111;
+  border: 1px solid rgba(38, 218, 14, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  transform: translateZ(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-text-field {
+  padding: 24px;
+  transform: translateZ(40px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-text-field h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.card-text-field p {
+  color: hsl(0, 0%, 72%);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+@media (max-width: 1100px) {
+  .achievements-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-window img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.achievements-footer-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.dive-in-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 14px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  background: #1d1d1d;
+  border: 1px solid rgba(38, 218, 14, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s ease;
+}
+
+.dive-in-btn:hover {
+  background: #26da0e;
+  color: #000000;
+  border-color: #26da0e;
+  box-shadow: 0 0 20px rgba(38, 218, 14, 0.4);
+  transform: translateY(-2px);
 }
