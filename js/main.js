@@ -1222,7 +1222,6 @@ function animateSpace() {
   }
 
   requestAnimationFrame(animateSpace);
-
 }
 
 animateSpace();
@@ -1235,5 +1234,3 @@ window.addEventListener("mousemove", (e) => {
 
 handleHackatimeCallback();
 loadPublicHackatimeStats();
-
-
