@@ -1110,18 +1110,20 @@ hr {
 }
 
 .lock-icon {
-  width:32px;
+  width: 32px;
   height: 32x;
   fill: #9ca3af;
 }
 
 /* Automatically sorts unlocked cards first and locked cards to the back */
+
 .achievement-card {
   order: 1;
 }
 
 .achievement-card.locked {
-  order: 1;
+  order: 2;
+  /* Pushes locked cards to the back */
   opacity: 0.55;
   cursor: not-allowed;
   border-color: rgba(255, 255, 255, 0.1) !important;
@@ -1129,15 +1131,21 @@ hr {
 
 .achievement-card.locked:hover {
   transform: none !important;
-  background: rgba(12, 12, 12, 0.28);
-  border-color: rgba(255, 255, 255, .01) !important;
+  background: rgba(12, 12, 12, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow:
-    0 18px 45px rgba(0, 0, 0, .45),
+    0 18px 45px rgba(0, 0, 0, 0.45),
     inset 0 1px rgba(255, 255, 255, 0.10),
-    inset 0 =1px rgba(0, 0, 0, 0.45) !important;
+    inset 0 -1px rgba(0, 0, 0, 0.45) !important;
 }
 
 .achievement-card.locked:hover::before {
   transform: none !important;
-  opacity: 0,55 !important;
+  opacity: 0.55 !important;
+}
+
+.lock-icon {
+  width: 32px;
+  height: 32px;
+  fill: #9ca3af;
 }
