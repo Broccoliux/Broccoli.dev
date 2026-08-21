@@ -47,6 +47,11 @@
   color: #9ca3af;
 }
 
+.heatmap-img {
+  width: 100%;
+  border-radius: 8px;
+}
+
 .heatmap-container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
