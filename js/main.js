@@ -1243,5 +1243,77 @@ window.addEventListener("mousemove", (e) => {
   mouse.y = e.clientY;
 });
 
+
+
+// broccoli chat
+
+document.addEventListener('DOMContentLoaded', () => {
+  const broccoliBtn = document.getElementById('broccoli-btn');
+  const sidebar = document.getElementById('broccoli-sidebar');
+  const closeBtn = document.getElementById('close-sidebar');
+  const sendBtn = document.getElementById('send-btn');
+  const chatInput = document.getElementById('chat-input');
+  const chatMessages = document.getElementById('chat-messages');
+  const popup = document.getElementById('broccoli-popup');
+
+  if (!broccoliBtn || !sidebar || !closeBtn || !sendBtn || !chatInput || !chatMessages) return;
+
+  let visitorId = localStorage.getItem('broccoli_visitor_id');
+  if (!visitorId) {
+    visitorId = 'visitor_' + Math.random().toString(36).substring(2, 9);
+    localStorage.setItem('broccoli_visitor_id', visitorId);
+  }
+
+  function appendMessage(sender, text, className, id = '') {
+    const msgDiv = document.createElement('div');
+    if (id) msgDiv.id = id;
+    msgDiv.className = `message ${className}`;
+    msgDiv.innerHTML = `<strong>${sender}:</strong><br>${text}`;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    appendMessage('You', text, 'user-msg');
+    chatInput.value = '';
+
+    const loadingId = 'loading_' + Date.now();
+    appendMessage('Broccoli', 'Thinking...', 'bot-msg', loadingId);
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ visitor_id: visitorId, message: text })
+      });
+
+      const data = await response.json();
+      document.getElementById(loadingId).remove();
+
+      appendMessage('Broccoli', data.reply || "Got it!", 'bot-msg');
+    } catch (err) {
+      document.getElementById(loadingId).remove();
+      appendMessage('System', 'Failed to reach server.', 'system-msg');
+    }
+  }
+
+  broccoliBtn.addEventListener('click', () => {
+    sidebar.style.right = '0';
+    if (popup) popup.style.display = 'none';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.style.right = '-350px';
+  });
+
+  sendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+});
+
 handleHackatimeCallback();
 loadPublicHackatimeStats();
