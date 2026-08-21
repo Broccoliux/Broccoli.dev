@@ -1284,7 +1284,7 @@ hr {
 }
 
 #broccoli-popup {
-  background: #10B981;
+  background: #26da0e;
   color: white;
   padding: 8px 12px;
   border-radius: 12px 12px 0 12px;
@@ -1297,7 +1297,7 @@ hr {
   height: 56px;
   border-radius: 50%;
   border: none;
-  background: #10B981;
+  background: #26da0e;
   color: white;
   font-size: 24px;
   cursor: pointer;
@@ -1305,7 +1305,7 @@ hr {
 }
 
 #broccoli-btn:hover {
-  background: #059669;
+  background: #26da0e;
 }
 
 #broccoli-sidebar {
@@ -1328,13 +1328,13 @@ hr {
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #000000;
   background: #111;
 }
 
 .sidebar-header h3 {
   margin: 0;
-  color: #10B981;
+  color: #26da0e;
   font-size: 16px;
 }
 
@@ -1373,7 +1373,7 @@ hr {
 }
 
 .user-msg {
-  background: #10B981;
+  background: #26da0e;
   align-self: flex-end;
 }
 
@@ -1401,7 +1401,7 @@ hr {
 }
 
 #send-btn {
-  background: #10B981;
+  background: #26da0e;
   color: white;
   border: none;
   padding: 8px 12px;
