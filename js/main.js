@@ -664,7 +664,18 @@ const SVG_ICONS = {
         2-2z"/>
         <polyline points="22 6 12 13 2 6"/>
         </svg>
-        `
+        `,
+
+achievements: `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17h4v-2.34c1.5-.75 2.5-2.28 2.5-4.02V7H7.5v3.64c0 1.74 1 3.27 2.5 4.02z"/>
+        <path d="M12 17v5"/>
+        </svg>
+        `,
 
 };
 
