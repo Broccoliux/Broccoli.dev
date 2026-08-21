@@ -1224,3 +1224,7 @@ hr {
   transform: none !important;
   opacity: 0.55 !important;
 }
+
+.achievements-subtitle {
+  color: #26da0e !important;
+}
