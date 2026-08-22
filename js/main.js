@@ -1240,6 +1240,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatMessages = document.getElementById('chat-messages');
   const popup = document.getElementById('broccoli-popup');
 
+  const messages = [
+    "yo! boiiii",
+    "got a sick project idea?",
+    "lets build something epic",
+    "tap to chat with my AI twin"
+  ];
+
+  let msgIndex = 0;
+
+  // Rotate messages every 4 seconds cleanly
+  setInterval(() => {
+    // Only rotate if the sidebar is closed
+    if (sidebar.style.right !== '0px') {
+      msgIndex = (msgIndex + 1) % messages.length;
+      popup.textContent = messages[msgIndex];
+    }
+  }, 4000);
+
+
+  broccoliBtn.addEventListener('click', () => {
+    sidebar.style.right = '0';
+    popup.style.display = 'none';
+  });
+
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.style.right = '-350px';
+    popup.style.display = 'block';
+  });
+
   if (!broccoliBtn || !sidebar || !closeBtn || !sendBtn || !chatInput || !chatMessages) return;
 
   let visitorId = localStorage.getItem('broccoli_visitor_id');
