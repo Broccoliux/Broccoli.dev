@@ -1219,15 +1219,20 @@ hr {
 
 #broccoli-popup {
   position: relative;
-  background: #1e1e1e;
+  background: rgba(12, 12, 12, 0.40);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   color: #26da0e;
   padding: 10px 16px;
-  border-radius: 12px;
+  border-radius: 16px;
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid #26da0e;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.45),
+    inset 0 1px rgba(87, 83, 83, 0.1),
+    inset 0 -1px rgba(0, 0, 0, 0.45);
   white-space: nowrap;
   margin-bottom: 12px;
 }
@@ -1239,10 +1244,11 @@ hr {
   right: 30px;
   border-width: 8px 8px 0 8px;
   border-style: solid;
-  border-color: #1e1e1e transparent;
+  border-color: rgba(12, 12, 12, 0.85) transparent;
   display: block;
   width: 0;
 }
+
 
 #broccoli-popup::before {
   content: '';
@@ -1251,7 +1257,7 @@ hr {
   right: 29px;
   border-width: 9px 9px 0 9px;
   border-style: solid;
-  border-color: #10B981 transparent;
+  border-color: rgba(100, 93, 93, 0.1) transparent;
   display: block;
   width: 0;
   z-index: -1;
