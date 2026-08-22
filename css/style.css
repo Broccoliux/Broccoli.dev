@@ -1213,22 +1213,48 @@ hr {
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   gap: 12px;
 }
 
 #broccoli-popup {
+  position: relative;
   background: #1e1e1e;
-  color: #10B981;
-  padding: 8px 14px;
+  color: #26da0e;
+  padding: 10px 16px;
   border-radius: 12px;
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid #10B981;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 1px solid #26da0e;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
-  transition: opacity 0.3s ease;
+  margin-bottom: 12px;
+}
+
+#broccoli-popup::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 30px;
+  border-width: 8px 8px 0 8px;
+  border-style: solid;
+  border-color: #1e1e1e transparent;
+  display: block;
+  width: 0;
+}
+
+#broccoli-popup::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  right: 29px;
+  border-width: 9px 9px 0 9px;
+  border-style: solid;
+  border-color: #10B981 transparent;
+  display: block;
+  width: 0;
+  z-index: -1;
 }
 
 #broccoli-sidebar {
@@ -1346,9 +1372,10 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  box-shadow: 0 0 0 0 #26da0e;
   animation: ripple-pulse 2s infinite;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 #broccoli-btn:hover {
@@ -1364,7 +1391,7 @@ hr {
 
 @keyframes ripple-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    box-shadow: 0 0 0 0 #26da0e;
     }
 
   70% {
