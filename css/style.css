@@ -465,11 +465,12 @@ hr {
 /*space metors*/
 
 #space-bg {
+
   position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
 }
 
 .space-object {
