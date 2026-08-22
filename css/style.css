@@ -1311,14 +1311,14 @@ hr {
 }
 
 #chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
 
+}
 .message {
   padding: 10px 12px;
   border-radius: 8px;
