@@ -1263,13 +1263,18 @@ hr {
   right: -350px;
   width: 350px;
   height: 100vh;
-  background: #1a1a1a;
-  border-left: 1px solid #333;
-  z-index: 10002;
+  z-index: 10000;
+  transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: rgba(63, 62, 62, 0.45);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-left: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: -18px 0 45px rgba(0, 0, 0, 0.45);
+
   display: flex;
   flex-direction: column;
-  transition: right 0.3s ease;
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.45);
+  padding: 20px;
 }
 
 .sidebar-header {
@@ -1392,11 +1397,12 @@ hr {
 @keyframes ripple-pulse {
   0% {
     box-shadow: 0 0 0 0 #26da0e;
-    }
+  }
 
   70% {
     box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
   }
