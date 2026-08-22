@@ -1004,6 +1004,7 @@ function initializeSpaceObjects() {
 // Load real hackatime data on page load
 loadLanguageHoursFromHackatime();
 
+
 // Button click handler for meteor tooltip
 tooltipButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -1011,12 +1012,18 @@ tooltipButton.addEventListener("click", (e) => {
 
   const language = tooltip.dataset.language;
 
+  console.log("Jump in void clicked:", language);
+
   if (!language) {
+    console.warn("No meteor language found.");
     return;
   }
 
-  window.location.href =
-    `stats.html?language=${encodeURIComponent(language)}`;
+  const targetUrl = `stats.html?language=${encodeURIComponent(language)}`;
+
+  console.log("Opening:", targetUrl);
+
+  window.location.assign(targetUrl);
 });
 
 function resetMeteorHoverState() {
