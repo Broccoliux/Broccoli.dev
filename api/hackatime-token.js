@@ -16,13 +16,6 @@ export default async function handler(req, res) {
       client_id
     } = req.body;
 
-    console.log("Token exchange request:", {
-      hasCode: !!code,
-      hasVerifier: !!code_verifier,
-      redirect_uri,
-      client_id
-    });
-
     const response = await fetch(HACKATIME_TOKEN_URL, {
       method: "POST",
       headers: {
@@ -39,7 +32,6 @@ export default async function handler(req, res) {
 
     const text = await response.text();
 
-    console.log("Hackatime response:", response.status, text);
     if (!response.ok) {
       return res.status(response.status).json({
         error: "Hackatime token exchange failed",
@@ -51,8 +43,6 @@ export default async function handler(req, res) {
     return res.status(200).json(tokenData);
 
   } catch (error) {
-    console.error("Token exchange error:", error);
-
     return res.status(500).json({
       error: "Token exchange failed",
       details: error.message

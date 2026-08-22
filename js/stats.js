@@ -78,7 +78,6 @@ async function loadStats() {
         );
       });
     } catch (error) {
-      console.error("Failed to load projects:", error);
       document.getElementById("project-count").textContent =
         error.status === 401 ? "Login required" : "Unavailable";
     }
@@ -86,9 +85,7 @@ async function loadStats() {
     document.getElementById("project-count").textContent = matchingProjects.length;
     renderProjects(matchingProjects);
 
-  } catch (error) {
-    console.error("Failed to load stats:", error);
-  }
+  } catch {}
 }
 
 function getProjectLanguages(project) {

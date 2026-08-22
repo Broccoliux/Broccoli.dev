@@ -86,7 +86,6 @@ async function loadPublicHackatimeStats() {
 
   try {
 
-    console.log("AUTO-LOADING PUBLIC HACKTIME DATA");
     const statsResponse = await fetch(
       "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time"
     );
@@ -135,9 +134,6 @@ async function loadPublicHackatimeStats() {
       );
 
       if (!project) {
-        console.warn(
-          `No Hackatime project found for "${hackatimeProject}"`
-        );
         return;
       }
 
@@ -151,22 +147,14 @@ async function loadPublicHackatimeStats() {
 
         const content = card.querySelector(".project-content");
 
-        if (!content) {
-          console.error("NO .project-content FOUND:", title);
-          return;
-        }
+        if (!content) return;
         content.appendChild(timeElement);
       }
       timeElement.textContent = `⏱ ${hours.toFixed(1)} hrs`;
     });
 
 
-  } catch (error) {
-    console.error(
-      "Failed to load public Hackatime stats:",
-      error
-    );
-  }
+  } catch {}
 }
 
 async function handleHackatimeCallback() {
@@ -231,7 +219,7 @@ async function handleHackatimeCallback() {
       window.location.pathname
     );
 
-  } catch (error) {
+  } catch {
     // Token request failed
   }
 
@@ -449,7 +437,6 @@ items.forEach(item => {
 
 
 // MacOS Neighbor Wave + Scroll Spy + Hover Glow
-
 
 function smoothstep(x) {
   return x * x * (3 - 2 * x);
@@ -915,7 +902,7 @@ async function loadLanguageHoursFromHackatime() {
         meteor.hours = hackatimeLanguage.total / 3600;
       }
     });
-  } catch (error) {
+  } catch {
     // Hackatime fetch failed, using default hours
   }
 
@@ -1023,10 +1010,8 @@ tooltipButton.addEventListener("click", (e) => {
   e.stopPropagation();
 
   const language = tooltip.dataset.language;
-  console.log("DIG IN clicked:", language);
 
   if (!language) {
-    console.error("No language stored in tooltip");
     return;
   }
 
@@ -1242,7 +1227,6 @@ window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 });
-
 
 
 // broccoli chat
