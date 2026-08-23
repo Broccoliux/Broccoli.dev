@@ -18,7 +18,12 @@ export default async function handler(req, res) {
       }
     );
 
-    const data = await response.json();
+    const text = await response.text();
+
+    return res.status(200).json({
+      hackatime_status: response.status,
+      hackatime_response: text
+    });
 
     if (!response.ok) {
       return res.status(response.status).json({
