@@ -1349,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const text = chatInput.value.trim();
     if (!text) return;
 
-    appendMessage('', text, 'user-msg');
+    appendMessage('You', text, 'user-msg');
     chatInput.value = '';
 
     const loadingId = 'loading_' + Date.now();
@@ -1381,7 +1381,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chatHistory.push({ role: 'assistant', content: botReply });
 
       appendMessage(
-        'Broccoli 2.0',
+        'Broccoli',
         botReply,
         'bot-msg'
       );
