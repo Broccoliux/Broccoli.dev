@@ -93,7 +93,6 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: "visitor_id and history array are required" });
   }
 
-
   let existingUserContext = "";
   if (process.env.SHEET_WEB_APP_URL) {
     try {
