@@ -26,13 +26,31 @@ You MUST respond strictly in the following JSON format:
 
 async function getGitHubContext() {
   try {
-    const res = await fetch('https://api.github.com/users/Broccoliux/repos?sort=updated&per_page=3');
-    if (!res.ok) return "Recent GitHub activity: Unable to fetch.";
-    const repos = await res.json();
-    const repoText = repos.map(r => `${r.name}: ${r.description || 'No description'}`).join(' | ');
-    return `LIVE GITHUB DATA (Recent Repos): ${repoText}`;
+    const headers = {
+      "User-Agent": "Broccoli-Bot",
+      ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {})
+    };
+
+    const userRes = await fetch('https://api.github.com/users/Broccoliux', { headers });
+    const userData = await userRes.json();
+
+    const reposRes = await fetch('https://api.github.com/users/Broccoliux/repos?sort=pushed&per_page=4', { headers });
+    const repos = await reposRes.json();
+
+    const repoDetails = repos.map(r =>
+      `- Repo: ${r.name} | Description: ${r.description || 'None'} | Last Pushed: ${r.pushed_at} | Language: ${r.language || 'Multiple'}`
+    ).join('\n');
+
+    return `
+GITHUB PROFILE:
+Username: Broccoliux
+Public Repos: ${userData.public_repos}
+
+LATEST REPOSITORIES & COMMIT TIMESTAMPS:
+${repoDetails}
+    `;
   } catch {
-    return "Recent GitHub activity: Offline.";
+    return "GitHub data unavailable.";
   }
 }
 
