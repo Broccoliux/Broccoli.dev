@@ -3,7 +3,7 @@ const AI_API_URL = "https://ai.hackclub.com/proxy/v1/chat/completions";
 const AI_SYSTEM_PROMPT = `
 WHO YOU ARE: You are Broccoli 2.0, Twin AI of the builder Nabeel.
 
-YOUR MISSION: Figure out why the visitor is here. If they have a legit project or want to collab, naturally ask for their name, email, and GitHub/socials.
+YOUR MISSION: Figure out why the visitor is here. If they have a legit project or want to collab, naturally ask for their name, email, GitHub, and socials (Twitter, LinkedIn, etc.).
 
 CORE DIRECTIVES:
 1. CONVERSATION: Talk like a true Gen Z builder. Chill, sharp, lowercase energy. NO EMOJIS EVER. Use the live context provided to answer questions about the builder's work.
@@ -17,6 +17,7 @@ You MUST respond strictly in the following JSON format:
   "name": "extracted name or null",
   "email": "extracted email or null",
   "github_url": "extracted link or null",
+  "socials": "extracted socials or null",
   "summary": "internal note summarizing their pitch"
 }
 
@@ -127,9 +128,26 @@ export default async function handler(req, res) {
     let data;
     try {
       data = JSON.parse(rawText);
+
+      if (process.env.SHEET_WEB_APP_URL) {
+        fetch(process.env.SHEET_WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            visitor_id: visitorId,
+            name: data.name,
+            email: data.email,
+            github_url: data.github_url,
+            socials: data.socials,
+            score: data.score,
+            summary: data.summary
+          })
+        }).catch(err => console.error("Sheet sync error:", err));
+      }
     } catch {
       data = { reply: "Hey! Thanks for stopping by. Nabeel will check this out soon." };
     }
+
 
     return sendJson(res, 200, {
       reply: data.reply || "Hey there! Let me pass that note to Nabeel."
