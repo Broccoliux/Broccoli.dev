@@ -24,33 +24,54 @@ You MUST respond strictly in the following JSON format:
 {GITHUB_DATA}
 `;
 
-async function getGitHubContext() {
+async function getGitHubContext(visitorMessage = "") {
   try {
     const headers = {
       "User-Agent": "Broccoli-Bot",
       ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {})
     };
 
-    const userRes = await fetch('https://api.github.com/users/Broccoliux', { headers });
-    const userData = await userRes.json();
+    const myReposRes = await fetch('https://api.github.com/users/Broccoliux/repos?per_page=100', { headers });
+    const myRepos = await myReposRes.json();
+    const myRepoDetails = Array.isArray(myRepos) ? myRepos.map(r =>
+      `- ${r.name}: ${r.description || 'No desc'} (Lang: ${r.language || 'Multiple'}, Stars: ${r.stargazers_count})`
+    ).join('\n') : "Unavailable";
 
-    const reposRes = await fetch('https://api.github.com/users/Broccoliux/repos?sort=pushed&per_page=4', { headers });
-    const repos = await reposRes.json();
+    let visitorGitHubData = "";
 
-    const repoDetails = repos.map(r =>
-      `- Repo: ${r.name} | Description: ${r.description || 'None'} | Last Pushed: ${r.pushed_at} | Language: ${r.language || 'Multiple'}`
-    ).join('\n');
+    const githubMatch = visitorMessage.match(/github\.com\/([a-zA-Z0-9_-]+)/i);
+    if (githubMatch && githubMatch[1]) {
+      const visitorUsername = githubMatch[1];
+      const visitorUserRes = await fetch(`https://api.github.com/users/${visitorUsername}`, { headers });
+
+      if (visitorUserRes.ok) {
+        const visitorUserData = await visitorUserRes.json();
+        const visitorReposRes = await fetch(`https://api.github.com/users/${visitorUsername}/repos?sort=updated&per_page=10`, { headers });
+        const visitorRepos = await visitorReposRes.json();
+
+        const visitorRepoList = Array.isArray(visitorRepos) ? visitorRepos.map(r =>
+          `  - ${r.name}: ${r.description || 'No desc'} (Lang: ${r.language || 'N/A'}, Stars: ${r.stargazers_count})`
+        ).join('\n') : "No repos found";
+
+        visitorGitHubData = `
+--- VISITOR GITHUB DATA (${visitorUsername}) ---
+Public Repos: ${visitorUserData.public_repos}
+Followers: ${visitorUserData.followers}
+Top Repos:
+${visitorRepoList}
+---------------------------------------------
+`;
+      }
+    }
 
     return `
-GITHUB PROFILE:
-Username: Broccoliux
-Public Repos: ${userData.public_repos}
+=== NABEEL'S FULL GITHUB REPOSITORIES ===
+${myRepoDetails}
 
-LATEST REPOSITORIES & COMMIT TIMESTAMPS:
-${repoDetails}
+${visitorGitHubData}
     `;
-  } catch {
-    return "GitHub data unavailable.";
+  } catch (err) {
+    return "GitHub data lookup error.";
   }
 }
 
@@ -75,7 +96,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const githubContext = await getGitHubContext();
+    const lastUserMsg = history.filter(m => m.role === 'user').pop()?.content || "";
+    const githubContext = await getGitHubContext(lastUserMsg);
     const finalSystemPrompt = AI_SYSTEM_PROMPT.replace('{GITHUB_DATA}', githubContext);
 
     const response = await fetch(AI_API_URL, {
