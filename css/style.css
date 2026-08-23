@@ -1377,11 +1377,13 @@ hr {
 .bot-msg {
   background: #2a2a2a;
   align-self: flex-start;
+
 }
 
 .user-msg {
   background: #26da0e;
   align-self: flex-end;
+  color: black;
 }
 
 .system-msg {
