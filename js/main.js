@@ -154,7 +154,7 @@ async function loadPublicHackatimeStats() {
     });
 
 
-  } catch {}
+  } catch { }
 }
 
 async function handleHackatimeCallback() {
@@ -653,7 +653,7 @@ const SVG_ICONS = {
         </svg>
         `,
 
-achievements: `
+  achievements: `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
@@ -1305,7 +1305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     appendMessage('Broccoli', 'Thinking...', 'bot-msg', loadingId);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ visitor_id: visitorId, message: text })
