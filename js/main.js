@@ -920,6 +920,8 @@ let mouse = {
   y: 0
 };
 
+let chatSidebarOpen = false;
+
 function languageToSize(hours, index = 0) {
 
   const safeHours = Math.max(Number(hours) || 0, 0.1);
@@ -1081,10 +1083,15 @@ function animateSpace() {
   });
 
   let hoveringAnyMeteor = false;
+  const sidebar = document.getElementById("broccoli-sidebar");
+  const sidebarRect = sidebar?.getBoundingClientRect();
+  const pointerOverChat = chatSidebarOpen && sidebarRect &&
+    mouse.x >= sidebarRect.left && mouse.x <= sidebarRect.right &&
+    mouse.y >= sidebarRect.top && mouse.y <= sidebarRect.bottom;
 
   spaceObjects.forEach(obj => {
 
-    if (!obj.isMeteor) return;
+    if (!obj.isMeteor || pointerOverChat) return;
 
     const centerX = obj.x + obj.size / 2;
     const centerY = obj.y + obj.size / 2;
@@ -1119,6 +1126,10 @@ function animateSpace() {
       tooltipHours.textContent = `${obj.hours.toFixed(1)} hrs`;
     }
   });
+
+  if (pointerOverChat) {
+    resetMeteorHoverState();
+  }
 
   // Check if tooltip or button is being hovered
   const tooltipElement = document.getElementById("meteor-tooltip");
@@ -1268,12 +1279,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   broccoliBtn.addEventListener('click', () => {
+    chatSidebarOpen = true;
     sidebar.style.right = '0';
     popup.style.display = 'none';
   });
 
 
   closeBtn.addEventListener('click', () => {
+    chatSidebarOpen = false;
     sidebar.style.right = `-${sidebar.offsetWidth}px`;
     popup.style.display = 'block';
   });
@@ -1362,11 +1375,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   broccoliBtn.addEventListener('click', () => {
+    chatSidebarOpen = true;
     sidebar.style.right = '0';
     if (popup) popup.style.display = 'none';
   });
 
   closeBtn.addEventListener('click', () => {
+    chatSidebarOpen = false;
     sidebar.style.right = `-${sidebar.offsetWidth}px`;
   });
 
