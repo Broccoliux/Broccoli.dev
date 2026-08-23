@@ -1351,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatInput.value = '';
 
     const loadingId = 'loading_' + Date.now();
-    appendMessage('Broccoli', 'Thinking...', 'bot-msg', loadingId);
+    appendMessage('Broccoli 2.0', 'Thinking...', 'bot-msg', loadingId);
 
     try {
       const response = await fetch('/api/chat', {
