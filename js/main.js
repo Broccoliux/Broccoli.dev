@@ -1328,6 +1328,8 @@ document.addEventListener('DOMContentLoaded', () => {
   resizeHandle.addEventListener('pointerup', stopResize);
   resizeHandle.addEventListener('pointercancel', stopResize);
 
+  let chatHistory = [];
+
   let visitorId = localStorage.getItem('broccoli_visitor_id');
   if (!visitorId) {
     visitorId = 'visitor_' + Math.random().toString(36).substring(2, 9);
@@ -1354,10 +1356,17 @@ document.addEventListener('DOMContentLoaded', () => {
     appendMessage('Broccoli 2.0', 'Thinking...', 'bot-msg', loadingId);
 
     try {
+      chatHistory.push({ role: 'user', content: text });
+
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ visitor_id: visitorId, message: text })
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          visitor_id: visitorId,
+          history: chatHistory
+        })
       });
 
       const data = await response.json();
@@ -1367,7 +1376,15 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(data.error || `Request failed (${response.status})`);
       }
 
-      appendMessage('Broccoli', data.reply || "I couldn't generate a reply right now.", 'bot-msg');
+      const botReply = data.reply || "I couldn't generate a reply right now.";
+
+      chatHistory.push({ role: 'assistant', content: botReply });
+
+      appendMessage(
+        'Broccoli',
+        botReply,
+        'bot-msg'
+      );
     } catch (err) {
       document.getElementById(loadingId).remove();
       appendMessage('System', err.message || 'Failed to reach server.', 'system-msg');
