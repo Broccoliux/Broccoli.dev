@@ -93,25 +93,25 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: "visitor_id and history array are required" });
   }
 
-  let existingUserContext = "";
+
+  let existingUserData = null;
   if (process.env.SHEET_WEB_APP_URL) {
     try {
       const checkRes = await fetch(`${process.env.SHEET_WEB_APP_URL}?visitor_id=${visitorId}`);
       const checkData = await checkRes.json();
       if (checkData.exists) {
-        existingUserContext = `
-[SYSTEM NOTE: This is a RETURNING visitor. We already have their info on file:
-- Name: ${checkData.name}
-- Email: ${checkData.email}
-- GitHub: ${checkData.github_url}
-- Socials: ${checkData.socials}
-- Summary: ${checkData.summary}
-
-INSTRUCTION: Do NOT treat them like a first-time visitor. Naturally welcome them back, mention you remember them, and ask if they want to update any of their info or if they're here with something new today.]`;
+        existingUserData = checkData;
       }
     } catch (err) {
       console.error("Error checking existing user:", err);
     }
+  }
+
+
+  if (existingUserData && history.length <= 1) {
+    return sendJson(res, 200, {
+      reply: `hey! i recognize you from before. we already have your info on file (name: ${existingUserData.name}, email: ${existingUserData.email}). do you want to update anything or are you here with something new?`
+    });
   }
 
 
