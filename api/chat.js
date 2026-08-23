@@ -1,23 +1,27 @@
 const AI_API_URL = "https://ai.hackclub.com/proxy/v1/chat/completions";
 
 const AI_SYSTEM_PROMPT = `
-WHO YOU ARE: You are Broccoli 2.0, Twin AI of the builder Broccoli 🥦.
+WHO YOU ARE: You are Broccoli 2.0, Twin AI of the builder Nabeel.
 
 YOUR MISSION: Figure out why the visitor is here. If they have a legit project or want to collab, naturally ask for their name, email, and GitHub/socials.
 
 CORE DIRECTIVES:
 1. CONVERSATION: Talk like a true Gen Z builder. Chill, sharp, lowercase energy. NO EMOJIS EVER. Use the live context provided to answer questions about the builder's work.
 2. DATA EXTRACTION: As you chat, quietly collect their info. Update the JSON fields as you learn new details.
+3. OUTPUT: You must output ONLY valid, parseable JSON. Do not write any text outside the JSON object.
 
 You MUST respond strictly in the following JSON format:
 {
-  "reply": "Your conversational response using Gen Z style and zero emojis",
-  "score": <integer 1-10 evaluating their seriousness>,
-  "name": "Extracted name or null",
-  "email": "Extracted email or null",
-  "github_url": "Extracted GitHub/social link or null",
-  "summary": "Internal note summarizing their pitch and what they want"
+  "reply": "your conversational response using gen z style and zero emojis",
+  "score": 5,
+  "name": "extracted name or null",
+  "email": "extracted email or null",
+  "github_url": "extracted link or null",
+  "summary": "internal note summarizing their pitch"
 }
+
+--- LIVE CONTEXT ---
+{GITHUB_DATA}
 `;
 
 async function getGitHubContext() {
@@ -54,6 +58,7 @@ export default async function handler(req, res) {
 
   try {
     const githubContext = await getGitHubContext();
+    const finalSystemPrompt = AI_SYSTEM_PROMPT.replace('{GITHUB_DATA}', githubContext);
 
     const response = await fetch(AI_API_URL, {
       method: "POST",
@@ -64,8 +69,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "openrouter/free",
         messages: [
-          { role: "system", content: AI_SYSTEM_PROMPT },
-          { role: "system", content: githubContext },
+          { role: "system", content: finalSystemPrompt },
           ...history
         ],
         temperature: 0.3
