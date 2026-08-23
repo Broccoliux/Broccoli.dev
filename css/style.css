@@ -1364,6 +1364,9 @@ hr {
 }
 
 .message {
+  max-width: 85%;
+  overflow-wrap: anywhere;
+  white-space: normal;
   padding: 10px 12px;
   border-radius: 8px;
   font-size: 13px;
