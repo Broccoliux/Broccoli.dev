@@ -1280,6 +1280,10 @@ hr {
   padding: 20px;
 }
 
+#broccoli-sidebar.expanded {
+  width: min(760px, calc(100vw - 32px));
+}
+
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -1295,16 +1299,30 @@ hr {
   font-size: 16px;
 }
 
+.sidebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#expand-sidebar,
 #close-sidebar {
   background: none;
   border: none;
   color: #aaa;
-  font-size: 18px;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
 }
 
+#expand-sidebar:hover,
 #close-sidebar:hover {
   color: white;
+}
+
+#close-sidebar {
+  font-size: 17px;
 }
 
 #chat-messages {
@@ -1316,6 +1334,7 @@ hr {
   flex: 1;
 
 }
+
 .message {
   padding: 10px 12px;
   border-radius: 8px;
@@ -1383,6 +1402,14 @@ hr {
   border-radius: 4px;
   cursor: pointer;
   font-size: 13px;
+}
+
+@media (max-width: 600px) {
+
+  #broccoli-sidebar,
+  #broccoli-sidebar.expanded {
+    width: calc(100vw - 32px);
+  }
 }
 
 

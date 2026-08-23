@@ -707,7 +707,10 @@
   <div id="broccoli-sidebar" class="sidebar">
     <div class="sidebar-header">
       <h3>Broccoli 2.0</h3>
-      <button id="close-sidebar">✕</button>
+      <div class="sidebar-actions">
+        <button id="expand-sidebar" type="button" aria-label="Expand chat" aria-pressed="false">↔</button>
+        <button id="close-sidebar" type="button" aria-label="Close chat">✕</button>
+      </div>
     </div>
     <div id="chat-messages">
       <div class="message bot-msg">

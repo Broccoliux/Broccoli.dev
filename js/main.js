@@ -1242,6 +1242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const broccoliBtn = document.getElementById('broccoli-btn');
   const sidebar = document.getElementById('broccoli-sidebar');
   const closeBtn = document.getElementById('close-sidebar');
+  const expandBtn = document.getElementById('expand-sidebar');
   const sendBtn = document.getElementById('send-btn');
   const chatInput = document.getElementById('chat-input');
   const chatMessages = document.getElementById('chat-messages');
@@ -1273,11 +1274,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   closeBtn.addEventListener('click', () => {
-    sidebar.style.right = '-350px';
+    sidebar.style.right = `-${sidebar.offsetWidth}px`;
     popup.style.display = 'block';
   });
 
-  if (!broccoliBtn || !sidebar || !closeBtn || !sendBtn || !chatInput || !chatMessages) return;
+  expandBtn.addEventListener('click', () => {
+    const expanded = sidebar.classList.toggle('expanded');
+    expandBtn.setAttribute('aria-pressed', String(expanded));
+    expandBtn.setAttribute('aria-label', expanded ? 'Collapse chat' : 'Expand chat');
+    expandBtn.textContent = expanded ? '↔' : '↔';
+  });
+
+  if (!broccoliBtn || !sidebar || !closeBtn || !expandBtn || !sendBtn || !chatInput || !chatMessages) return;
 
   let visitorId = localStorage.getItem('broccoli_visitor_id');
   if (!visitorId) {
@@ -1331,7 +1339,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   closeBtn.addEventListener('click', () => {
-    sidebar.style.right = '-350px';
+    sidebar.style.right = `-${sidebar.offsetWidth}px`;
   });
 
   sendBtn.addEventListener('click', sendMessage);
