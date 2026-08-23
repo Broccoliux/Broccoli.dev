@@ -21,6 +21,8 @@ You MUST respond strictly in the following JSON format:
   "summary": "internal note summarizing their pitch"
 }
 
+{EXISTING_USER_CONTEXT}
+
 --- LIVE CONTEXT ---
 {GITHUB_DATA}
 `;
@@ -122,7 +124,9 @@ INSTRUCTION: Do NOT treat them like a first-time visitor. Naturally welcome them
   try {
     const lastUserMsg = history.filter(m => m.role === 'user').pop()?.content || "";
     const githubContext = await getGitHubContext(lastUserMsg);
-    const finalSystemPrompt = AI_SYSTEM_PROMPT.replace('{GITHUB_DATA}', githubContext);
+    const finalSystemPrompt = AI_SYSTEM_PROMPT
+      .replace('{GITHUB_DATA}', githubContext)
+      .replace('{EXISTING_USER_CONTEXT}', existingUserContext);
 
     const response = await fetch(AI_API_URL, {
       method: "POST",
