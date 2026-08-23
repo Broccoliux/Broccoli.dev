@@ -108,10 +108,17 @@ export default async function handler(req, res) {
   }
 
 
-  if (existingUserData && history.length <= 1) {
-    return sendJson(res, 200, {
-      reply: `hey! i recognize you from before. we already have your info on file (name: ${existingUserData.name}, email: ${existingUserData.email}). do you want to update anything or are you here with something new?`
-    });
+  let existingUserContext = "";
+  if (existingUserData) {
+    existingUserContext = `
+[RETURNING VISITOR DETECTED]:
+- Name: ${existingUserData.name}
+- Email: ${existingUserData.email}
+- GitHub: ${existingUserData.github_url}
+- Socials: ${existingUserData.socials}
+- Summary: ${existingUserData.summary}
+
+INSTRUCTION FOR THIS FIRST MESSAGE: If the user just started the chat, naturally welcome them back, tell them you remember them from before, and ask if they want to update their saved info or talk about something new. Keep it Gen Z, zero emojis.`;
   }
 
 
