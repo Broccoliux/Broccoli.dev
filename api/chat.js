@@ -138,9 +138,9 @@ export default async function handler(req, res) {
             name: data.name,
             email: data.email,
             github_url: data.github_url,
-            socials: data.socials,
             score: data.score,
-            summary: data.summary
+            summary: data.summary,
+            socials: data.socials,
           })
         }).catch(err => console.error("Sheet sync error:", err));
       }
