@@ -8,7 +8,31 @@ export default async function handler(req, res) {
     });
   }
 
-  return res.status(200).json({
-    message: "Hackatime stats API is working"
-  });
+  try {
+    const response = await fetch(
+      `${HACKATIME_API}/projects`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.HACKATIME_ACCESS_TOKEN}`
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: "Hackatime request failed",
+        details: data
+      });
+    }
+
+    return res.status(200).json(data);
+
+  } catch (error) {
+    return res.status(500).json({
+      error: "Server error",
+      details: error.message
+    });
+  }
 }
