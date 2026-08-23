@@ -1242,7 +1242,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const broccoliBtn = document.getElementById('broccoli-btn');
   const sidebar = document.getElementById('broccoli-sidebar');
   const closeBtn = document.getElementById('close-sidebar');
-  const expandBtn = document.getElementById('expand-sidebar');
+  const resizeHandle = document.getElementById('sidebar-resize-handle');
   const sendBtn = document.getElementById('send-btn');
   const chatInput = document.getElementById('chat-input');
   const chatMessages = document.getElementById('chat-messages');
@@ -1278,14 +1278,42 @@ document.addEventListener('DOMContentLoaded', () => {
     popup.style.display = 'block';
   });
 
-  expandBtn.addEventListener('click', () => {
-    const expanded = sidebar.classList.toggle('expanded');
-    expandBtn.setAttribute('aria-pressed', String(expanded));
-    expandBtn.setAttribute('aria-label', expanded ? 'Collapse chat' : 'Expand chat');
-    expandBtn.textContent = expanded ? '↔' : '↔';
-  });
+  if (!broccoliBtn || !sidebar || !closeBtn || !resizeHandle || !sendBtn || !chatInput || !chatMessages) return;
 
-  if (!broccoliBtn || !sidebar || !closeBtn || !expandBtn || !sendBtn || !chatInput || !chatMessages) return;
+  let resizeStartX;
+  let resizeStartWidth;
+
+  function startResize(event) {
+    resizeStartX = event.clientX;
+    resizeStartWidth = sidebar.getBoundingClientRect().width;
+    sidebar.classList.add('resizing');
+    resizeHandle.setPointerCapture(event.pointerId);
+  }
+
+  function resizeSidebar(event) {
+    if (!sidebar.classList.contains('resizing')) return;
+
+    const styles = getComputedStyle(sidebar);
+    const minWidth = parseFloat(styles.minWidth);
+    const maxWidth = parseFloat(styles.maxWidth);
+    const nextWidth = resizeStartWidth + resizeStartX - event.clientX;
+    const width = Math.min(maxWidth, Math.max(minWidth, nextWidth));
+
+    sidebar.style.setProperty('--chat-sidebar-width', `${width}px`);
+  }
+
+  function stopResize(event) {
+    if (!sidebar.classList.contains('resizing')) return;
+    sidebar.classList.remove('resizing');
+    if (resizeHandle.hasPointerCapture(event.pointerId)) {
+      resizeHandle.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  resizeHandle.addEventListener('pointerdown', startResize);
+  resizeHandle.addEventListener('pointermove', resizeSidebar);
+  resizeHandle.addEventListener('pointerup', stopResize);
+  resizeHandle.addEventListener('pointercancel', stopResize);
 
   let visitorId = localStorage.getItem('broccoli_visitor_id');
   if (!visitorId) {
