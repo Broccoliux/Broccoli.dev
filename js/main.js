@@ -1314,10 +1314,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       document.getElementById(loadingId).remove();
 
-      appendMessage('Broccoli', data.reply || "Got it!", 'bot-msg');
+      if (!response.ok) {
+        throw new Error(data.error || `Request failed (${response.status})`);
+      }
+
+      appendMessage('Broccoli', data.reply || "I couldn't generate a reply right now.", 'bot-msg');
     } catch (err) {
       document.getElementById(loadingId).remove();
-      appendMessage('System', 'Failed to reach server.', 'system-msg');
+      appendMessage('System', err.message || 'Failed to reach server.', 'system-msg');
     }
   }
 
