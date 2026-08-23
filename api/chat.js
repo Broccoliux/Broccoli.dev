@@ -31,9 +31,9 @@ export default async function handler(req, res) {
     return sendJson(res, 405, { error: "Method not allowed" });
   }
 
-  const { visitor_id: visitorId, message } = req.body || {};
-  if (typeof visitorId !== "string" || typeof message !== "string" || !message.trim()) {
-    return sendJson(res, 400, { error: "visitor_id and message are required" });
+  const { visitor_id: visitorId, history } = req.body || {};
+  if (typeof visitorId !== "string" || !Array.isArray(history)) {
+    return sendJson(res, 400, { error: "visitor_id and history array are required" });
   }
 
   const apiKey = process.env.HACK_CLUB_AI_KEY;
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
         model: "openrouter/free",
         messages: [
           { role: "system", content: AI_SYSTEM_PROMPT },
-          { role: "user", content: `Visitor ID: ${visitorId}\nMessage: ${message.trim()}` }
+          ...history
         ],
         temperature: 0.3
       })
