@@ -13,7 +13,8 @@ export default async function handler(req, res) {
       `${HACKATIME_API}/projects`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.HACKATIME_ACCESS_TOKEN}`
+          Authorization:
+            `Bearer ${process.env.HACKATIME_ACCESS_TOKEN}`
         }
       }
     );
@@ -24,15 +25,6 @@ export default async function handler(req, res) {
       hackatime_status: response.status,
       hackatime_response: text
     });
-
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: "Hackatime request failed",
-        details: data
-      });
-    }
-
-    return res.status(200).json(data);
 
   } catch (error) {
     return res.status(500).json({
