@@ -91,6 +91,29 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: "visitor_id and history array are required" });
   }
 
+
+  let existingUserContext = "";
+  if (process.env.SHEET_WEB_APP_URL) {
+    try {
+      const checkRes = await fetch(`${process.env.SHEET_WEB_APP_URL}?visitor_id=${visitorId}`);
+      const checkData = await checkRes.json();
+      if (checkData.exists) {
+        existingUserContext = `
+[SYSTEM NOTE: This is a RETURNING visitor. We already have their info on file:
+- Name: ${checkData.name}
+- Email: ${checkData.email}
+- GitHub: ${checkData.github_url}
+- Socials: ${checkData.socials}
+- Summary: ${checkData.summary}
+
+INSTRUCTION: Do NOT treat them like a first-time visitor. Naturally welcome them back, mention you remember them, and ask if they want to update any of their info or if they're here with something new today.]`;
+      }
+    } catch (err) {
+      console.error("Error checking existing user:", err);
+    }
+  }
+
+
   const apiKey = process.env.HACK_CLUB_AI_KEY;
   if (!apiKey) {
     return sendJson(res, 500, { error: "AI service is not configured" });
