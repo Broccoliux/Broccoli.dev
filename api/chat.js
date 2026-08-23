@@ -82,6 +82,50 @@ function sendJson(res, status, body) {
   res.status(status).setHeader("Content-Type", "application/json").send(JSON.stringify(body));
 }
 
+function sheetUrl(params = {}) {
+  const url = new URL(process.env.SHEET_WEB_APP_URL);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      url.searchParams.set(key, String(value));
+    }
+  });
+  return url.toString();
+}
+
+function extractedData(data = {}) {
+  return {
+    reply: typeof data.reply === "string" ? data.reply : "",
+    score: Number.isInteger(data.score) ? data.score : 0,
+    name: data.name ?? null,
+    email: data.email ?? null,
+    github_url: data.github_url ?? null,
+    socials: data.socials ?? null,
+    summary: data.summary ?? ""
+  };
+}
+
+async function saveVisitorData(visitorId, data) {
+  if (!process.env.SHEET_WEB_APP_URL) return;
+
+  const sheetResponse = await fetch(process.env.SHEET_WEB_APP_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      visitor_id: visitorId,
+      name: data.name,
+      email: data.email,
+      github_url: data.github_url,
+      score: data.score,
+      summary: data.summary,
+      socials: data.socials
+    })
+  });
+
+  if (!sheetResponse.ok) {
+    throw new Error(`Google Sheets returned ${sheetResponse.status}`);
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -97,7 +141,8 @@ export default async function handler(req, res) {
   let existingUserData = null;
   if (process.env.SHEET_WEB_APP_URL) {
     try {
-      const checkRes = await fetch(`${process.env.SHEET_WEB_APP_URL}?visitor_id=${visitorId}`);
+      const checkRes = await fetch(sheetUrl({ visitor_id: visitorId }));
+      if (!checkRes.ok) throw new Error(`Google Sheets returned ${checkRes.status}`);
       const checkData = await checkRes.json();
       if (checkData.exists) {
         existingUserData = checkData;
@@ -159,31 +204,33 @@ INSTRUCTION FOR THIS FIRST MESSAGE: If the user just started the chat, naturally
     rawText = rawText.replace(/^```json\s*/, "").replace(/^```\s*/, "").replace(/\s*```$/, "");
 
     let data;
+    let shouldSave = false;
     try {
-      data = JSON.parse(rawText);
-
-      if (process.env.SHEET_WEB_APP_URL) {
-        fetch(process.env.SHEET_WEB_APP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            visitor_id: visitorId,
-            name: data.name,
-            email: data.email,
-            github_url: data.github_url,
-            score: data.score,
-            summary: data.summary,
-            socials: data.socials,
-          })
-        }).catch(err => console.error("Sheet sync error:", err));
-      }
+      data = extractedData(JSON.parse(rawText));
+      shouldSave = true;
     } catch {
-      data = { reply: "Hey! Thanks for stopping by. Nabeel will check this out soon." };
+      data = extractedData({
+        reply: "Hey! Thanks for stopping by. Nabeel will check this out soon."
+      });
+    }
+
+    if (shouldSave) {
+      try {
+        await saveVisitorData(visitorId, data);
+      } catch (err) {
+        console.error("Sheet sync error:", err);
+      }
     }
 
 
     return sendJson(res, 200, {
-      reply: data.reply || "Hey there! Let me pass that note to Nabeel."
+      reply: data.reply || "Hey there! Let me pass that note to Nabeel.",
+      score: data.score,
+      name: data.name,
+      email: data.email,
+      github_url: data.github_url,
+      socials: data.socials,
+      summary: data.summary
     });
   } catch {
     return sendJson(res, 502, { error: "Unable to reach AI service" });
