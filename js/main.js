@@ -1332,7 +1332,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let visitorId = localStorage.getItem('broccoli_visitor_id');
   if (!visitorId) {
-    visitorId = 'visitor_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+
+    visitorId = 'visitor_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
     localStorage.setItem('broccoli_visitor_id', visitorId);
   }
 
