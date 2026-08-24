@@ -1,4 +1,5 @@
-import { resend } from 'resend';
+import { Resend } from 'resend';
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const AI_API_URL = "https://ai.hackclub.com/proxy/v1/chat/completions";
