@@ -1,8 +1,4 @@
-const SUMMARY_API =
-  "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time";
-
-const AUTH_API =
-  "https://hackatime.hackclub.com/api/v1/authenticated";
+const API_URL = "/api/hackatime-stats";
 
 const languageMap = {
   "JAVA SCRIPT": "JavaScript",
@@ -11,20 +7,6 @@ const languageMap = {
   "FREE CAD": "FreeCAD"
 };
 
-async function fetchJSON(url) {
-  const token = localStorage.getItem("hackatime_access_token");
-  const headers = token ? { Authorization: `Bearer ${token}` } : {};
-  const response = await fetch(url, { headers });
-
-  if (!response.ok) {
-    const error = new Error(`${response.status} ${response.statusText}`);
-    error.status = response.status;
-    throw error;
-  }
-
-  return response.json();
-}
-
 async function loadStats() {
   const params = new URLSearchParams(window.location.search);
   const selectedLanguage = params.get("language");
@@ -32,111 +14,88 @@ async function loadStats() {
   if (!selectedLanguage) return;
 
   try {
-    const summary = await fetchJSON(SUMMARY_API);
-    const apiLanguage = languageMap[selectedLanguage] || selectedLanguage;
+    const apiLanguage =
+      languageMap[selectedLanguage] || selectedLanguage;
 
-    const languageData = summary.languages.find(
-      language => language.key.toLowerCase() === apiLanguage.toLowerCase()
+    const response = await fetch(
+      `${API_URL}?language=${encodeURIComponent(apiLanguage)}`
     );
 
-    const hours = languageData ? languageData.total / 3600 : 0;
-
-    document.getElementById("stats-language").textContent = selectedLanguage;
-    document.getElementById("total-hours").textContent = `${hours.toFixed(1)} hrs`;
-
-    let activeDaysCount = 0;
-    if (summary.days && Array.isArray(summary.days)) {
-      activeDaysCount = summary.days.filter(day => {
-        if (!day.languages) return false;
-        return day.languages.some(l =>
-          (l.key || l.name || "").toLowerCase() === apiLanguage.toLowerCase()
-        );
-      }).length;
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
     }
 
-    const activeDaysEl = document.getElementById("active-days");
-    if (activeDaysEl) {
-      activeDaysEl.textContent = activeDaysCount;
-    }
+    const data = await response.json();
+    const projects = data.projects || [];
 
-    const token = localStorage.getItem("hackatime_access_token");
+    const totalSeconds = projects.reduce(
+      (total, project) =>
+        total + Number(project.total_seconds || 0),
+      0
+    );
 
-    if (!token) {
-      document.getElementById("project-count").textContent = "Login required";
-      renderProjects([]);
-      return;
-    }
+    const hours = totalSeconds / 3600;
 
-    let matchingProjects = [];
+    document.getElementById("stats-language").textContent =
+      selectedLanguage;
 
-    try {
-      const projectsData = await fetchJSON(`${AUTH_API}/projects`);
-      matchingProjects = (projectsData.projects || []).filter(project => {
-        const projectLanguages = getProjectLanguages(project);
-        return projectLanguages.some(
-          language => language.toLowerCase() === apiLanguage.toLowerCase()
-        );
-      });
-    } catch (error) {
-      document.getElementById("project-count").textContent =
-        error.status === 401 ? "Login required" : "Unavailable";
-    }
+    document.getElementById("total-hours").textContent =
+      `${hours.toFixed(1)} hrs`;
 
-    document.getElementById("project-count").textContent = matchingProjects.length;
-    renderProjects(matchingProjects);
+    document.getElementById("project-count").textContent =
+      projects.length;
 
-  } catch {}
-}
+    renderProjects(projects);
 
-function getProjectLanguages(project) {
-  if (Array.isArray(project.languages)) {
-    return project.languages
-      .map(language =>
-        typeof language === "string" ? language : language.name || language.key
-      )
-      .filter(Boolean);
+  } catch (error) {
+    console.error("Failed to load stats:", error);
+
+    document.getElementById("project-count").textContent =
+      "Unavailable";
+
+    renderProjects([]);
   }
-
-  if (project.languages && typeof project.languages === "object") {
-    return Object.keys(project.languages);
-  }
-
-  return project.language ? [project.language] : [];
 }
 
 function renderProjects(projects) {
-  const container = document.getElementById("language-projects");
+  const container =
+    document.getElementById("language-projects");
+
   container.innerHTML = "";
 
   if (!projects.length) {
-    container.innerHTML = "<p>No tracked projects found for this language.</p>";
+    container.innerHTML =
+      "<p>No tracked projects found for this language.</p>";
     return;
   }
 
   projects
-    .sort((a, b) => getProjectSeconds(b) - getProjectSeconds(a))
+    .sort(
+      (a, b) =>
+        Number(b.total_seconds || 0) -
+        Number(a.total_seconds || 0)
+    )
     .forEach(project => {
+
       const card = document.createElement("article");
       card.className = "stats-project";
 
-      const hours = getProjectSeconds(project) / 3600;
-      const projectLanguages = getProjectLanguages(project);
+      const hours =
+        Number(project.total_seconds || 0) / 3600;
 
       card.innerHTML = `
         <div>
           <h3>${project.name}</h3>
           <p>${hours.toFixed(1)} hrs total project time</p>
         </div>
-        <span>${projectLanguages.join(" · ")}</span>
+
+        <span>
+          ${(project.languages || []).join(" · ")}
+        </span>
       `;
 
       container.appendChild(card);
     });
 }
-
-function getProjectSeconds(project) {
-  return Number(project.total_seconds ?? project.total ?? 0);
-}
-
 
 loadStats();
