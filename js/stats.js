@@ -59,14 +59,6 @@ async function loadStats() {
       activeDaysEl.textContent = activeDaysCount;
     }
 
-    const token = localStorage.getItem("hackatime_access_token");
-
-    if (!token) {
-      document.getElementById("project-count").textContent = "Login required";
-      renderProjects([]);
-      return;
-    }
-
     let matchingProjects = [];
 
     try {
