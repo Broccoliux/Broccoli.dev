@@ -24,14 +24,35 @@ body {
 
 main {
   position: relative;
-  flex: 1;
-  scrollbar-width: none;
-  font-weight: 400;
-
-#chat-messages::-webkit-scrollbar,
-#chat-input::-webkit-scrollbar {
-  display: none;
+  z-index: 1;
 }
+
+/* HERO */
+
+.hero {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.hero-left {
+  width: 50%;
+}
+
+.hero-left h1 {
+  font-size: 58px;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-left h2 {
+  margin-top: 18px;
+  font-size: 28px;
+  font-weight: 400;
 }
 
 .green {
