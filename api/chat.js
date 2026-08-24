@@ -245,6 +245,10 @@ INSTRUCTION FOR THIS FIRST MESSAGE: If the user just started the chat, naturally
     if (shouldSave) {
       try {
         await saveVisitorData(visitorId, data);
+
+        sendLeadNotification(visitorId, data).catch(err =>
+          console.error("background notification error:", err)
+        );
       } catch (err) {
         console.error("Sheet sync error:", err);
       }
