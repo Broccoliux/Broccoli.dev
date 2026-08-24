@@ -9,6 +9,14 @@ export default async function handler(req, res) {
   }
 
   try {
+    const language = req.query.language;
+
+    if (!language) {
+      return res.status(400).json({
+        error: "Language is required"
+      });
+    }
+
     const response = await fetch(
       `${HACKATIME_API}/projects`,
       {
@@ -19,11 +27,24 @@ export default async function handler(req, res) {
       }
     );
 
-    const text = await response.text();
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: "Hackatime request failed"
+      });
+    }
+
+    const projects = (data.projects || []).filter(project =>
+      project.languages?.some(
+        lang =>
+          lang.toLowerCase() === language.toLowerCase()
+      )
+    );
 
     return res.status(200).json({
-      hackatime_status: response.status,
-      hackatime_response: text
+      language,
+      projects
     });
 
   } catch (error) {
