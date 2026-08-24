@@ -24,35 +24,14 @@ body {
 
 main {
   position: relative;
-  z-index: 1;
-}
-
-/* HERO */
-
-.hero {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10%;
-}
-
-.hero-left {
-  width: 50%;
-}
-
-.hero-left h1 {
-  font-size: 58px;
-  color: #fff;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.hero-left h2 {
-  margin-top: 18px;
-  font-size: 28px;
+  flex: 1;
+  scrollbar-width: none;
   font-weight: 400;
+
+#chat-messages::-webkit-scrollbar,
+#chat-input::-webkit-scrollbar {
+  display: none;
+}
 }
 
 .green {
@@ -1360,6 +1339,33 @@ hr {
   padding: 16px;
   overflow-y: auto;
   flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #26da0e rgba(255, 255, 255, 0.08);
+}
+
+#chat-messages::-webkit-scrollbar,
+#chat-input::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat-messages::-webkit-scrollbar-track,
+#chat-input::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb,
+#chat-input::-webkit-scrollbar-thumb {
+  background: #26da0e;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+#chat-messages::-webkit-scrollbar-thumb:hover,
+#chat-input::-webkit-scrollbar-thumb:hover {
+  background: #61f34d;
+  background-clip: padding-box;
 
 }
 
@@ -1384,6 +1390,7 @@ hr {
   background: #26da0e;
   align-self: flex-end;
   color: black;
+  white-space: pre-wrap;
 }
 
 .system-msg {
@@ -1410,6 +1417,10 @@ hr {
   color: #26da0e;
   padding: 12px 16px;
   font-size: 14px;
+  line-height: 1.4;
+  resize: vertical;
+  max-height: 120px;
+  scrollbar-width: none;
   outline: none;
   box-shadow:
     0 8px 20px rgba(70, 68, 68, 0.3),
