@@ -9,12 +9,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    const {
-      code,
-      code_verifier,
-      redirect_uri,
-      client_id
-    } = req.body;
+    const { code, code_verifier } = req.body || {};
+
+    if (
+      typeof code !== "string" ||
+      typeof code_verifier !== "string" ||
+      code.length > 2000 ||
+      code_verifier.length > 200
+    ) {
+      return res.status(400).json({
+        error: "Invalid OAuth request"
+      });
+    }
 
     const response = await fetch(HACKATIME_TOKEN_URL, {
       method: "POST",
@@ -24,9 +30,9 @@ export default async function handler(req, res) {
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri,
-        client_id,
-        code_verifier
+        code_verifier,
+        redirect_uri: process.env.HACKATIME_REDIRECT_URI,
+        client_id: process.env.HACKATIME_CLIENT_ID
       })
     });
 
