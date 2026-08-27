@@ -59,22 +59,17 @@ async function loadStats() {
       activeDaysEl.textContent = activeDaysCount;
     }
 
-    let matchingProjects = [];
+    const projectsResponse = await fetch(
+      `${API_URL}?language=${encodeURIComponent(apiLanguage)}`
+    );
 
-    try {
-      const projectsData = await fetchJSON(`${AUTH_API}/projects`);
-      matchingProjects = (projectsData.projects || []).filter(project => {
-        const projectLanguages = getProjectLanguages(project);
-        return projectLanguages.some(
-          language => language.toLowerCase() === apiLanguage.toLowerCase()
-        );
-      });
-    } catch (error) {
-      document.getElementById("project-count").textContent =
-        error.status === 401 ? "Login required" : "Unavailable";
-    }
+    const projectsData = await projectsResponse.json();
 
-    document.getElementById("project-count").textContent = matchingProjects.length;
+    const matchingProjects = projectsData.projects || [];
+
+    document.getElementById("project-count").textContent =
+      matchingProjects.length;
+
     renderProjects(matchingProjects);
 
   } catch { }
