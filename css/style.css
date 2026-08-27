@@ -68,16 +68,7 @@ main {
 
 }
 
-.hero-right {
-  width: 40%;
-  display: flex;
-  justify-content: center;
-}
 
-.hero-right img {
-  width: 100%;
-  max-width: 520px;
-}
 
 .section {
   min-height: 100vh;
@@ -1041,11 +1032,7 @@ hr {
 
 }
 
-.lock-icon {
-  width: 32px;
-  height: 32x;
-  fill: #9ca3af;
-}
+
 
 
 
