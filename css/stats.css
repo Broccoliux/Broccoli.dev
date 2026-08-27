@@ -52,64 +52,7 @@
   border-radius: 8px;
 }
 
-.heatmap-container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
 
-.heatmap-week {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.heatmap-day {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background-color: rgba(255, 255, 255, 0.05);
-  transition: transform 0.2s ease;
-}
-
-.heatmap-day:hover {
-  transform: scale(1.25);
-  border: 1px solid #fff;
-}
-
-.heatmap-day.level-0 { background-color: rgba(255, 255, 255, 0.05); }
-.heatmap-day.level-1 { background-color: rgba(99, 102, 241, 0.3); }
-.heatmap-day.level-2 { background-color: rgba(99, 102, 241, 0.6); }
-.heatmap-day.level-3 { background-color: rgba(99, 102, 241, 0.85); }
-.heatmap-day.level-4 { background-color: #6366f1; box-shadow: 0 0 8px rgba(99, 102, 241, 0.6); }
-
-.heatmap-legend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 15px;
-  font-size: 0.8rem;
-  color: #9ca3af;
-}
-
-.legend-scale {
-  display: flex;
-  gap: 4px;
-}
-
-.legend-box {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-.legend-box.level-0 { background-color: rgba(255, 255, 255, 0.05); }
-.legend-box.level-1 { background-color: rgba(99, 102, 241, 0.3); }
-.legend-box.level-2 { background-color: rgba(99, 102, 241, 0.6); }
-.legend-box.level-3 { background-color: rgba(99, 102, 241, 0.85); }
-.legend-box.level-4 { background-color: #6366f1; }
 
 
 .stats-main>section:nth-of-type(2) {
