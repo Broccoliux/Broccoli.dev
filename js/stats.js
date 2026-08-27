@@ -2,10 +2,6 @@ const API_URL = "/api/hackatime-stats";
 
 const SUMMARY_API =
   "https://hackatime.hackclub.com/api/summary?user_id=U0ASNE2V58Q&interval=all_time";
-
-const AUTH_API =
-  "https://hackatime.hackclub.com/api/v1/authenticated";
-
 const languageMap = {
   "JAVA SCRIPT": "JavaScript",
   "BASH TERMINAL": "Shell",
