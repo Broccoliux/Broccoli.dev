@@ -168,10 +168,28 @@ export default async function handler(req, res) {
   }
 
   const { visitor_id: visitorId, history } = req.body || {};
-  if (typeof visitorId !== "string" || !Array.isArray(history)) {
-    return sendJson(res, 400, { error: "visitor_id and history array are required" });
-  }
 
+  const validHistory =
+    Array.isArray(history) &&
+    history.length <= 30 &&
+    history.every(message =>
+      message &&
+      ["user", "assistant"].includes(message.role) &&
+      typeof message.content === "string" &&
+      message.content.length > 0 &&
+      message.content.length <= 4000
+    );
+
+  if (
+    typeof visitorId !== "string" ||
+    !/^visitor_[a-z0-9_]+$/i.test(visitorId) ||
+    visitorId.length > 100 ||
+    !validHistory
+  ) {
+    return sendJson(res, 400, {
+      error: "Invalid request"
+    });
+  }
 
   let existingUserData = null;
   if (process.env.SHEET_WEB_APP_URL) {
@@ -224,7 +242,7 @@ INSTRUCTION FOR THIS FIRST MESSAGE: If the user just started the chat, naturally
         model: "openrouter/free",
         messages: [
           { role: "system", content: finalSystemPrompt },
-          ...history
+          ...safeHistory
         ],
         temperature: 0.3
       })
