@@ -244,19 +244,6 @@ const tooltipHours = document.getElementById("meteor-tooltip-time");
 
 const tooltipButton = document.getElementById("tooltip-open");
 
-tooltip.addEventListener("mouseenter", () => {
-  tooltipHovered = true;
-
-  if (hoveredMeteor) {
-    hoveredMeteor.vx = 0;
-    hoveredMeteor.vy = 0;
-  }
-});
-
-tooltip.addEventListener("mouseleave", () => {
-  tooltipHovered = false;
-});
-
 new Typed("#element", {
   strings: [
     "AI/ML Engineering",
@@ -913,7 +900,6 @@ async function loadLanguageHoursFromHackatime() {
 const spaceObjects = [];
 
 let hoveredMeteor = null;
-let tooltipHovered = false;
 
 let mouse = {
   x: 0,
@@ -1274,19 +1260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 4000);
 
-
-  broccoliBtn.addEventListener('click', () => {
-    chatSidebarOpen = true;
-    sidebar.style.right = '0';
-    popup.style.display = 'none';
-  });
-
-
-  closeBtn.addEventListener('click', () => {
-    chatSidebarOpen = false;
-    sidebar.style.right = `-${sidebar.offsetWidth}px`;
-    popup.style.display = 'block';
-  });
 
   if (!broccoliBtn || !sidebar || !closeBtn || !resizeHandle || !sendBtn || !chatInput || !chatMessages) return;
 
