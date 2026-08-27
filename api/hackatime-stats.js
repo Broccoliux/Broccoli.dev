@@ -48,9 +48,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
+    console.error("Hackatime stats error:", error);
+
     return res.status(500).json({
-      error: "Server error",
-      details: error.message
+      error: "Unable to load statistics"
     });
   }
 }
