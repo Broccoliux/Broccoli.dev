@@ -191,6 +191,8 @@ export default async function handler(req, res) {
     });
   }
 
+  const safeHistory = history.slice(-20);
+
   let existingUserData = null;
   if (process.env.SHEET_WEB_APP_URL) {
     try {
