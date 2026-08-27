@@ -40,8 +40,7 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       return res.status(response.status).json({
-        error: "Hackatime token exchange failed",
-        details: text
+        error: "Hackatime token exchange failed"
       });
     }
 
@@ -49,9 +48,10 @@ export default async function handler(req, res) {
     return res.status(200).json(tokenData);
 
   } catch (error) {
+    console.error("Token exchange error:", error);
+
     return res.status(500).json({
-      error: "Token exchange failed",
-      details: error.message
+      error: "Token exchange failed"
     });
   }
 }
