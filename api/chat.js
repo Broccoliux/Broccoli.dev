@@ -146,14 +146,14 @@ async function sendLeadNotification(visitorId, data) {
       to: process.env.NOTIFICATION_EMAIL,
       subject: `new lead: ${data.name || 'unknown visitor'} (score: ${data.score}/10)`,
       html: `
-        <h3>new high-intent lead captured by broccoli 2.0!</h3>
-        <p><strong>Name:</strong> ${data.name || "Not provided"}</p>
-        <p><strong>Email:</strong> ${data.email || 'Not provided'}</p>
-        <p><strong>GitHub:</strong> ${data.github_url || 'Not provided'}</p>
-        <p><strong>Socials:</strong> ${data.socials || 'Not provided'}</p>
-        <p><strong>Score:</strong> ${data.score}/10</p>
-        <p><strong>Summary:</strong> ${data.summary || 'No summary provided'}</p>
-        <p><small>Visitor ID: ${visitorId}</small></p>
+        <h3>new lead captured by broccoli 2.0</h3>
+        <p><strong>Name:</strong> ${escapeHtml(data.name || "Not provided")}</p>
+        <p><strong>Email:</strong> ${escapeHtml(data.email || "Not provided")}</p>
+        <p><strong>GitHub:</strong> ${escapeHtml(data.github_url || "Not provided")}</p>
+        <p><strong>Socials:</strong> ${escapeHtml(data.socials || "Not provided")}</p>
+        <p><strong>Score:</strong> ${escapeHtml(data.score)}</p>
+        <p><strong>Summary:</strong> ${escapeHtml(data.summary || "Not provided")}</p>
+        <p><small>Visitor ID: ${escapeHtml(visitorId)}</small></p>
       `
     });
   } catch (error) {
