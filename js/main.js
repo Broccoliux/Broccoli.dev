@@ -1309,9 +1309,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function appendMessage(sender, text, className, id = '') {
     const msgDiv = document.createElement('div');
-    if (id) msgDiv.id = id;
+
+    if (id) {
+      msgDiv.id = id;
+    }
+
     msgDiv.className = `message ${className}`;
-    msgDiv.innerHTML = `<strong>${sender}:</strong><br>${text}`;
+
+    const senderElement = document.createElement('strong');
+    senderElement.textContent = `${sender}:`;
+
+    const textElement = document.createElement('span');
+    textElement.textContent = text;
+
+    msgDiv.append(senderElement, document.createElement('br'), textElement);
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
