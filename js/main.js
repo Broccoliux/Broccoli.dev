@@ -1352,7 +1352,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-      document.getElementById(loadingId).remove();
+      const loadingMessage = document.getElementById(loadingId);
+      if (loadingMessage) loadingMessage.remove();
 
       if (!response.ok) {
         throw new Error(data.error || `Request failed (${response.status})`);
@@ -1368,7 +1369,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'bot-msg'
       );
     } catch (err) {
-      document.getElementById(loadingId).remove();
+      const loadingMessage = document.getElementById(loadingId);
+      if (loadingMessage) loadingMessage.remove();
       appendMessage('System', err.message || 'Failed to reach server.', 'system-msg');
     }
   }
