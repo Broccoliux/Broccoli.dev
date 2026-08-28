@@ -1,5 +1,8 @@
 # Broccoli.dev
 
+<img width="1355" height="685" alt="image" src="https://github.com/user-attachments/assets/cd463773-7961-463e-81cd-1623005d7013" />
+
+
 Broccoli.dev is a personal portfolio of Broccoli, The site combines a space themed interactive homepage with project and achievement showcase, live Hacktime activity, and a AI powered Broccoli Twim (Broccoli 2.0).
 
 ## Why it is sooo coool
