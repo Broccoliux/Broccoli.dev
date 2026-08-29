@@ -1326,6 +1326,7 @@ hr {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.10);
+  
   border-radius: 14px;
   color: #26da0e;
   padding: 12px 16px;
