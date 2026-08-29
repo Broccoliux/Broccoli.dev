@@ -14,7 +14,7 @@ Broccoli.dev is a personal portfolio of Broccoli, The site combines a space them
 - Project cards with Cool glass effect, and Hacktime project hrs.
 - A cool nerdy Achievement Page.
 - Langauge specific activity page.
-- Cool Twin of Broccoli. (broccoli 2.0)
+- Cool Twin of Broccoli, (broccoli 2.0).
 - GitHub context lookup for Broccoli repositories and, when supplied, a visitors public GitHub profile and repositories.
 - Broccoli twin have power to save visitor Info if provided, in google sheets and aleart mail to Broccoli.
 
@@ -29,9 +29,9 @@ Broccoli.dev is a personal portfolio of Broccoli, The site combines a space them
     │   └── stats.css              Stats-page styles
     ├── js/
     │   ├── main.js                Homepage interactions and API calls
-    │   └── stats.js               Stats-page data loading and rendering
+    │   └── stats.js               Stats-page data laoding and rendering
     ├── api/
-    │   ├── chat.js                AI chat, GitHub lookup, Sheets, and email
+    │   ├── chat.js                AI chat, Github lookup, sheets, and email
     │   ├── hackatime-stats.js     Server-side Hackatime project filtering
     │   └── hackatime-token.js     Hackatime OAuth token exchange
     ├── img_assets/                Portfolio, achievement, and space images
@@ -60,4 +60,4 @@ Broccoli.dev is a personal portfolio of Broccoli, The site combines a space them
 - A static web server for the frontend.
 - Enviroment variables for the server side features(see below).
 
-# THATS IT
+# Made my Broccoli for Broccoli.
