@@ -61,3 +61,5 @@ Broccoli.dev is a personal portfolio of Broccoli, The site combines a space them
 - Enviroment variables for the server side features(see below).
 
 # Made my Broccoli for Broccoli.
+
+U like it? Star it.
