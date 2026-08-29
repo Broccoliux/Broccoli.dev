@@ -7,7 +7,7 @@ const manualProjectHours = {
   "Flipper Black": 90,
   "ARIA": 23,
   "Broccoli board": 65,
-  "N-X-H-desktop-Hud": 23
+  "N-X-H-desktop-hub": 23
 };
 
 // HACKATIME PKCE
@@ -113,7 +113,7 @@ async function loadPublicHackatimeStats() {
 
           if (!timeElement) {
             timeElement = document.createElement("div");
-            timeElement.className = "project-time";
+            timeElement.className = "Project-time";
 
             const content = card.querySelector(".project-content");
 
@@ -700,6 +700,7 @@ items.forEach(item => {
 });
 
 // Mmouse leave reset
+
 
 dock.addEventListener("mouseleave", () => {
   state.forEach(obj => {
