@@ -130,7 +130,6 @@ async function saveVisitorData(visitorId, data) {
   }
 }
 
-
 async function sendLeadNotification(visitorId, data) {
   if (!process.env.RESEND_API_KEY || !process.env.NOTIFICATION_EMAIL) {
     return;
