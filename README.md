@@ -54,11 +54,54 @@ Broccoli.dev is a personal portfolio of Broccoli, The site combines a space them
 
 ## Local setup
 
-### Requirments
+### Requirements
 
-- Node.js 18 or newer is recommended because the server code uses the built in `fetch` API.
-- A static web server for the frontend.
-- Enviroment variables for the server side features(see below).
+- Node.js 18 or newer
+- npm
+- A local dev server that can run the API routes under `api/`
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Add the API keys in Vercel
+
+Store these values in your Vercel project environment variables, not in a local `.env` file:
+
+```bash
+HACK_CLUB_AI_KEY=your_ai_key_here
+GITHUB_TOKEN=your_github_token_here
+SHEET_WEB_APP_URL=https://script.google.com/macros/s/your-sheet-web-app/exec
+RESEND_API_KEY=your_resend_api_key
+NOTIFICATION_EMAIL=you@example.com
+HACKATIME_CLIENT_ID=your_hackatime_client_id
+HACKATIME_REDIRECT_URI=http://localhost:3000/
+HACKATIME_ACCESS_TOKEN=your_hackatime_token
+```
+
+### Run locally
+
+```bash
+npx vercel dev
+```
+
+Then open the local URL shown in the terminal, usually:
+
+```bash
+http://localhost:3000
+```
+
+This starts the frontend and loads the server routes in `api/` with the environment variables from Vercel.
+
+### If you only want to preview the static front-end
+
+```bash
+npx serve .
+```
+
+This works for the HTML pages, but the AI chat, Hackatime auth, and lead capture features will not work without the Vercel API environment setup.
 
 # Made my Broccoli for Broccoli.
 
