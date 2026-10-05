@@ -106,3 +106,5 @@ This works for the HTML pages, but the AI chat, Hackatime auth, and lead capture
 # Made my Broccoli for Broccoli.
 
 U like it? Star it.
+
+how can they reject this
