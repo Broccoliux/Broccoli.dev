@@ -101,7 +101,7 @@ This starts the frontend and loads the server routes in `api/` with the environm
 npx serve .
 ```
 
-This works for the HTML pages, but the AI chat, Hackatime auth, and lead capture features will not work without the Vercel API environment setup.
+This works for the HTML pages, but the AI chat, Hackatime auth, and lead capture features will not work without the Vercel API environment setup.....
 
 # Made my Broccoli for Broccoli.
 
